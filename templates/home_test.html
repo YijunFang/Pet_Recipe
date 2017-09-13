@@ -1,5 +1,20 @@
 <!DOCTYPE html>
 <html>
-This is a basic test page until Alex generates html pages we will use
+<p>This is a basic test page until Alex generates html pages we will use</p>
+<p>/search demonstrates some simple jinja</p>
+<p>3 views currently exist which is index '/' and '/search', '/profile'. These will be our dynamic pages</p>
+
+<form method="POST" action ="/search">
+	Search:
+	<br>
+	<input type="text" name="search_term" >
+	<br>
+	<input type="submit" value="Submit">
+</form>
+
+<br>
+<form action ="/profile">
+<input type="submit" value="Go to /profile" />
+</form>
 
 </html>
