@@ -4,7 +4,7 @@ import sqlite3
 import glob
 import re
 
-conn = sqlite3.connect('DB/recipedb.db')
+conn = sqlite3.connect('db/recipedb.db')
 conn.text_factory = str
 print("Opened database successfully")
 
