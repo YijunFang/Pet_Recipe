@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request
-
+# from Pet_Recipe.LoginForm import LoginForm
+# from main import app
+from .forms import LoginForm
 app = Flask(__name__)
+app.debug = True
+app.secret_key = 's3cr3t'
 
 @app.route('/')
 def index():
@@ -17,6 +21,13 @@ def search_view():
 def profile_view():    
 	return render_template("profile_test.html")  #html file can be replaced without affecting app route
 
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+    form = LoginForm()
+    return render_template('login.html',
+        title = 'Sign In',
+        form = form)
 
 if __name__ == '__main__':
+	print "lol"
 	app.run(debug=True, host='127.0.0.1')
