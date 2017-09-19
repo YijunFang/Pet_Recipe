@@ -14,24 +14,19 @@
   <body>
     <div id="base" class="">
 
-      <!-- TOP (Rectangle) -->
+      <!-- TOP Black Bar -->
       <div id="u0" class="ax_default box_1" data-label="TOP">
         <div id="u0_div" class=""></div>
-        <!-- Unnamed () -->
-        <div id="u1" class="text" style="display: none; visibility: hidden"></div>
       </div>
 
-      <!-- Middle (Rectangle) -->
+      <!-- Search Background -->
       <div id="u2" class="ax_default box_1" data-label="Middle">
         <div id="u2_div" class=""></div>
-        <!-- Unnamed () -->
-        <div id="u3" class="text" style="display: none; visibility: hidden"></div>
       </div>
 
       <!-- Title (Rectangle) -->
       <div id="u4" class="ax_default heading_1" data-label="Title">
-        <div id="u4_div" class=""></div>
-        <!-- Unnamed () -->
+        <!-- Title -->
         <div id="u5" class="text" style="visibility: visible;">
           <p><span>Pet Recipes</span></p>
         </div>
@@ -40,36 +35,37 @@
       <!-- LOGO (Image) -->
       <div id="u6" class="ax_default image" data-label="LOGO">
         <img id="u6_img" class="img " src="../static/images/home/logo_u6.png"/>
-        <!-- Unnamed () -->
-        <div id="u7" class="text" style="display: none; visibility: hidden">
+      </div>
+
+        <!-- SearchBar-->
+        <div id="u8" class="ax_default box_2" data-label="SearchBar">
+            <div id="u8_div" class=""></div>
+            <div id="u9" class="text" style="visibility: visible;">
+              <form method="POST" action ="/search">
+                    <p><span>&nbsp;&nbsp; </span>
+                    <span style="color:#999999;">
+                        <input type="text" name="search_term" >
+                            <div id="u10" class="ax_default image" data-label="Search">
+                                <input id="u10_image" type="image" src="../static/images/home/search_u10.png">
+                            </div>
+                    </span></p>          
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Search Selection -->
+      <div id="u27" class="ax_default box_2">
+        <div id="u27_div" class=""></div>
+        <!-- Filter -->
+        <div id="u28" class="text" style="visibility: visible;">
+          <p><span>&nbsp; Everything</span></p>
         </div>
       </div>
 
-      <!-- SearchBar (Rectangle) -->
-      <div id="u8" class="ax_default box_2" data-label="SearchBar">
-        <div id="u8_div" class=""></div>
-        <!-- Unnamed () -->
-        <div id="u9" class="text" style="visibility: visible;">
-          <form method="POST" action ="/search">
-          <p><span>&nbsp;&nbsp; </span><span style="color:#999999;">
-              <input type="text" name="search_term" >
-                <div id="u10" class="ax_default image" data-label="Search">
-                  <input id="u10_image" type="image" src="../static/images/home/search_u10.png">
-                </div>
-
-          </span></p>          
-        </form>
-
-        </div>
-      </div>
-
-      <!-- User (Image) -->
+      <!-- User Icon-->
       <div id="u16" class="ax_default image" data-label="User">
         <img id="u16_img" class="img " src="../static/images/home/user_u16.png"/>
-        <!-- Unnamed () -->
-        <div id="u17" class="text" style="display: none; visibility: hidden">
-          <p><span></span></p>
-        </div>
       </div>
 
         <!-- back (Rectangle) -->
@@ -106,17 +102,7 @@
             {% endfor %}
 
         </div>
-
-     
-
-      <!-- Unnamed (Rectangle) -->
-      <div id="u27" class="ax_default box_2">
-        <div id="u27_div" class=""></div>
-        <!-- Unnamed () -->
-        <div id="u28" class="text" style="visibility: visible;">
-          <p><span>&nbsp; Everything</span></p>
-        </div>
-      </div>
+      
     </div>
   </body>
 </html>
