@@ -14,7 +14,7 @@ from app.models import User,Recipe
 def index():
 	"""
 		example code for selecting (call query in sqlalchemy)
-	
+		
 	for item in db_session.query(Recipe.id, Recipe.ingredient,Recipe.instruction):
 		print (item)
 	"""
