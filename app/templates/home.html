@@ -78,6 +78,18 @@
         </div>
       </div>
 
+      <!-- User (Image) -->
+      <div id="u16" class="ax_default image" data-label="User">
+        <img id="u16_img" class="img " src="../static/images/home/user_u16.png"/>
+        <!-- Unnamed () -->
+        <div id="u17" class="text" style="display: none; visibility: hidden">
+          <p><span></span></p>
+        </div>
+      </div>
+
+     <!-- start recipe box here with u14-->
+     
+     
       <!-- post01 (Rectangle) -->
       <div id="u14" class="ax_default box_1" data-label="post01">
         <div id="u14_div" class=""></div>
@@ -87,14 +99,7 @@
         </div>
       </div>
 
-      <!-- User (Image) -->
-      <div id="u16" class="ax_default image" data-label="User">
-        <img id="u16_img" class="img " src="../static/images/home/user_u16.png"/>
-        <!-- Unnamed () -->
-        <div id="u17" class="text" style="display: none; visibility: hidden">
-          <p><span></span></p>
-        </div>
-      </div>
+
 
       <!-- Post (Image) -->
       <div id="u18" class="ax_default image" data-label="Post">
@@ -127,10 +132,22 @@
       <div id="u24" class="ax_default box_2">
         <div id="u24_div" class=""></div>
         <!-- Unnamed () -->
+        
         <div id="u25" class="text" style="visibility: visible;">
+          <!-- old example
           <p><span>Rover’s Rissoles</span></p><p><span><br></span></p><p><span>1 cup hamburger meat stir-fried in 1 tablespoon canola oil</span></p><p><span>2 boiled eggs chopped</span></p><p><span>1/2 cup cooked plain oatmeal</span></p><p><span>1 jar baby food green beans</span></p><p><span>1 jar baby food carrots</span></p><p><span>2 tablespoons cottage cheese</span></p>
+          -->
+          <p>html/css doesn't seem to be dynamic so all recipes listed here for now</p><br>
+          {% for r in recipes %}
+          <p><span><b>{{ r.title }}</b> <br></span></p>
+          <p><span>{{ r.ingredient }} <br></span></p>
+          <p><span>{{ r.instruction }} <br></span></p>
+          <br>
+          {% endfor %}
         </div>
+
       </div>
+     
 
       <!-- Unnamed (Rectangle) -->
       <div id="u27" class="ax_default box_2">

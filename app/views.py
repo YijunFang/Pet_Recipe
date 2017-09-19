@@ -2,15 +2,26 @@ from flask import Flask, render_template, request
 # from Pet_Recipe.LoginForm import LoginForm
 # from main import app
 from .forms import LoginForm
+
 app = Flask(__name__)
 app.debug = True
 app.secret_key = 's3cr3t'
 
+from app.database import db_session,engine
+from app.models import User,Recipe
+
 @app.route('/')
 def index():
-	#we must use render_template in order to make dynamic pages with jinja in the html file itself
-	#all html files need to be in templates folder
-	return render_template("home_test.html")  
+	"""
+		example code for selecting (call query in sqlalchemy)
+	
+	for item in db_session.query(Recipe.id, Recipe.ingredient,Recipe.instruction):
+		print (item)
+	"""
+	recipes = db_session.query(Recipe).all()
+	print(recipes)
+
+	return render_template("home.html",recipes=recipes)  
 
 @app.route('/search',methods=['POST'])
 def search_view():
@@ -19,7 +30,7 @@ def search_view():
 
 @app.route('/profile')
 def profile_view():    
-	return render_template("profile_test.html")  #html file can be replaced without affecting app route
+	return render_template("profile_test.html")  
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -29,5 +40,6 @@ def login():
         form = form)
 
 if __name__ == '__main__':
-	print "lol"
+	#print "lol"
 	app.run(debug=True, host='127.0.0.1')
+
