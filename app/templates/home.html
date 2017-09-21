@@ -1,76 +1,74 @@
 ﻿<!DOCTYPE html>
 <html>
-  <head>
-    <title>Home</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <meta name="/viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
-    <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
-    <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
-    <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
-    <script src="../static/files/home/data.js"></script>
-  </head>
-  <body>
-    <div id="base" class="">
+    <head>
+        <title>Home</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="/viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
+        <script src="../static/files/home/data.js"></script>
+    </head>
+    <body>
 
-      <!-- TOP Black Bar -->
-      <div id="u0" class="ax_default box_1" data-label="TOP">
-        <div id="u0_div" class=""></div>
-      </div>
+    <!-- TOP Black Bar -->
+    <div id="u0" class="">
+        <!-- User Icon-->
+        <img id="u4" class="img " src="../static/images/home/user_u16.png"/>
+    </div>
 
-      <!-- Search Background -->
-      <div id="u2" class="ax_default box_1" data-label="Middle">
-        <div id="u2_div" class=""></div>
-      </div>
+    <!-- Search Blue Background -->
+    <div id="u1" class="">
 
-      <!-- Title (Rectangle) -->
-      <div id="u4" class="ax_default heading_1" data-label="Title">
         <!-- Title -->
-        <div id="u5" class="text" style="visibility: visible;">
-          <p><span>Pet Recipes</span></p>
+        <div id="u3" class="ax_default heading_1" data-label="Title">
+            <!-- LOGO -->
+            <p><img id="u2" class="img " src="../static/images/home/logo_u6.png"/> Pet Recipes <p>
         </div>
-      </div>
 
-      <!-- LOGO (Image) -->
-      <div id="u6" class="ax_default image" data-label="LOGO">
-        <img id="u6_img" class="img " src="../static/images/home/logo_u6.png"/>
-      </div>
+        <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Everything
 
-        <!-- SearchBar-->
-        <div id="u8" class="ax_default box_2" data-label="SearchBar">
-            <div id="u8_div" class=""></div>
-            <div id="u9" class="text" style="visibility: visible;">
-              <form method="POST" action ="/search">
-                    <p><span>&nbsp;&nbsp; </span>
-                    <span style="color:#999999;">
-                        <input type="text" name="search_term" >
-                            <div id="u10" class="ax_default image" data-label="Search">
-                                <input id="u10_image" type="image" src="../static/images/home/search_u10.png">
-                            </div>
-                    </span></p>          
-                </form>
-
+        </button>
+            <form method="POST" action ="/search">
+                    <input type="text" name="search_term" placeholder="Search.."> 
+            </form> 
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#Everything">Everything</a>
+                <a href="#User">User</a>
+                <a href="#Recipes">Recipes</a>
             </div>
         </div>
 
-        <!-- Search Selection -->
-      <div id="u27" class="ax_default box_2">
-        <div id="u27_div" class=""></div>
-        <!-- Filter -->
-        <div id="u28" class="text" style="visibility: visible;">
-          <p><span>&nbsp; Everything</span></p>
-        </div>
-      </div>
+    </div>
+                  
+    <script>
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
 
-      <!-- User Icon-->
-      <div id="u16" class="ax_default image" data-label="User">
-        <img id="u16_img" class="img " src="../static/images/home/user_u16.png"/>
-      </div>
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+    </script>
 
         <!-- back (Rectangle) -->
-        <div id="u12" class="ax_default box_1" data-label="back">
-            <div id="u12_div" class=""></div>
+        <div id="u12" class="">
 
             <!-- start recipe box here with u14-->
             <!-- Recipes Post -->
@@ -103,6 +101,5 @@
 
         </div>
       
-    </div>
-  </body>
+    </body>
 </html>
