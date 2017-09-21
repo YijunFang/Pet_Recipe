@@ -149,10 +149,10 @@ input[name="search_term"]:focus {
 
 #u12 {
   position:relative;
-  left:10%;
+  left:20%;
   top:5%;
-  width:80%;
-  height:400%;
+  width:60%;
+  height:auto;
   background:inherit;
   background-color:rgba(28, 193, 196, 1);
   box-sizing:border-box;
@@ -168,11 +168,10 @@ input[name="search_term"]:focus {
 
 #u14 {
   position: relative;
-  left:2%;
   float: bottom;
-  width:90%;
-  height:322px;
-  margin:15px;
+  width:auto;
+  height:auto;
+  margin: 40px;
   background:inherit;
   background-color:rgba(242, 242, 242, 1);
   box-sizing:border-box;
@@ -219,6 +218,43 @@ input[name="search_term"]:focus {
   left:60px;
   top:20%;
   width:80%;
-  height:80%;
+  height:auto;
   text-align:left;
+}
+
+/*
+ * alternate version of u14 style that will scale to child div contents
+ */
+#u14_alt {
+  position: relative;
+  left:10px;
+  top:10px;
+  width:90%;
+  height:auto;
+  margin:15px;
+  background:inherit;
+  background-color:rgba(242, 242, 242, 1);
+  box-sizing:border-box;
+  border-width:1px;
+  border-style:solid;
+  border-color:rgba(121, 121, 121, 1);
+  border-radius:0px;
+  -moz-box-shadow:none;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+}
+
+#recipe_column{
+  float:none;
+  display: table-cell; 
+  vertical-align: top;
+
+}
+
+#recipe_img{
+  width: 350px;
+}
+
+#default_inner{
+  margin: 30px;
 }

@@ -13,59 +13,7 @@
     </head>
     <body>
 
-    <!-- TOP Black Bar -->
-    <div id="u0" class="">
-        <!-- User Icon-->
-        <img id="u4" class="img " src="../static/images/home/user_u16.png"/>
-    </div>
-
-    <!-- Search Blue Background -->
-    <div id="u1" class="">
-
-        <!-- Title -->
-        <div id="u3" class="ax_default heading_1" data-label="Title">
-            <!-- LOGO -->
-            <p><img id="u2" class="img " src="../static/images/home/logo_u6.png"/> Pet Recipes <p>
-        </div>
-
-        <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Everything
-
-        </button>
-            <form method="POST" action ="/search">
-                    <input type="text" name="search_term" placeholder="Search.."> 
-            </form> 
-            <div id="myDropdown" class="dropdown-content">
-                <a href="#Everything">Everything</a>
-                <a href="#User">User</a>
-                <a href="#Recipes">Recipes</a>
-            </div>
-        </div>
-
-    </div>
-                  
-    <script>
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-    </script>
+{% include 'header.html' %}
 
         <!-- back (Rectangle) -->
         <div id="u12" class="">
@@ -84,7 +32,7 @@
 
                     <!-- Post Time -->
                     <div id="u22" class="ax_default box_2">
-                                           <!-- Post Background -->
+                    <!-- Post Background -->
                     <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
                         <div id="u21" class="text" style="visibility: visible;">
                             <p><span>User01234</span></p>
@@ -92,14 +40,44 @@
                         <p><span>Today 9:13 am</span></p>
                     </div>
 
-                    <!-- Post Content -->
-                    <div id="u24" class="ax_default box_2">
-                        <p>html/css doesn't seem to be dynamic so all recipes listed here for now</p><br>
-                        <p><span><b>{{ r.title }}</b> <br></span></p>
-                        <p><span>{{ r.ingredient }} <br></span></p>
-                        <p><span>{{ r.instruction }} <br></span></p>              
-                        <br>
+                    <!-- title -->
+                    <div id = "default_inner" >
+                    <p class="heading_1" style="text-align:center">{{ r.title }}</p><br>
                     </div>
+
+                    <!-- horizontal line-->
+                    <center><img src="..\static\images\result_page\u94.png" width="96%"/></center>
+
+
+                    <!-- Recipe Post Content -->
+                    <div id="u24" class="ax_default box_2">
+
+                    <!-- recipe post left column (recipe image)-->
+                    <div id="recipe_column">
+                        <div id = "default_inner">
+                        {% if r.imagepath is not none %}
+                        <img src="{{ r.imagepath }}" id="recipe_img"/>
+                        {% else %}
+                        <img src="../static/images/noimage.jpg" id="recipe_img"/>
+                        {% endif %}
+                        </div>
+                    </div> 
+
+                    <!-- recipe post right column -->
+                    <div id="recipe_column">
+                        <div id = "default_inner">
+                        
+                        <p class="heading_3">Ingredients</p><br>
+                        <p class="paragraph">{{ r.ingredient }}</p>
+
+
+                        <br><p class="heading_3">Instructions</p><br>
+                        <p class="paragraph">{{ r.instruction }}</p>
+
+                        <br>
+                      </div>
+                    </div>
+                    </div>  
 
                 </div>
             {% endfor %}

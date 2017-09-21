@@ -39,6 +39,10 @@ def login():
         title = 'Sign In',
         form = form)
 
+@app.route('/recipe')
+def recipe_view():    
+	return render_template("recipe.html")  
+
 if __name__ == '__main__':
 	#print "lol"
 	app.run(debug=True, host='127.0.0.1')
