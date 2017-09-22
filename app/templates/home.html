@@ -42,7 +42,7 @@
 
                     <!-- title -->
                     <div id = "default_inner" style="text-align:center" >
-                    <a href="/recipe" class="heading_1" >{{ r.Recipe.title }}</a><br>
+                    <a href="{{ url_for('recipe_view',recipeid='hello') }}" class="heading_1" >{{ r.Recipe.title }}</a><br>
                     </div>
 
                     <!-- horizontal line-->
@@ -80,9 +80,7 @@
                         <br>
                       </div>
                     </div>
-
-                     <div class="clear"></div>  
-
+                    <div class="clear"></div>  
                     </div>  
 
                 </div>

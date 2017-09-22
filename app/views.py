@@ -19,6 +19,8 @@ def index():
 		print (item)
 	"""
 	recipes = db_session.query(Recipe,Pet_type).filter(Recipe.type==Pet_type.id).all()
+	print(recipes)
+
 	return render_template("home.html",recipes=recipes)  
 
 @app.route('/search',methods=['POST'])
@@ -38,7 +40,8 @@ def login():
         form = form)
 
 @app.route('/recipe')
-def recipe_view():    
+def recipe_view():  
+	recipeid = request.args.get('recipeid')
 	return render_template("recipe.html")  
 
 if __name__ == '__main__':
