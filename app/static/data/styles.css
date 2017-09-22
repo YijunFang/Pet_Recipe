@@ -93,6 +93,7 @@ a:active {
 .paragraph {
   text-align:left;
   font-family:'ArialMT', 'Arial';
+  font-size:12px;
 }
 .line {
 }

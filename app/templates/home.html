@@ -53,7 +53,7 @@
                     <div id="u24" class="ax_default box_2">
 
                     <!-- recipe post left column (recipe image)-->
-                    <div id="recipe_column">
+                    <div class="recipe_column_left">
                         <div id = "default_inner">
                         {% if r.Recipe.imagepath is not none %}
                         <img src="{{ r.Recipe.imagepath }}" id="recipe_img"/>
@@ -64,7 +64,7 @@
                     </div> 
 
                     <!-- recipe post right column -->
-                    <div id="recipe_column">
+                    <div class="recipe_column_right">
                         <div id = "default_inner">
                         <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
                         
@@ -80,6 +80,9 @@
                         <br>
                       </div>
                     </div>
+
+                     <div class="clear"></div>  
+
                     </div>  
 
                 </div>

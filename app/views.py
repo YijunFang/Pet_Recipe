@@ -19,8 +19,6 @@ def index():
 		print (item)
 	"""
 	recipes = db_session.query(Recipe,Pet_type).filter(Recipe.type==Pet_type.id).all()
-	print(recipes)
-
 	return render_template("home.html",recipes=recipes)  
 
 @app.route('/search',methods=['POST'])

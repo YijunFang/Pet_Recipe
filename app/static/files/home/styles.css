@@ -167,12 +167,10 @@ input[name="search_term"]:focus {
 }
 
 #u14 {
-  position: relative;
-  float: bottom;
+
   width:auto;
   height:auto;
   margin: 40px;
-  background:inherit;
   background-color:rgba(242, 242, 242, 1);
   box-sizing:border-box;
   border-width:1px;
@@ -202,6 +200,7 @@ input[name="search_term"]:focus {
   word-wrap:break-word;
 }
 
+/*u22 is post header*/
 #u22 {
   position:relative;
   left:65px;
@@ -214,45 +213,32 @@ input[name="search_term"]:focus {
 }
 
 #u24 {
-  position:relative;
+  /*position:relative;
   left:60px;
   top:20%;
   width:80%;
   height:auto;
-  text-align:left;
+  text-align:left;*/
 }
 
-/*
- * alternate version of u14 style that will scale to child div contents
- */
-#u14_alt {
-  position: relative;
-  left:10px;
-  top:10px;
-  width:90%;
-  height:auto;
-  margin:15px;
-  background:inherit;
-  background-color:rgba(242, 242, 242, 1);
-  box-sizing:border-box;
-  border-width:1px;
-  border-style:solid;
-  border-color:rgba(121, 121, 121, 1);
-  border-radius:0px;
-  -moz-box-shadow:none;
-  -webkit-box-shadow:none;
-  box-shadow:none;
+
+.recipe_column_left{
+  float:left;
+  width:50%;
 }
 
-#recipe_column{
-  float:none;
-  display: table-cell; 
-  vertical-align: top;
+.recipe_column_right{
+  float:right;
+  width:50%;
 
+}
+
+.clear{
+  clear:both;
 }
 
 #recipe_img{
-  width: 400px;
+  width: 100%;
 }
 
 #default_inner{
