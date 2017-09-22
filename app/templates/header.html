@@ -1,0 +1,53 @@
+    <!-- TOP Black Bar -->
+    <div id="u0" class="">
+        <!-- User Icon-->
+        <img id="u4" class="img " src="../static/images/home/user_u16.png"/>
+    </div>
+
+    <!-- Search Blue Background -->
+    <div id="u1" class="">
+
+        <!-- Title -->
+        <div id="u3" class="ax_default heading_1" data-label="Title">
+            <!-- LOGO -->
+            <p><img id="u2" class="img " src="../static/images/home/logo_u6.png"/> Pet Recipes <p>
+        </div>
+
+        <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Everything
+
+        </button>
+            <form method="POST" action ="/search">
+                    <input type="text" name="search_term" placeholder="Search.."> 
+            </form> 
+            <div id="myDropdown" class="dropdown-content">
+                <a class="paragraph" href="#Everything">Everything</a>
+                <a class="paragraph" href="#User">User</a>
+                <a class="paragraph" href="#Recipes">Recipes</a>
+            </div>
+        </div>
+
+    </div>
+                  
+    <script>
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+    </script>
