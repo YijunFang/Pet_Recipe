@@ -1,7 +1,7 @@
 ﻿body {
   margin:0;
   background-color:rgba(242, 242, 242, 1);
-  z-index: -99;
+
 }
 
 #u0 {
@@ -9,7 +9,7 @@
   width:100%;
   height:8%;
   background-color:rgba(65, 65, 65, 1);
-  z-index: -1;
+
 }
 
 #u1 {
@@ -163,7 +163,7 @@ input[name="search_term"]:focus {
   -moz-box-shadow:none;
   -webkit-box-shadow:none;
   box-shadow:none;
-  z-index: -2;
+
 }
 
 #u14 {

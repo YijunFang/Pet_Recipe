@@ -8,7 +8,7 @@ app.debug = True
 app.secret_key = 's3cr3t'
 
 from app.database import db_session,engine
-from app.models import User,Recipe
+from app.models import *
 
 @app.route('/')
 def index():
@@ -18,7 +18,7 @@ def index():
 	for item in db_session.query(Recipe.id, Recipe.ingredient,Recipe.instruction):
 		print (item)
 	"""
-	recipes = db_session.query(Recipe).all()
+	recipes = db_session.query(Recipe,Pet_type).filter(Recipe.type==Pet_type.id).all()
 	print(recipes)
 
 	return render_template("home.html",recipes=recipes)  

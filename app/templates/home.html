@@ -41,8 +41,8 @@
                     </div>
 
                     <!-- title -->
-                    <div id = "default_inner" >
-                    <p class="heading_1" style="text-align:center">{{ r.title }}</p><br>
+                    <div id = "default_inner" style="text-align:center" >
+                    <a href="/recipe" class="heading_1" >{{ r.Recipe.title }}</a><br>
                     </div>
 
                     <!-- horizontal line-->
@@ -55,8 +55,8 @@
                     <!-- recipe post left column (recipe image)-->
                     <div id="recipe_column">
                         <div id = "default_inner">
-                        {% if r.imagepath is not none %}
-                        <img src="{{ r.imagepath }}" id="recipe_img"/>
+                        {% if r.Recipe.imagepath is not none %}
+                        <img src="{{ r.Recipe.imagepath }}" id="recipe_img"/>
                         {% else %}
                         <img src="../static/images/noimage.jpg" id="recipe_img"/>
                         {% endif %}
@@ -66,13 +66,14 @@
                     <!-- recipe post right column -->
                     <div id="recipe_column">
                         <div id = "default_inner">
+                        <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
                         
                         <p class="heading_3">Ingredients</p><br>
-                        <p class="paragraph">{{ r.ingredient }}</p>
+                        <p class="paragraph">{{ r.Recipe.ingredient }}</p>
 
 
                         <br><p class="heading_3">Instructions</p><br>
-                        <p class="paragraph">{{ r.instruction }}</p>
+                        <p class="paragraph">{{ r.Recipe.instruction }}</p>
 
                         <br>
                       </div>
