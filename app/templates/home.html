@@ -69,11 +69,13 @@
                         <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
                         
                         <p class="heading_3">Ingredients</p><br>
-                        <p class="paragraph">{{ r.Recipe.ingredient }}</p>
+                        
+                        <p class="paragraph">{{ r.Recipe.ingredient.replace('\n','<br />')|safe }}</p>
 
 
                         <br><p class="heading_3">Instructions</p><br>
-                        <p class="paragraph">{{ r.Recipe.instruction }}</p>
+
+                        <p class="paragraph">{{ r.Recipe.instruction.replace('\n','<br />')|safe }}</p>
 
                         <br>
                       </div>
