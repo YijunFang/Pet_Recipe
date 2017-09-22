@@ -1,34 +1,30 @@
-<!-- extend base layout -->
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Log In</title>
+    <link rel="stylesheet" type="text/css" href="../static/files/login/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
-{% block content %}
-<script type="text/javascript">
-function set_openid(openid, pr)
-{
-    u = openid.search('<username>')
-    if (u != -1) {
-        // openid requires username
-        user = prompt('Enter your ' + pr + ' username:')
-        openid = openid.substr(0, u) + user
-    }
-    form = document.forms['login'];
-    form.elements['openid'].value = openid
-}
-</script>
-<h1>Sign In</h1>
-<form action="" method="post" name="login">
-    {{ form.hidden_tag() }}
-    <p>
-        Please enter your OpenID, or select one of the providers below:<br>
-        {{ form.openid(size=80) }}
-        {% for error in form.openid.errors %}
-          <span style="color: red;">[{{error}}]</span>
-        {% endfor %}<br>
-        |{% for pr in providers %}
-          <a href="javascript:set_openid('{{ pr.url }}', '{{ pr.name }}');">{{ pr.name }}</a> |
-        {% endfor %}
-    </p>
-    <p>{{ form.remember_me }} Remember Me</p>
-    <p><input type="submit" value="Sign In"></p>
-</form>
-{% endblock %}
+</head>
+<body>
+<div id="main" class="container">   
+    <form name="loginform" id="loginform" action="#" method="post" class="wpl-track-me"> 
+        <p class="login-username">
+        <label for="user_login">Username</label> 
+            <input type="text" name="log" id="user_login" class="input" placeholder="Email Address" value="" size="20" /> 
+        </p> 
+        <p class="login-password"> 
+        <label for="user_pass">Password</label><input type="password" name="pwd" id="user_pass" class="input" placeholder="Password" value="" size="20" /> 
+        </p>    
+        <p class="login-remember"><label><input name="rememberme" type="checkbox" id="rememberme" value="forever"> Remember Me</label></p>
+        <p class="login-submit"><input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Log in" />
+        <input type="hidden" name="redirect_to" value="#"/>
+        </p>    
+    </form> 
+</div>
+  
+  
+</body>
+</html>
+ 
