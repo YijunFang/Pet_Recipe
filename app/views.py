@@ -26,8 +26,11 @@ def index():
 
 @app.route('/search',methods=['POST'])
 def search_view():
-	search_term = request.form['search_term']   
-	return render_template("search_test.html",search_term=search_term) 
+	search_term = request.form['search_term']
+	pet_type = Pet_type.query.all()
+	user = User.query.all()
+	recipes = db_session.query(Recipe,Pet_type).filter(Recipe.type==Pet_type.id).all()   
+	return render_template("result_page.html",search_term=search_term, pet_type=pet_type, recipes=recipes, user = user) 
 
 @app.route('/profile')
 def profile_view():    
