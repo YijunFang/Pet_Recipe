@@ -35,7 +35,7 @@
                     <!-- Post Background -->
                     <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
                         <div id="u21" class="text" style="visibility: visible;">
-                            <p><span>User01234</span></p>
+                            <p><span> {{ r.User.user_name }} </span></p>
                         </div>
                         <p><span>Today 9:13 am</span></p>
                     </div>
@@ -43,7 +43,7 @@
                     <!-- title -->
                     <div id = "default_inner" style="text-align:center" >
                     <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
-				instruction=r.Recipe.instruction, pettype=r.Pet_type.type) }}" class="heading_1" >{{ r.Recipe.title }}</a><br>
+				instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_1" >{{ r.Recipe.title }}</a><br>
                     </div>
 
                     <!-- horizontal line-->

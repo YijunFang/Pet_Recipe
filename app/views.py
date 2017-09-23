@@ -18,7 +18,8 @@ def index():
 	for item in db_session.query(Recipe.id, Recipe.ingredient,Recipe.instruction):
 		print (item)
 	"""
-	recipes = db_session.query(Recipe,Pet_type).filter(Recipe.type==Pet_type.id).all()
+	recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
+							 filter(Recipe.user_id==User.id).all()
 	print(recipes)
 
 	return render_template("home.html",recipes=recipes)  
@@ -46,12 +47,17 @@ def recipe_view():
 	ingredient = request.args.get('ingredient')
 	instruction = request.args.get('instruction')
 	pettype= request.args.get('pettype')
+	user= request.args.get('user')
+	img= request.args.get('img')
+
 	return render_template("recipe.html",
 		recipeid=recipeid,
 		title=title,
 		ingredient=ingredient,
 		instruction=instruction,
-		pettype=pettype)  
+		pettype=pettype,
+		user=user,
+		img=img)
 
 if __name__ == '__main__':
 	#print "lol"

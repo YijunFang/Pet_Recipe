@@ -34,7 +34,7 @@
                                            <!-- Post Background -->
                     <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
                         <div id="u21" class="text" style="visibility: visible;">
-                            <p><span>User01234</span></p>
+                            <p><span> {{ user }}</span></p>
                         </div>
                         <p><span>Today 9:13 am</span></p>
                     </div>
@@ -54,7 +54,7 @@
                     <!-- recipe post left column (recipe image)-->
                     <div class="recipe_column_left">
                         <div id = "default_inner">
-                        <img src="..\static\images\recipe_image\treats1.jpg" id="recipe_img"/>
+                        <img src= {{ img }} id="recipe_img"/>
                         </div>
                     </div> 
 
