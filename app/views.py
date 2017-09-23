@@ -42,7 +42,16 @@ def login():
 @app.route('/recipe')
 def recipe_view():  
 	recipeid = request.args.get('recipeid')
-	return render_template("recipe.html")  
+	title = request.args.get('title')
+	ingredient = request.args.get('ingredient')
+	instruction = request.args.get('instruction')
+	pettype= request.args.get('pettype')
+	return render_template("recipe.html",
+		recipeid=recipeid,
+		title=title,
+		ingredient=ingredient,
+		instruction=instruction,
+		pettype=pettype)  
 
 if __name__ == '__main__':
 	#print "lol"

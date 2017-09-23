@@ -42,7 +42,8 @@
 
                     <!-- title -->
                     <div id = "default_inner" style="text-align:center" >
-                    <a href="{{ url_for('recipe_view',recipeid='hello') }}" class="heading_1" >{{ r.Recipe.title }}</a><br>
+                    <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+				instruction=r.Recipe.instruction, pettype=r.Pet_type.type) }}" class="heading_1" >{{ r.Recipe.title }}</a><br>
                     </div>
 
                     <!-- horizontal line-->

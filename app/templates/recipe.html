@@ -42,7 +42,7 @@
 
                     <!-- title -->
                     <div id = "default_inner" >
-                    <p class="heading_1" style="text-align:center">Recipe Title</p><br>
+                    <p class="heading_1" style="text-align:center"> {{ title }} </p><br>
                     </div>
 
                     <!-- horizontal line-->
@@ -62,17 +62,13 @@
                     <div class="recipe_column_right">
                         <div id = "default_inner">
                         
-                        <p class="heading_3">Suitable For Dogs</p><br>
+                        <p class="heading_3">Suitable For {{ pettype }}</p><br>
 
                         <p class="heading_3">Ingredients</p><br>
-                        <p class="paragraph">ingredient 1</p>
-                        <p class="paragraph">ingredient 2</p>
-                        <p class="paragraph">ingredient 3</p>
+                        <p class="paragraph">{{ ingredient }}</p>
 
                         <br><p class="heading_3">Instructions</p><br>
-                        <p class="paragraph">1. action 1</p>
-                        <p class="paragraph">2. action 2</p>
-                        <p class="paragraph">3. action 3</p>
+                        <p class="paragraph">{{ instruction }}</p>
                         <br>
                       </div>
                     </div>
