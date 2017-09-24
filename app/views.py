@@ -29,7 +29,8 @@ def search_view():
 	search_term = request.form['search_term']
 	pet_type = Pet_type.query.all()
 	user = User.query.all()
-	recipes = db_session.query(Recipe,Pet_type).filter(Recipe.type==Pet_type.id).all()   
+	recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
+							 filter(Recipe.user_id==User.id).all()
 	return render_template("result_page.html",search_term=search_term, pet_type=pet_type, recipes=recipes, user = user) 
 
 @app.route('/profile')

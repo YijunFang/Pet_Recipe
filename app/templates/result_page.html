@@ -9,23 +9,101 @@
         <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
         <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
         <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/files/result_page/styles.css" type="text/css" rel="stylesheet"/>
+        </style>
         <script src="../static/files/home/data.js"></script>
     </head>
     <body>
 
 {% include 'header.html' %}
     <!-- Home Direct -->
-    <div>
+    <div id="tag" class="">
 
         <p><a href="/"> Home </a> > Search</p>
     </div>
 
+    <div id="search_title" class="">
+        <p>Search Result of {{ search_term }}</p>
+    </div>
+ <!-- Search Result-->
+    <div id="result_post" class="">
+        <!-- Search User -->
+
+            {% for u in user %}
+                {% if search_term in u.user_name %}
+                <div id="u14" class="">
+                    <img id="avatar" class="img " src="../static/images/home/post_u18.png"/> 
+                    <p id="user_text" class="text">{{ u.user_name }}</p>
+                </div>
+                {% endif %}
+            {% endfor %}
+        <!-- Search Post -->
+        
+            {% for r in recipes %}
+                {% if (search_term in r.Recipe.ingredient or search_term in r.Recipe.instruction or search_term in r.Recipe.title ) %}
+                <div id="u14" class="">
+                    <div id="u22" class="ax_default box_2">
+                    <!-- Post Background -->
+                    <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
+                        <div id="u21" class="text" style="visibility: visible;">
+                            <p><span> {{ r.User.user_name }} </span></p>
+                        </div>
+                    </div>
+                    <!-- title -->
+                    <div id = "default_inner" style="text-align:center" >
+                    <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_1" >{{ r.Recipe.title }}</a><br>
+                    </div>
+                     <!-- horizontal line-->
+                    <center><img src="..\static\images\result_page\u94.png" width="96%"/></center>
+
+
+                    <!-- Recipe Post Content -->
+                    <div id="u24" class="ax_default box_2">
+
+                    <!-- recipe post left column (recipe image)-->
+                    <div class="recipe_column_left">
+                        <div id = "default_inner">
+                        {% if r.Recipe.imagepath is not none %}
+                        <img src="{{ r.Recipe.imagepath }}" id="recipe_img"/>
+                        {% else %}
+                        <img src="../static/images/noimage.jpg" id="recipe_img"/>
+                        {% endif %}
+                        </div>
+                    </div> 
+
+                    <!-- recipe post right column -->
+                    <div class="recipe_column_right">
+                        <div id = "default_inner">
+                        <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
+                        
+                        <p class="heading_3">Ingredients</p><br>
+                        
+                        <p class="paragraph">{{ r.Recipe.ingredient.replace('\n','<br />')|safe }}</p>
+
+
+                        <br><p class="heading_3">Instructions</p><br>
+
+                        <p class="paragraph">{{ r.Recipe.instruction.replace('\n','<br />')|safe }}</p>
+
+                        <br>
+                      </div>
+                    </div>
+                    <div class="clear"></div>  
+                    </div> 
+                </div>
+                {% endif %}
+            {% endfor %}
+    </div>
 
     <!-- Filter Bar-->
-    <div>
+    <div id="filter" class="">
+        <div id="filter_top" class="">
+            <p>Filter By</p>
+        </div>
         <div>
-            <button onclick="uncheckAll()" > Clear Filter </button>
-            <p> PET TYPE </p>
+            <button class="clear_button" onclick="uncheckAll()" > Clear Filter </button>
+            <p id="filter_title"> PET TYPE </p>
             {% for t in pet_type %}
               <p>
                 <label><input type="checkbox" />
@@ -34,31 +112,11 @@
             {% endfor %}
         </div>
         <div>
-        <p>FOOD TYPE</p>
+        <p id="filter_title">FOOD TYPE</p>
         <p><label><input type="checkbox"/>Meal </label><p>
         <p><label><input type="checkbox"/>Snack </label><p>
+        <button class="go_button" > GO </button>
         </div>
     </div>
-
-    <!-- Search Result-->
-    <div>
-        <!-- Search User -->
-        <div>
-            {% for u in user %}
-                {% if search_term in u.user_name %}
-                    <p>{{ u.user_name }}</p>
-                {% endif %}
-            {% endfor %}
-        </div>
-        <!-- Search Post -->
-        <div>
-            {% for r in recipes %}
-                {% if (search_term in r.Recipe.ingredient or search_term in r.Recipe.instruction or search_term in r.Recipe.title ) %}
-                    <p>{{ r.Recipe.title }}</p>
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-    <script>
 </body>
 </html>
