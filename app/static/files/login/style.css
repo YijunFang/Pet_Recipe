@@ -49,7 +49,7 @@
 /* Reset End */
 
 body {
-	background: #6EC1F8 url("bg.png") repeat;
+	background: #6EC1F8 /*url("bg.png") repeat*/;
 	position: relative;
 	font-family: 'Oswald', sans-serif;
 }
