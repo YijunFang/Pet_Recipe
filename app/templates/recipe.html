@@ -54,7 +54,11 @@
                     <!-- recipe post left column (recipe image)-->
                     <div class="recipe_column_left">
                         <div id = "default_inner">
+                        {% if img is not none %}
                         <img src= {{ img }} id="recipe_img"/>
+                        {% else %}
+                        <img src="../static/images/noimage.jpg" id="recipe_img"/>
+                        {% endif %}
                         </div>
                     </div> 
 
@@ -65,10 +69,10 @@
                         <p class="heading_3">Suitable For {{ pettype }}</p><br>
 
                         <p class="heading_3">Ingredients</p><br>
-                        <p class="paragraph">{{ ingredient }}</p>
+                        <p class="paragraph">{{ ingredient.replace('\n','<br />')|safe }}</p>
 
                         <br><p class="heading_3">Instructions</p><br>
-                        <p class="paragraph">{{ instruction }}</p>
+                        <p class="paragraph">{{ instruction.replace('\n','<br />')|safe }}</p>
                         <br>
                       </div>
                     </div>
