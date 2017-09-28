@@ -19,14 +19,15 @@
     <!-- Home Direct -->
     <div id="tag" class="">
 
-        <p><a href="/"> Home </a> > Search</p>
+        <p class="heading_5"><a href="/"> Home </a> > Search</p>
     </div>
 
     <div id="search_title" class="">
-        <p>Search Result of {{ search_term }}</p>
+        <p class="heading_1">{{ recipes|count }} result(s) found for "{{ search_term }}"</p>
     </div>
  <!-- Search Result-->
     <div id="result_post" class="">
+
         <!-- Search User -->
 
             {% for u in user %}
@@ -40,7 +41,7 @@
         <!-- Search Post -->
         
             {% for r in recipes %}
-                {% if (search_term in r.Recipe.ingredient or search_term in r.Recipe.instruction or search_term in r.Recipe.title ) %}
+               
                 <div id="u14" class="">
                     <div id="u22" class="ax_default box_2">
                     <!-- Post Background -->
@@ -92,9 +93,11 @@
                     <div class="clear"></div>  
                     </div> 
                 </div>
-                {% endif %}
+              
             {% endfor %}
     </div>
+
+
 
     <!-- Filter Bar-->
     <div id="filter" class="">
@@ -105,18 +108,27 @@
             <button class="clear_button" onclick="uncheckAll()" > Clear Filter </button>
             <p id="filter_title"> PET TYPE </p>
             {% for t in pet_type %}
-              <p>
-                <label><input type="checkbox" />
+              <p class="heading_4">
+                <label><input class="checkbox" type="checkbox" />
                 {{ t.type  }}</label>
             </p>
             {% endfor %}
         </div>
         <div>
         <p id="filter_title">FOOD TYPE</p>
-        <p><label><input type="checkbox"/>Meal </label><p>
-        <p><label><input type="checkbox"/>Snack </label><p>
+        <p class="heading_4"><label><input type="checkbox"/>Meal </label><p>
+        <p class="heading_4"><label><input type="checkbox"/>Snack </label><p>
         <button class="go_button" > GO </button>
         </div>
     </div>
+
+    <script>
+    function uncheckAll(){
+        checks = document.getElementsByClassName("checkbox");
+        for(var i=0; i<checks.length; i++) {
+            checks[i].checked = false;
+        }
+    }
+    </script>
 </body>
 </html>
