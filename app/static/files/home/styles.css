@@ -245,3 +245,28 @@ input[name="search_term"]:focus {
 #default_inner{
   margin: 30px;
 }
+
+.mySlides{
+  position: absolute;
+  width:100%;
+  height:65%;
+  overflow: hidden;
+}
+
+.slideimg{
+  width:100%;
+  height:100%;
+
+}
+
+.homegrey{
+  background-color:rgba(65, 65, 65, 1);
+  width:100%;
+  height:15%;
+}
+
+.slideshow{
+  overflow: hidden;
+  height: 65%;
+}
+

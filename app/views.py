@@ -15,9 +15,11 @@ def index():
 	recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
 							 filter(Recipe.user_id==User.id).all()
 
-	return render_template("home.html",recipes=recipes)  
+	#return render_template("home_alt.html",recipes=recipes) # uncomment for old version
+	                                                         # we may reuse this for logged
+	                                                         # in users' feed
+	return render_template("home_alt.html",recipes=recipes)  
 
-@app.route('/search',methods=['POST'])
 def search_view():
 	search_term = request.form['search_term']
 	search_filter = request.form['search_filter']

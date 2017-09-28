@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="/viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+
+    {% include 'header.html' %}
+    
+    <div class="slideshow">
+    {% for r in recipes %}
+        {% if r.Recipe.imagepath is not none %}
+        <div class="mySlides">
+            <div class="recipe_column_left" >
+            <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}"><img src="{{ r.Recipe.imagepath }}" width="100%"/></a>
+
+            </div>
+            <div class="recipe_column_right">
+                <div id = "default_inner">
+                                   <p> <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_1" >{{ r.Recipe.title }}</a></p>
+
+                    <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
+
+                    <p class="heading_3">Ingredients</p><br>
+
+                    <p class="paragraph">{{ r.Recipe.ingredient.replace('\n','<br />')|safe }}</p>
+
+
+                    <br><p class="heading_3">Instructions</p><br>
+
+                    <p class="paragraph">{{ r.Recipe.instruction.replace('\n','<br />')|safe }}</p>
+
+                    <br>
+                </div>
+            </div>
+            <div class="clear"></div>  
+        </div>
+        {% endif %}
+    {% endfor %}   
+    <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+    <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+    </div>
+    <div class="homegrey">
+        <br>
+        <p class="heading_0">Today's Recommended Recipes</p><br>
+    </div> 
+    </body>
+</html>
+
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+    showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    if (n > x.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = x.length} ;
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    x[slideIndex-1].style.display = "block";
+}
+</script>
