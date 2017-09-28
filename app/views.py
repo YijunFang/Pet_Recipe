@@ -20,6 +20,7 @@ def index():
 	                                                         # in users' feed
 	return render_template("home_alt.html",recipes=recipes)  
 
+@app.route('/search',methods=['POST'])
 def search_view():
 	search_term = request.form['search_term']
 	search_filter = request.form['search_filter']
