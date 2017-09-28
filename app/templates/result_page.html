@@ -99,6 +99,9 @@
 
     <!-- Filter Bar-->
     <div id="filter" class="">
+        <form method="POST" action ="/search">
+        <input type="hidden" name="search_filter" value="{{ search_filter }}">
+        <input type="hidden" name="search_term" value="{{ search_term }}">
         <div id="filter_top" class="">
             <p>Filter By</p>
         </div>
@@ -107,7 +110,7 @@
             <p id="filter_title"> PET TYPE </p>
             {% for t in pet_type %}
               <p class="heading_4">
-                <label><input class="checkbox" type="checkbox" />
+                <label><input class="checkbox" type="checkbox" name="pet_filter" value="{{ t.type  }}" />
                 {{ t.type  }}</label>
             </p>
             {% endfor %}
@@ -118,6 +121,7 @@
         <p class="heading_4"><label><input type="checkbox"/>Snack </label><p>
         <button class="go_button" > GO </button>
         </div>
+        </form>
     </div>
 
     <script>

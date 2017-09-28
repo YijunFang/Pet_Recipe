@@ -21,24 +21,30 @@ def index():
 def search_view():
 	search_term = request.form['search_term']
 	search_filter = request.form['search_filter']
+	pet_type = Pet_type.query.all()
 
 	user = []
 	recipes = []
 
-	pet_type = Pet_type.query.all()
+	#search users
 	if search_filter=='Users' or search_filter=='Everything':
 		user = db_session.query(User).filter(User.user_name.contains(search_term)).all()
-
-	if search_filter=='Recipes' or search_filter=='Everything':
 	#search for search_term in recipe title,instruction & ingredients
+	if search_filter=='Recipes' or search_filter=='Everything':
 		recipes = db_session.query(Recipe,Pet_type,User).\
 							 filter(Recipe.type==Pet_type.id). \
 							 filter(Recipe.user_id==User.id). \
 							 filter(or_(Recipe.title.contains(search_term), \
 							 	        Recipe.ingredient.contains(search_term), \
 							 	        Recipe.instruction.contains(search_term))).all()
-	
-	return render_template("result_page.html",search_term=search_term, pet_type=pet_type, recipes=recipes, user = user) 
+	#search based on pet filter
+	# reference for querying db based on list of checkbox values
+	# https://stackoverflow.com/questions/41741224/multiple-checkbox-sqlalchemy-delete
+	selected_pets = request.form.getlist('pet_filter')
+	print(selected_pets)	
+
+	return render_template("result_page.html",search_term=search_term, search_filter=search_filter, \
+		                    pet_type=pet_type, recipes=recipes, user = user, ) 
 
 @app.route('/profile')
 def profile_view():    
