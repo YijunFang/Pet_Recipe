@@ -23,23 +23,21 @@
     </div>
 
     <div id="search_title" class="">
-        <p class="heading_1">{{ recipes|count }} result(s) found for "{{ search_term }}"</p>
+        <p class="heading_1">{{ recipes|count + user|count}} result(s) found for "{{ search_term }}"</p>
     </div>
  <!-- Search Result-->
     <div id="result_post" class="">
 
         <!-- Search User -->
-
             {% for u in user %}
-                {% if search_term in u.user_name %}
                 <div id="u14" class="">
                     <img id="avatar" class="img " src="../static/images/home/post_u18.png"/> 
                     <p id="user_text" class="text">{{ u.user_name }}</p>
                 </div>
-                {% endif %}
             {% endfor %}
         <!-- Search Post -->
-        
+            
+
             {% for r in recipes %}
                
                 <div id="u14" class="">

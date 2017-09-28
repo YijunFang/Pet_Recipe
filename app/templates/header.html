@@ -12,30 +12,36 @@
         <!-- Title -->
         <div id="u3" class="ax_default heading_1" data-label="Title">
             <!-- LOGO -->
-          
+            <p>
                 <a href="/">
-                <img id="u2" src="../static/images/home/logo_u6.png"/> 
+                <img id="u2" class="img " src="../static/images/home/logo_u6.png"/> 
                 </a>
-                Pet Recipes 
+                Pet Recipes <p>
         </div>
 
         <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Everything
-
-        </button>
+        <button onclick="myFunction()" class="dropbtn">Everything</button>
             <form method="POST" action ="/search">
+                <div id="myDropdown" class="dropdown-content">
+                    <a class="paragraph" onClick="changeActive('Everything')" href="#Everything">Everything</a>
+                    <a class="paragraph" onClick="changeActive('Users')" href="#Users">Users</a>
+                    <a class="paragraph" onClick="changeActive('Recipes')" href="#Recipes">Recipes</a>
+                    <!-- since this isn't a traditonal select element, we need to set what filter
+                         was clicked in thr drop down menu as a hidden input (dynamically set by js)-->
+                    <input type="hidden" id="search_bar_filter" name="search_filter" value="Everything">
+                </div>
                     <input type="text" name="search_term" placeholder="Search.."> 
             </form> 
-            <div id="myDropdown" class="dropdown-content">
-                <a class="paragraph" href="#Everything">Everything</a>
-                <a class="paragraph" href="#User">User</a>
-                <a class="paragraph" href="#Recipes">Recipes</a>
-            </div>
         </div>
 
     </div>
                   
     <script>
+    function changeActive(dropdown_type){
+        document.getElementsByClassName("dropbtn")[0].innerHTML = dropdown_type;
+        document.getElementById("search_bar_filter").value = dropdown_type;
+    }
+
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     function myFunction() {

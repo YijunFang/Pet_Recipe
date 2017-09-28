@@ -20,11 +20,18 @@ def index():
 @app.route('/search',methods=['POST'])
 def search_view():
 	search_term = request.form['search_term']
-	pet_type = Pet_type.query.all()
-	user = db_session.query(User).filter(User.user_name.contains(search_term)).all()
+	search_filter = request.form['search_filter']
 
+	user = []
+	recipes = []
+
+	pet_type = Pet_type.query.all()
+	if search_filter=='Users' or search_filter=='Everything':
+		user = db_session.query(User).filter(User.user_name.contains(search_term)).all()
+
+	if search_filter=='Recipes' or search_filter=='Everything':
 	#search for search_term in recipe title,instruction & ingredients
-	recipes = db_session.query(Recipe,Pet_type,User).\
+		recipes = db_session.query(Recipe,Pet_type,User).\
 							 filter(Recipe.type==Pet_type.id). \
 							 filter(Recipe.user_id==User.id). \
 							 filter(or_(Recipe.title.contains(search_term), \
