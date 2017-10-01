@@ -27,8 +27,8 @@
 
 #u2 {
   position:relative;
-  left: 8%;
-  width: 35%;
+  left: 5%;
+  top: -3px;
   vertical-align: middle;
 }
 
@@ -36,11 +36,13 @@
   display: inline-block;
   position:relative;
   left: 3%;
-  top: 3%;
+  top: 15%;
+  width: 30%;
+  height:100% ;
   font-family:'SignPainter-HouseScript', 'SignPainter HouseScript', 'SignPainter';
   font-weight:400;
   font-style:italic;
-  font-size:36px;
+  font-size:42px;
 }
 
 #u4 {
@@ -105,6 +107,7 @@ input[name="search_term"]:focus {
   text-align: center;
   font-size: 16px;
   cursor: pointer;
+  z-index: 99;
 }
 
 .dropbtn:hover, .dropbtn:focus {
@@ -115,7 +118,8 @@ input[name="search_term"]:focus {
     position: relative;
     float: right;
     right: 30%;
-    top: 25%;
+    top: 35%;
+    z-index: 99;
 }
 
 .dropdown-content {
@@ -129,7 +133,7 @@ input[name="search_term"]:focus {
     background-color:rgba(242, 242, 242, 1);
     text-align: center;
     font-size: 16px;
-    z-index: 1;
+    z-index: 99;
 }
 
 .dropdown-content a {

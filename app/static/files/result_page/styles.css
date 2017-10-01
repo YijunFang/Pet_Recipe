@@ -13,7 +13,7 @@
 #search_title{
   float: left;
   position:relative;
-  left:11%;
+  left:15%;
   top:3%;
   font-size:32px;
   text-align:left;
@@ -24,7 +24,7 @@
 #result_post {
   position:relative;
   left:25%;
-  top:13%;
+  top:11%;
   width:60%;
   height:auto;
   background:inherit;
@@ -89,7 +89,7 @@
   float: left;
   position:absolute;
   left:5%;
-  top: 45%;
+  top: 41%;
   width:15%;
   background:inherit;
   background-color:rgba(242, 242, 242, 1);
