@@ -4,6 +4,12 @@ class User(Base):
 	# this line ccreates class variables
 	# automatically from .db file
     __table__ = Base.metadata.tables['user']
+    def __init__(self
+                 , UserName
+                 , Password
+                 ):
+        self.UserName = UserName
+        self.Password = Password
 
 class Comment(Base):
 	__table__ = Base.metadata.tables['comment']

@@ -37,6 +37,12 @@ print("Total number of rows deleted :", conn.total_changes)
 #INSERT
 conn.execute("INSERT INTO user ('user_name','password','email') \
       VALUES ('jane','pwd','135@gmail.com')");
+conn.execute("INSERT INTO user ('user_name','password','email') \
+      VALUES ('aa','pwd','aa@gmail.com')");
+conn.execute("INSERT INTO user ('user_name','password','email') \
+      VALUES ('bb','pwd','bb@gmail.com')");
+conn.execute("INSERT INTO user ('user_name','password','email') \
+      VALUES ('cc','pwd','cc@gmail.com')");
 conn.commit()
 print("Records created successfully")
 
