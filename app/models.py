@@ -8,9 +8,11 @@ class User(Base):
 	# automatically from .db file
     __table__ = Base.metadata.tables['user']
 
+    """
     id = __table__.c.id
     password = __table__.c.password
     authenticated = __table__.c.authenticated
+    """
 
     def is_active(self):
         """True, as all users are active."""
@@ -22,7 +24,7 @@ class User(Base):
 
     def is_authenticated(self):
         """Return True if the user is authenticated."""
-        return self.authenticated
+        return bool(self.authenticated)
 
 class Anonymous(AnonymousUserMixin):
   def __init__(self):
