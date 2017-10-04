@@ -31,8 +31,8 @@ def index():
 							 filter(Recipe.user_id==User.id).all()
 
 	#return render_template("home_alt.html",recipes=recipes) # uncomment for old version
-	                                                         # we may reuse this for logged
-	                                                         # in users' feed
+															 # we may reuse this for logged
+															 # in users' feed
 	return render_template("home_alt.html",recipes=recipes)
 
 @app.route('/search',methods=['PUT','GET'])
@@ -69,8 +69,8 @@ def search_view():
 								 filter(Recipe.user_id==User.id). \
 								 filter(Pet_type.type.in_(selected_pets)).\
 								 filter(or_(Recipe.title.contains(search_term), \
-								 	        Recipe.ingredient.contains(search_term), \
-								 	        Recipe.instruction.contains(search_term))).all()
+											Recipe.ingredient.contains(search_term), \
+											Recipe.instruction.contains(search_term))).all()
 
 	else:
 		# #search users
@@ -82,9 +82,9 @@ def search_view():
 								 filter(Recipe.type==Pet_type.id). \
 								 filter(Recipe.user_id==User.id). \
 								 filter(or_(Pet_type.type.contains(search_term),\
-								 			Recipe.title.contains(search_term), \
-								 	        Recipe.ingredient.contains(search_term), \
-								 	        Recipe.instruction.contains(search_term))).all()
+											Recipe.title.contains(search_term), \
+											Recipe.ingredient.contains(search_term), \
+											Recipe.instruction.contains(search_term))).all()
 
 	print("search_filter: "+search_filter)
 	print("selected_pets: "),
@@ -101,7 +101,7 @@ def search_view():
 	print(user)
 	print("============")
 	return render_template("result_page.html",search_term=search_term, search_filter=search_filter, \
-		                    pet_type=pet_type, recipes=recipes, user = user, )
+							pet_type=pet_type, recipes=recipes, user = user, )
 
 @app.route('/profile')
 def profile_view():
@@ -116,24 +116,23 @@ def login():
 		password = request.form['password']
 		print('in post after')
 
-		print('Users '+ username)
+		print('User '+ username)
 		print('psd '+ password)
 
-		return render_template('login.html')
+		u = db_session.query(User).filter_by(user_name= username).first()
+		if (u is None) :
+			# signup page
+			return render_template('login_err.html')
 
-		# return Response('login.html')
+		elif u.password == password:
+			return render_template('home.html')
+		else:
+			print('u obj '+ str(u.user_name))
+			print('u pass '+ u.password)
+			return render_template('login_err.html')
 
-		# registeredUser = users_repository.get_user(username)
-		# print('Users '+ str(users_repository.users))
-		# print('Register user %s , password %s' % (registeredUser.username, registeredUser.password))
-		# if registeredUser != None and registeredUser.password == password:
-		#     print('Logged in..')
-		#     login_user(registeredUser)
-		#     return redirect(url_for('home'))
-		# else:
-		#     return abort(401)
 	else:
-		# print('login get')
+		print('login get')
 
 		return render_template('login.html')
 # class User(UserMixin):
