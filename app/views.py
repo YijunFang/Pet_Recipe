@@ -114,10 +114,6 @@ def login():
 
 		username = request.form['username']
 		password = request.form['password']
-		print('in post after')
-
-		print('User '+ username)
-		print('psd '+ password)
 
 		u = db_session.query(User).filter_by(user_name= username).first()
 		if (u is None) :
@@ -127,30 +123,11 @@ def login():
 		elif u.password == password:
 			return render_template('home.html')
 		else:
-			print('u obj '+ str(u.user_name))
-			print('u pass '+ u.password)
+			# print('u obj '+ str(u.user_name))
 			return render_template('login_err.html')
 
 	else:
-		print('login get')
-
 		return render_template('login.html')
-# class User(UserMixin):
-#     pass
-#     # user object        
-#     @login_manager.user_loader
-#     def user_loader(username):
-#         if query_user(username):
-#             user = User()
-#             user.id = username
-#             return user
-#         return None
-
-#     def query_user(username):
-#         user = UserAccounts.query.filter_by(user_name=username).first()
-#         if user:
-#             return True
-#         return False
 
 
 @app.route('/recipe')
