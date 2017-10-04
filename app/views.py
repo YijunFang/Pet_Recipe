@@ -1,5 +1,6 @@
 from __future__ import print_function
 import sys
+import re
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -24,6 +25,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+user_id = None
 
 @app.route('/')
 def index():
@@ -121,6 +123,7 @@ def login():
 			return render_template('login_err.html')
 
 		elif u.password == password:
+			user_id = u.id
 			return render_template('home.html')
 		else:
 			# print('u obj '+ str(u.user_name))
@@ -129,6 +132,37 @@ def login():
 	else:
 		return render_template('login.html')
 
+@app.route('/register', methods = ['GET', 'POST'])
+def register():
+	if request.method == 'POST':
+		print('in post')
+
+		password = request.form['password']
+		c_password = request.form['c_password']
+		c_password = request.form['c_password']
+		email = request.form['email']
+		username = request.form['username']
+		u = db_session.query(User).filter_by(user_name= username).first()
+		if not password or not username or not email or not password == c_password or not bool(re.search(r"^[\w\.\+\-]+\@[\w]+\.[a-z]{2,3}$", email)) :
+			return render_template('register_err.html')
+		elif (u is not None) :
+			return render_template('register_err_u.html')
+		else: 
+			# engine.execute('INSERT INTO "user" ''(user_name,password,email) ''VALUES ("s1","raw1","a@gmail.com")') 
+			meta = MetaData(engine,reflect=True)
+			table = meta.tables['user']
+
+			ins = table.insert().values(user_name=username, password = password, email= email ) 
+			conn = engine.connect() 
+			conn.execute(ins)
+			
+			u = db_session.query(User).filter_by(user_name= username).first()
+			user_id = u.id
+			print ('success')
+			return render_template('home.html')
+
+	else:
+		return render_template('register.html')
 
 @app.route('/recipe')
 def recipe_view():
