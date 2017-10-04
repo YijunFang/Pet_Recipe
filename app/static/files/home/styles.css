@@ -12,6 +12,37 @@
 
 }
 
+#header_text{
+  float: right;
+  position: relative;
+  top: 30%;
+  right: 1%;
+  font-weight:400;
+  color: lightgrey;
+  vertical-align: middle;
+}
+.headerT a:link {
+    color: lightgrey; 
+    background-color: transparent; 
+    text-decoration: none;
+}
+
+.headerT a:visited {
+    color: lightgrey;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.headerT a:hover {
+    color: red;
+    background-color: transparent;
+}
+
+.headerT a:active {
+    color: blue;
+    background-color: transparent;
+}
+
 #u1 {
   position: relative;
   width:100%;
@@ -48,8 +79,8 @@
 #u4 {
   float: right;
   position:relative;
-  right:8%;
-  top:15%;
+  right:110%;
+  top:-5px;
   width:33px;
   height:34px;
 }

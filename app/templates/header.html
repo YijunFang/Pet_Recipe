@@ -1,9 +1,20 @@
     <!-- TOP Black Bar -->
     <div id="u0" class="">
-        <!-- User Icon-->
-        <a href="/login">
-        <img id="u4" class="img " src="../static/images/home/user_u16.png"/>
-        </a>
+        <div id="header_text" class="headerT">
+        <!-- Sign In / Resigter Icon-->
+        <p>
+        {% if current_user.is_authenticated %}
+            <img id="u4" class="img " src="../static/images/home/user_u16.png"/>
+            <a href="/logout">Log Out</a>
+        {% else %}
+            <a href="/register">
+            Sign Up
+            </a>
+             / 
+            <a href="/login"> Login </a>
+        {% endif %}
+        </p>
+        </div>
     </div>
 
     <!-- Search Blue Background -->

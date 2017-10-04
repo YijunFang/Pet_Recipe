@@ -24,8 +24,10 @@ from app.models import *
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
+login_manager.anonymous_user = Anonymous
 
 user_id = None
+current_user = Anonymous
 
 @app.route('/')
 def index():
@@ -109,6 +111,14 @@ def search_view():
 def profile_view():
 	return render_template("profile_test.html")
 
+@login_manager.user_loader
+def user_loader(user_id):
+    """Given *user_id*, return the associated User object.
+
+    :param unicode user_id: user_id (email) user to retrieve
+    """
+    return User.query.get(user_id)
+
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
 	if request.method == 'POST':
@@ -124,6 +134,8 @@ def login():
 
 		elif u.password == password:
 			user_id = u.id
+			login_user(u)
+			current_user = u
 			return render_template('home.html')
 		else:
 			# print('u obj '+ str(u.user_name))
@@ -131,6 +143,14 @@ def login():
 
 	else:
 		return render_template('login.html')
+
+@app.route('/logout', methods = ['GET', 'POST'])
+def logout():
+    """Logout the current user."""
+    user = current_user
+    user.authenticated = False
+    logout_user()
+    return render_template("logout.html")
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
