@@ -31,7 +31,7 @@ current_user = Anonymous
 
 @app.route('/')
 def index():
-	
+
 	recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
 							 filter(Recipe.user_id==User.id).all()
 
@@ -173,9 +173,9 @@ def register():
 			meta = MetaData(engine,reflect=True)
 			table = meta.tables['user']
 
-			ins = table.insert().values(user_name=username, password = password, email= email ) 
+			ins = table.insert().values(user_name=username, password = password, email= email, authenticated=0 ) 
 			conn = engine.connect() 
-			conn.execute(ins, 'utf8')
+			conn.execute(ins)
 			
 			u = db_session.query(User).filter_by(user_name= username).first()
 			user_id = u.id
