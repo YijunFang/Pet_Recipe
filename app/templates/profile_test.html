@@ -17,5 +17,11 @@ user profile
 {{ current_user.id }}
 <br>
 {{ current_user.user_name }}
+
+{% if current_user.profile_pic is not none %}
+<img src="{{ current_user.profile_pic}}" />
+{% else %}
+<img src="static\images\home\post_u18.png">
+{% endif %}
 </body>
 </html>
