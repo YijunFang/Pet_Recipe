@@ -110,6 +110,8 @@ def search_view():
 
 @app.route('/profile')
 def profile_view():
+	print("In profile")
+	print(current_user)
 	return render_template("profile_test.html")
 
 @login_manager.user_loader
@@ -134,6 +136,7 @@ def login():
 			return render_template('login_err.html')
 
 		elif u.password == password:
+			print("login success")
 			user_id = u.id
 			login_user(u)
 			current_user = u
@@ -148,8 +151,9 @@ def login():
 @app.route('/logout', methods = ['GET', 'POST'])
 def logout():
     """Logout the current user."""
-    user = current_user
-    user.authenticated = False
+    # removed these lines because it causes server to fail on mulitple users
+    #user = current_user
+    #user.authenticated = False
     logout_user()
     return render_template("logout.html")
 

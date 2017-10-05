@@ -1,5 +1,21 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>Home</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="/viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+ <body>
+{% include 'header.html' %}
 user profile 
-
+{{ current_user.id }}
+<br>
+{{ current_user.user_name }}
+</body>
 </html>
