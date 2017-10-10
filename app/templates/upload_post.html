@@ -21,27 +21,29 @@
         {% else %}
 
             <!--Upload Post-->
-            <form class="w3-container w3-card-4" action="/action_page.php">
+            <form class="w3-container w3-card-4" action="#" method="post">
                 <h2 class="w3-text-blue">Upload Your Own Post</h2>
             <p>      
                 <label class="w3-text-blue"><b>Title</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="title" type="text"></p>
+                <input class="w3-input w3-border w3-margin-bottom " name="title" type="text"></input></p>
             <p>      
                 <label class="w3-text-blue"><b>Pet Type</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="pet_type" type="text"></p>
+                <input class="w3-input w3-border w3-margin-bottom " name="pet_type" type="text"></input></p>
             <p>      
                 <label class="w3-text-blue"><b>Ingrediant</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="ingrediant" type="text"></p>
+                <input class="w3-input w3-border w3-margin-bottom " name="ingredient" type="text"></input></p>
             <p>      
                 <label class="w3-text-blue"><b>Instruction</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="instruction" type="text"></p>
+                <input class="w3-input w3-border w3-margin-bottom " name="instruction" type="text"></input></p>
             <p>      
                 <label class="w3-text-blue"><b>Image</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="text"></p>    
+                <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="text"></input></p>    
 
             <p>
+                <input type="hidden" name="user" value={{ current_user.id }} ></input>
                 <input type=submit value=Upload class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
                 </input>
+
             </p>
             </form>
         

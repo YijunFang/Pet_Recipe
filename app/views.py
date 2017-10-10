@@ -140,6 +140,7 @@ def login():
 			user_id = u.id
 			login_user(u)
 			current_user = u
+			print (current_user.get_id)
 			return render_template('home.html')
 		else:
 			# print('u obj '+ str(u.user_name))
@@ -178,8 +179,9 @@ def register():
 			table = meta.tables['user']
 
 			ins = table.insert().values(user_name=username, password = password, email= email, authenticated=0 ) 
-			conn = engine.connect() 
+			conn = engine.connect()
 			conn.execute(ins)
+			conn.close()
 			
 			u = db_session.query(User).filter_by(user_name= username).first()
 			user_id = u.id
@@ -208,16 +210,36 @@ def recipe_view():
 		user=user,
 		img=img)
 
-@app.route('/upload_post')
+@app.route('/upload_post', methods = ['GET', 'POST'])
 def upload_post():
-	title = request.form['title']
-	ingdredient = request.form['ingredient']
-	instruction = equest.form['instruction']
-	pet_type = equest.form['pet_type']
-	user_id = current_user
-	post_image = equest.form['pet_image']
+	if request.method == 'POST':
+		print ('in post')
+		title = request.form['title']
+		ingredient = request.form['ingredient']
+		instruction = request.form['instruction']
+		pet_type = request.form['pet_type']
+		img = None #request.form['post_image']
+		user_id= request.form['user']
+		u = db_session.query(User).filter_by(id= user_id).first()
 
-	return render_template('upload_post.html')
+		if( u is not None):
+			#new_post = Recipe(user_id=user_id, ingredient=ingredient, instruction=instruction, type=pet_type, title=title)
+			#db_session.add(new_post)
+			#db_session.commit()
+			meta = MetaData(engine,reflect=True)
+			table = meta.tables['recipe']
+
+			ins = table.insert().values(user_id=user_id, ingredient=ingredient, instruction=instruction, type=pet_type, title=title) 
+			conn = engine.connect()
+			conn.execute(ins)
+			conn.close()
+
+			return render_template('home.html')
+		else:
+			return render_template('upload_post.html')
+
+	else:
+		return render_template('upload_post.html')
 
 if __name__ == '__main__':
 	#print "lol"

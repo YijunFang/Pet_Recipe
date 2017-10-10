@@ -1,7 +1,7 @@
 from app.database import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import MetaData
-from flask.ext.login import AnonymousUserMixin
+from flask_login import AnonymousUserMixin
 
 class User(Base):
 	# this line ccreates class variables
@@ -44,3 +44,5 @@ class Pet_type(Base):
 
 class Recipe(Base):
 	__table__ = Base.metadata.tables['recipe']
+	def __init__(self, *args, **kwargs):
+		super(Recipe, self).__init__(**kwargs)
