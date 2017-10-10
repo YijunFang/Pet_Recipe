@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/files/upload_post/styles.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+
+{% include 'header.html' %}
+
+		{% if not current_user.is_authenticated %}
+            {{ current_user.user_name }}
+            <h1>Please log in to upload your post!</h1>
+        {% else %}
+
+            <!--Upload Post-->
+            <form class="w3-container w3-card-4" action="/action_page.php">
+                <h2 class="w3-text-blue">Upload Your Own Post</h2>
+            <p>      
+                <label class="w3-text-blue"><b>Title</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="title" type="text"></p>
+            <p>      
+                <label class="w3-text-blue"><b>Pet Type</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="pet_type" type="text"></p>
+            <p>      
+                <label class="w3-text-blue"><b>Ingrediant</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="ingrediant" type="text"></p>
+            <p>      
+                <label class="w3-text-blue"><b>Instruction</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="instruction" type="text"></p>
+            <p>      
+                <label class="w3-text-blue"><b>Image</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="text"></p>    
+
+            <p>
+                <input type=submit value=Upload class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
+                </input>
+            </p>
+            </form>
+        
+
+
+
+        {% endif %}
+	</body>
+</html>

@@ -1,0 +1,18 @@
+﻿.theme-color {
+    color:#85d9f0 !important;
+}
+
+.theme-color-background {
+    color:#FFFFFF !important;
+    background-color:#85d9f0!important;
+}
+
+.w3_btn {
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

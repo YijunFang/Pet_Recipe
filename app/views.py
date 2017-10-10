@@ -208,6 +208,17 @@ def recipe_view():
 		user=user,
 		img=img)
 
+@app.route('/upload_post')
+def upload_post():
+	title = request.form['title']
+	ingdredient = request.form['ingredient']
+	instruction = equest.form['instruction']
+	pet_type = equest.form['pet_type']
+	user_id = current_user
+	post_image = equest.form['pet_image']
+
+	return render_template('upload_post.html')
+
 if __name__ == '__main__':
 	#print "lol"
 	app.run(debug=True, host='127.0.0.1')
