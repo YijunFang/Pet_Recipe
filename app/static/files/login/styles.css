@@ -21,6 +21,7 @@
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+	font-family: 'Oswald', sans-serif;
     }
     /* HTML5 display-role reset for older browsers */
     article, aside, details, figcaption, figure,
@@ -51,22 +52,27 @@
 body {
 	background: #6EC1F8  repeat;
 	position: relative;
-	font-family: 'Oswald', sans-serif;
 }
 
 .container {
-	margin: auto;  
+	margin: 8vw;  
 	padding: 8vw 0;
 }
 
 #loginform {	
 	background-color: #f7f7f7;
 	display: block;
-	height: 190px;
+	height: 200px;
 	margin: 0 auto;	
 	outline: solid 10px rgba(0,0,0,0.10);
-	width: 190px;
+	width: 200px;
 	padding: 30px;
+}
+
+#msg{
+	color:red;
+	position: relative;
+    top: -30px;
 }
 
 .login-username:before { 
@@ -74,8 +80,9 @@ body {
 	color: #4c4c4c;	
 	font-size: 20px;
 	text-transform: uppercase;
-	margin: 0;
+	margin: 35%;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+	font-family: 'Oswald', sans-serif;
 } 
  
  .login-username label, .login-password label {

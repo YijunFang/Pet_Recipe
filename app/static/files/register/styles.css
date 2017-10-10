@@ -55,7 +55,7 @@ body {
 }
 
 .container {
-	margin: auto;  
+	margin: 6vw;  
 	padding: 8vw 0;
 }
 
@@ -65,16 +65,22 @@ body {
 	height: 100%;
 	margin: 0 auto;	
 	outline: solid 10px rgba(0,0,0,0.10);
-	width: 190px;
+	width: 230px;
 	padding: 30px;
 }
 
+#msg{
+	color:red;
+	position: relative;
+    top: -30px;
+}
+
 .register-username:before { 
-	content: "Log In";
+	content: "Sign In";
 	color: #4c4c4c;	
 	font-size: 20px;
 	text-transform: uppercase;
-	margin: 0;
+	margin: 35%;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 } 
  
