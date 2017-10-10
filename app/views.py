@@ -9,7 +9,7 @@ from flask import Flask, render_template, request,redirect
 # from Pet_Recipe.LoginForm import LoginForm
 # from main import app
 from .forms import LoginForm
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user 
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
 from sqlalchemy import or_
 app = Flask(__name__)
@@ -27,7 +27,7 @@ login_manager.login_view = "login"
 login_manager.anonymous_user = Anonymous
 
 user_id = None
-current_user = Anonymous
+
 
 @app.route('/')
 def index():
@@ -111,7 +111,7 @@ def search_view():
 @app.route('/profile')
 def profile_view():
 	print("In profile")
-	print(current_user)
+	print(current_user.id)
 	return render_template("profile_test.html")
 
 @login_manager.user_loader
@@ -139,7 +139,6 @@ def login():
 			print("login success")
 			user_id = u.id
 			login_user(u)
-			current_user = u
 			print (current_user.get_id)
 			return render_template('home.html')
 		else:
