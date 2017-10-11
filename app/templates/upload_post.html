@@ -25,16 +25,30 @@
                 <h2 class="w3-text-blue">Upload Your Own Post</h2>
             <p>      
                 <label class="w3-text-blue"><b>Title</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="title" type="text"></input></p>
+                <input class="w3-input w3-border w3-margin-bottom " name="title" type="text" required></input></p>
             <p>      
                 <label class="w3-text-blue"><b>Pet Type</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="pet_type" type="text"></input></p>
+                  <div class="w3-dropdown-hover w3-margin-top w3-margin-bottom">
+                  <button class="w3-button theme-color-background">Please Choose A Pet Type!</button>
+                      
+                      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                            {% for p in pet_type %}
+                            <a href="#" class="w3-bar-item w3-button">{{ p.type }}</a>
+                            {% endfor %}
+                      </div>
+                      
+                </div>
+
+                <!--<input class="w3-input w3-border w3-margin-bottom " name="pet_type" type="text"></input></p>-->
+            
+
+
             <p>      
                 <label class="w3-text-blue"><b>Ingrediant</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="ingredient" type="text"></input></p>
+                <input class="w3-input w3-border w3-margin-bottom " name="ingredient" type="text" required></input></p>
             <p>      
                 <label class="w3-text-blue"><b>Instruction</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="instruction" type="text"></input></p>
+                <input class="w3-input w3-border w3-margin-bottom " name="instruction" type="text" required></input></p>
             <p>      
                 <label class="w3-text-blue"><b>Image</b></label>
                 <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="file" accept=".jpg, .jpeg, .png, .gif" ></input></p>    

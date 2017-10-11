@@ -226,6 +226,7 @@ def allowed_file(filename):
 def upload_post():
 	UPLOAD_FOLDER = 'app/static/images/recipe_image'
 	app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+	input_pet_type = Pet_type.query.all()
 	if request.method == 'POST':
 		print ('in post')
 		title = request.form['title']
@@ -244,7 +245,7 @@ def upload_post():
 			print ('file upload successfully!')
 			img_path = '../static/images/recipe_image/' + filename
 			print (img_path)
-			
+
 		if( u is not None):
 			meta = MetaData(engine,reflect=True)
 			table = meta.tables['recipe']
@@ -256,12 +257,12 @@ def upload_post():
 			conn.execute(ins)
 			conn.close()
 
-			return render_template('home.html')
+			return render_template('home.html', pet_type = input_pet_type)
 		else:
-			return render_template('upload_post.html')
+			return render_template('upload_post.html', pet_type = input_pet_type)
 
 	else:
-		return render_template('upload_post.html')
+		return render_template('upload_post.html', pet_type = input_pet_type)
 
 if __name__ == '__main__':
 	#print "lol"
