@@ -242,8 +242,9 @@ def upload_post():
 			filename = secure_filename(img.filename)
 			img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			print ('file upload successfully!')
-			img_path = UPLOAD_FOLDER + "/" + filename
-
+			img_path = '../static/images/recipe_image/' + filename
+			print (img_path)
+			
 		if( u is not None):
 			meta = MetaData(engine,reflect=True)
 			table = meta.tables['recipe']
