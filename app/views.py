@@ -36,11 +36,11 @@ user_id = None
 
 @app.route('/')
 def index():
-	#show logged in version of homepage
+	#show logged in version of homepage with favorites
 	if current_user.is_authenticated:
 		recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
 								 filter(Recipe.user_id==User.id).all()
-		return render_template("home.html",recipes=recipes)
+		return redirect('/fave')
 
 	#show guest version of homepage
 	else:
@@ -223,6 +223,18 @@ def register():
 
 	else:
 		return render_template('register.html')
+
+
+@app.route('/fave')
+def fave():
+	#handle event where user adds a new recipe to faves
+	recipetofave = request.args.get('recipetofave')	 #id of recipe to fave
+	if recipetofave is not None:
+		print(recipetofave)
+
+	#put list of faves in recipes variable to be rendered by jinja
+	recipes = []
+	return render_template('home.html',recipes=recipes)
 
 @app.route('/recipe')
 def recipe_view():

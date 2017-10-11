@@ -34,7 +34,7 @@
                                            <!-- Post Background -->
                     <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
                         <div id="u21" class="text" style="visibility: visible;">
-                            <p><span> <a href="{{url_for('profile_view',userid=userid.id)}}">{{ user }}</a></span></p>
+                            <p><span> <a href="{{url_for('profile_view',userid=userid)}}">{{ user }}</a></span></p>
                         </div>
                         <p><span>Today 9:13 am</span></p>
                     </div>
@@ -65,6 +65,9 @@
                     <!-- recipe post right column -->
                     <div class="recipe_column_right">
                         <div id = "default_inner">
+
+                        <p class="heading_3"><a href="{{url_for('fave',recipetofave=recipeid)}}">Fave This Recipe</a></p>  
+                        <br>
                         
                         <p class="heading_3">Suitable For {{ pettype }}</p><br>
 

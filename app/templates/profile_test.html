@@ -68,14 +68,12 @@
                 {% endif %}
                 </div>
 
-                <div clas="profile_column_right">
+                <div class="profile_column_right">
                     <div id = "default_inner" >
                         <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id) }}" class="heading_2" >{{ r.Recipe.title }}</a><br><br />
                     </div>
                 </div>
-
                 <div class="clear"></div> 
-
             </div>
             {% endfor %}
 
