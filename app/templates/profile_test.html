@@ -8,20 +8,31 @@
         <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
         <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
         <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
-        <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
     </head>
  <body>
-{% include 'header.html' %}
-user profile 
-{{ current_user.id }}
-<br>
-{{ current_user.user_name }}
+ {% include 'header.html' %}
+ <div id="u12" class="">
+ <div id="u14" class="">
+ 
+        <div class="recipe_column_left">
+            {% if current_user.profile_pic is not none %}
+            <img src="{{ current_user.profile_pic}}" id="recipe_img"/>
+            {% else %}
+            <img src="static\images\home\post_u18.png" id="recipe_img"/>
+            {% endif %}
+        </div>
+        <div class="recipe_column_right">
+            user profile 
+            {{ current_user.id }}
+            <br>
+            {{ current_user.user_name }}
+        </div>
+        <div class="clear"></div> 
+ 
+</div>
+</div>
 
-{% if current_user.profile_pic is not none %}
-<img src="{{ current_user.profile_pic}}" />
-{% else %}
-<img src="static\images\home\post_u18.png">
-{% endif %}
+
 </body>
 </html>

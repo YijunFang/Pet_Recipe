@@ -11,10 +11,10 @@
   width:60%;
   height:auto;
   background:inherit;
-  background-color:rgba(28, 193, 196, 1);
+  background-color:rgba(242, 242, 242, 1);
   box-sizing:border-box;
   border-width:1px;
-  border-style:solid;
+  /*border-style:solid;*/
   border-color:rgba(121, 121, 121, 1);
   border-radius:0px;
   -moz-box-shadow:none;
