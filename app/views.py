@@ -226,6 +226,7 @@ def register():
 
 
 @app.route('/fave')
+@login_required
 def fave():
 	#handle event where user adds a new recipe to faves
 	recipetofave = request.args.get('recipetofave')	 #id of recipe to fave

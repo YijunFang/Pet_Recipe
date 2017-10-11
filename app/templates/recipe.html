@@ -65,9 +65,10 @@
                     <!-- recipe post right column -->
                     <div class="recipe_column_right">
                         <div id = "default_inner">
-
+                        {% if current_user.is_authenticated %}
                         <p class="heading_3"><a href="{{url_for('fave',recipetofave=recipeid)}}">Fave This Recipe</a></p>  
                         <br>
+                        {% endif %}
                         
                         <p class="heading_3">Suitable For {{ pettype }}</p><br>
 
