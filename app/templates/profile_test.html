@@ -14,18 +14,23 @@
     </head>
  <body>
  {% include 'header.html' %}
+
+
  <div id="u12" class="">
  <div id="u14" class="">
+
+<div id="container2">
+ <div id="container1">
  
-        <div class="profile_column_left">
-            {% if current_user.profile_pic is not none %}
-            <img src="{{ current_user.profile_pic}}" id="recipe_img"/>
+        <div id="col1">
+            {% if profile[0].User.profile_pic is not none %}
+            <img src="{{ profile[0].User.profile_pic}}" id="recipe_img"/>
             {% else %}
             <img src="static\images\home\post_u18.png" id="recipe_img"/>
             {% endif %}
             <div id = "default_inner" >
-            <p class="title_large">{{ current_user.user_name }}</p>
-            <p class="paragraph">{{ current_user.email }}</p>
+            <p class="title_large">{{ profile[0].User.user_name }}</p>
+            <p class="paragraph">{{ profile[0].User.email }}</p>
             <br>
             <p class="heading_3">Pets Owned</p>
             <ul>
@@ -33,17 +38,27 @@
             <li><p class="paragraph">{{ p.Pet.NAME }}   ({{p.Pet_type.type}})</p></li>
             {% endfor %}
             </ul>
-            <br>
-            <form class="w3-container w3-card-4" action="/modifyprofile" method="post">
-            <input type=submit value="Update Profile" class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
-            </form>
+            {% if current_user.id == uid %}
+            <a href="/update_profile" style="color: #169BD5"><p class="heading_3">Update Profile</p></a>
+            {% else %}
+            <a href="/follow" style="color: #169BD5"><p class="heading_3">Follow User</p></a>
+            {% endif %}
             </div>
 
         </div>
-        <div class="profile_column_right">
-
+        <div id="col2">
+            {% for r in recipes %}
+            <div id = "default_inner" >
+                <p class="heading_3">{{r.Recipe.title}}</p>
+                <img src="{{r.Recipe.imagepath}}" id="recipe_img"/>
+            </div>
+            {% endfor %}
+           
         </div>
         <div class="clear"></div> 
+</div>
+</div>
+
 </div>
 </div>
 

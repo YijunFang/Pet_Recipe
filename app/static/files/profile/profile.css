@@ -3,6 +3,7 @@
   width:30%;
   background-color:rgba(65, 65, 65, 1);
   color: white;
+  height:100%;
 }
 
 .profile_column_right{
@@ -19,4 +20,34 @@
 
 .clear{
   clear:both;
+}
+
+#container2 {
+	clear:left;
+	float:left;
+	width:100%;
+	overflow:hidden;
+	background:#ffffff; /* column 2 background colour */
+}
+#container1 {
+	float:left;
+	width:100%;
+	position:relative;
+	right:70%;
+	background-color:rgba(65, 65, 65, 1); /* column 1 background colour */
+}
+#col1 {
+	float:left;
+	width:30%;
+	position:relative;
+	left:70%;
+	overflow:hidden;
+	color:white;
+}
+#col2 {
+	float:left;
+	width:70%;
+	position:relative;
+	left:70%;
+	overflow:hidden;
 }
