@@ -9,30 +9,43 @@
         <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
         <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
         <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/files/profile/profile.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     </head>
  <body>
  {% include 'header.html' %}
  <div id="u12" class="">
  <div id="u14" class="">
  
-        <div class="recipe_column_left">
+        <div class="profile_column_left">
             {% if current_user.profile_pic is not none %}
             <img src="{{ current_user.profile_pic}}" id="recipe_img"/>
             {% else %}
             <img src="static\images\home\post_u18.png" id="recipe_img"/>
             {% endif %}
-        </div>
-        <div class="recipe_column_right">
-            user profile 
-            {{ current_user.id }}
+            <div id = "default_inner" >
+            <p class="title_large">{{ current_user.user_name }}</p>
+            <p class="paragraph">{{ current_user.email }}</p>
             <br>
-            {{ current_user.user_name }}
+            <p class="heading_3">Pets Owned</p>
+            <ul>
+            {% for p in profile %}
+            <li><p class="paragraph">{{ p.Pet.NAME }}   ({{p.Pet_type.type}})</p></li>
+            {% endfor %}
+            </ul>
+            <br>
+            <form class="w3-container w3-card-4" action="/modifyprofile" method="post">
+            <input type=submit value="Update Profile" class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
+            </form>
+            </div>
+
+        </div>
+        <div class="profile_column_right">
+
         </div>
         <div class="clear"></div> 
- 
 </div>
 </div>
-
 
 </body>
 </html>

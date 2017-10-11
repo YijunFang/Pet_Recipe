@@ -112,7 +112,11 @@ def search_view():
 def profile_view():
 	print("In profile")
 	print(current_user.id)
-	return render_template("profile_test.html")
+	profile = db_session.query(User,Pet,Pet_type). \
+					filter(Pet.type==Pet_type.id). \
+			  		filter(User.id==Pet.owner). \
+			  		filter(Pet.owner==current_user.id).all()
+	return render_template("profile_test.html",profile=profile)
 
 @login_manager.user_loader
 def user_loader(user_id):
