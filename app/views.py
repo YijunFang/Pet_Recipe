@@ -128,17 +128,19 @@ def profile_view():
 	print(current_user.id)
 	print(userid)
 	
-	profile = db_session.query(User,Pet,Pet_type). \
+	profile = db_session.query(User).filter(User.id==userid).all()
+
+	pets = db_session.query(Pet,Pet_type). \
 					filter(Pet.type==Pet_type.id). \
-			  		filter(User.id==Pet.owner). \
 			  		filter(Pet.owner==userid).all()
+
 	recipes = []
 	recipes = db_session.query(Recipe,Pet_type). \
 					filter(Recipe.user_id==userid).	\
 					filter(Recipe.type==Pet_type.id). \
 					all()
-	print(recipes)
-	return render_template("profile_test.html",profile=profile,uid=userid,recipes=recipes)
+	print(profile)
+	return render_template("profile_test.html",profile=profile,recipes=recipes,pets=pets)
 
 @login_manager.user_loader
 def user_loader(user_id):

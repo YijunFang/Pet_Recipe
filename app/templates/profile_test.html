@@ -23,20 +23,23 @@
  <div id="container1">
  
         <div id="col1">
-            {% if profile[0].User.profile_pic is not none %}
-            <img src="{{ profile[0].User.profile_pic}}" id="recipe_img"/>
+            {% if profile[0].profile_pic is not none %}
+            <img src="{{ profile[0].profile_pic}}" id="recipe_img"/>
             {% else %}
             <img src="static\images\home\post_u18.png" id="recipe_img"/>
             {% endif %}
             <div id = "default_inner" >
-            <p class="title_large">{{ profile[0].User.user_name }}</p>
-            <p class="paragraph">{{ profile[0].User.email }}</p>
+            <p class="title_large">{{ profile[0].user_name }}</p>
+            <p class="paragraph">{{ profile[0].email }}</p>
             <br>
             <p class="heading_3">Pets Owned</p>
             <ul>
-            {% for p in profile %}
+            {% for p in pets %}
             <li><p class="paragraph">{{ p.Pet.NAME }}   ({{p.Pet_type.type}})</p></li>
             {% endfor %}
+            {% if pets|count == 0 %}
+                <li>None</li>
+            {% endif %}
             </ul>
             {% if current_user.id == uid %}
             <a href="/update_profile" style="color: #169BD5"><p class="heading_3">Update Profile</p></a>
