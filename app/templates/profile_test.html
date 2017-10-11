@@ -50,9 +50,15 @@
 
         </div>
         <div id="col2">
+            {% if current_user.id == profile[0].id %}
+            <div id = "default_inner" >
+            <a href="/upload_post" style="color: #169BD5"><p class="heading_2" style="text-align:right">Upload Post</p></a>
+            </div>
+            {% endif %}
+
             {% for r in recipes %}
             <div id = "default_inner" >
-                <p class="heading_3">{{r.Recipe.title}}</p>
+                <p class="heading_2">{{r.Recipe.title}}</p>
                 {% if r.Recipe.imagepath is not none %}
                 <img src="{{r.Recipe.imagepath}}" id="recipe_img"/>
                 {% else %}
@@ -60,6 +66,12 @@
                 {% endif %}
             </div>
             {% endfor %}
+
+            {% if recipes|count == 0 %}
+            <div id = "default_inner" >
+                 <p class="heading_2">This user has no recipes yet</p>
+            </div>
+            {% endif %}
            
         </div>
         <div class="clear"></div> 

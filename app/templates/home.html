@@ -1,91 +1,76 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <title>Home</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-        <meta name="/viewport" content="width=device-width, initial-scale=1.0"/>
-        <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
-        <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
-        <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
-        <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
-    </head>
-    <body>
+<head>
+    <title>Home</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="/viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/result_page/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
 
-{% include 'header.html' %}
+    {% include 'header.html' %}
 
-        <!-- back (Rectangle) -->
-        <div id="u12" class="">
+    <div id="u12" class="">
+        <p class="heading_1">Your Feed</p>
+    </div>
 
-            <!-- start recipe box here with u14-->
-            <!-- Recipes Post -->
-            {% for r in recipes %}
-                <div id="u14" class="">
+    <!-- back (Rectangle) -->
+    <div id="u12" class="">
 
-                    <!-- PosterName
-                    <div id="u21" class="text" style="visibility: visible;">
-                        <p>                   Post Background
-                    <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
-                    <span>User01234</span></p>
-                    </div>-->
+        <!-- start recipe box here with u14-->
+        <!-- Recipes Post -->
+        {% for r in recipes %}
+        <div id="u14" class="">
 
-                    <!-- Post Time -->
-                    <div id="u22" class="ax_default box_2">
-                    <!-- Post Background -->
-                    <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
-                        <div id="u21" class="text" style="visibility: visible;">
-                            <p><span> {{ r.User.user_name }} </span></p>
-                        </div>
-                    </div>
+            <!-- Recipe Post Content -->
+            <div id="u24" class="ax_default box_2">
 
-                    <!-- title -->
-                    <div id = "default_inner" style="text-align:center" >
-                    <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
-				instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_1" >{{ r.Recipe.title }}</a><br>
-                    </div>
-
-                    <!-- horizontal line-->
-                    <center><img src="..\static\images\result_page\u94.png" width="96%"/></center>
+                <!-- recipe post left column (recipe image)-->
+                <div class="recipe_column_left">
 
 
-                    <!-- Recipe Post Content -->
-                    <div id="u24" class="ax_default box_2">
+                    {% if r.Recipe.imagepath is not none %}
+                    <img src="{{ r.Recipe.imagepath }}" id="recipe_img"/>
+                    {% else %}
+                    <img src="../static/images/noimage.jpg" id="recipe_img"/>
+                    {% endif %}
 
-                    <!-- recipe post left column (recipe image)-->
-                    <div class="recipe_column_left">
-                        <div id = "default_inner">
-                        {% if r.Recipe.imagepath is not none %}
-                        <img src="{{ r.Recipe.imagepath }}" id="recipe_img"/>
-                        {% else %}
-                        <img src="../static/images/noimage.jpg" id="recipe_img"/>
-                        {% endif %}
-                        </div>
-                    </div> 
+                </div> 
 
-                    <!-- recipe post right column -->
-                    <div class="recipe_column_right">
-                        <div id = "default_inner">
+                <!-- recipe post right column -->
+
+                <div class="recipe_column_right">
+
+                    <div id = "default_inner">
+                        <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                        instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >{{ r.Recipe.title }}</a><br><br />
                         <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
                         
                         <p class="heading_3">Ingredients</p><br>
                         
                         <p class="paragraph">{{ r.Recipe.ingredient.replace('\n','<br />')|safe }}</p>
 
-
-                        <br><p class="heading_3">Instructions</p><br>
-
-                        <p class="paragraph">{{ r.Recipe.instruction.replace('\n','<br />')|safe }}</p>
-
-                        <br>
-                      </div>
-                    </div>
-                    <div class="clear"></div>  
-                    </div>  
-
+                        <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                        instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >
+                        <br><p class="heading_3">Read more...</p>
+                    </a>
                 </div>
-            {% endfor %}
+            </div>
+            
 
-        </div>
-      
-    </body>
+            <div class="clear"></div>  
+        </div> 
+
+    </div>
+    {% endfor %}
+
+</div>
+
+</body>
 </html>

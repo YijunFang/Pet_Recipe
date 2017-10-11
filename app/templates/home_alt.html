@@ -19,32 +19,38 @@
     {% for r in recipes %}
         {% if r.Recipe.imagepath is not none %}
         <div class="mySlides">
+
             <div class="recipe_column_left" >
             <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
                 instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}"><img src="{{ r.Recipe.imagepath }}" width="100%"/></a>
 
             </div>
-            <div class="recipe_column_right">
+            <div class="recipe_column_right" style="color:white;">
                 <div id = "default_inner">
                                    <p> <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
                 instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_1" >{{ r.Recipe.title }}</a></p>
 
                     <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
 
+                    
+
                     <p class="heading_3">Ingredients</p><br>
 
                     <p class="paragraph">{{ r.Recipe.ingredient.replace('\n','<br />')|safe }}</p>
-
-
+                    
+                    <!--
                     <br><p class="heading_3">Instructions</p><br>
 
                     <p class="paragraph">{{ r.Recipe.instruction.replace('\n','<br />')|safe }}</p>
+                    -->
+
 
                     <br>
                 </div>
             </div>
             <div class="clear"></div>  
         </div>
+
         {% endif %}
     {% endfor %}   
     <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>

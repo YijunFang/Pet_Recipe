@@ -29,6 +29,9 @@ class User(Base):
 class Anonymous(AnonymousUserMixin):
   def __init__(self):
     self.username = 'Guest'
+    def is_authenticated(self):
+        """Return True if the user is authenticated."""
+        return False
 
 class Comment(Base):
 	__table__ = Base.metadata.tables['comment']

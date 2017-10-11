@@ -1,22 +1,22 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <title>Result</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-        <meta name="/viewport" content="width=device-width, initial-scale=1.0"/>
-        <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
-        <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
-        <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
-        <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
-        <link href="../static/files/result_page/styles.css" type="text/css" rel="stylesheet"/>
-        <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
-        </style>
-        <script src="../static/files/home/data.js"></script>
-    </head>
-    <body>
+<head>
+    <title>Result</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="/viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/result_page/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
+</style>
+<script src="../static/files/home/data.js"></script>
+</head>
+<body>
 
-{% include 'header.html' %}
+    {% include 'header.html' %}
     <!-- Home Direct -->
     <div id="tag" class="">
 
@@ -26,81 +26,78 @@
     <div id="search_title" class="">
         <p class="heading_1" >{{ recipes|count + user|count}} result(s) found for "{{ search_term }}"</p>
     </div>
- <!-- Search Result-->
+    <!-- Search Result-->
     <div id="result_post" class="">
 
         <!-- Search User -->
-            {% for u in user %}
-                <div id="u14" class="">
-                    <img id="avatar" class="img " src="../static/images/home/post_u18.png"/> 
-                    <p id="user_text" class="text">{{ u.user_name }}</p>
-                </div>
-            {% endfor %}
+        {% for u in user %}
+        <div id="u14" class="">
+            <img id="avatar" class="img " src="../static/images/home/post_u18.png"/> 
+            <a href="{{url_for('profile_view',userid=u.id)}}"><p id="user_text" class="text">{{ u.user_name }}</p></a>
+        </div>
+        {% endfor %}
         <!-- Search Post -->
-            
-
-            {% for r in recipes %}
-               
-                <div id="u14" class="">
-                    <div id="u22" class="ax_default box_2">
-                    <!-- Post Background -->
-                    <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
-                        <div id="u21" class="text" style="visibility: visible;">
-                            <p><span> {{ r.User.user_name }} </span></p>
-                        </div>
-                    </div>
-                    <!-- title -->
-                    <div id = "default_inner" style="text-align:center" >
-                    <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
-                instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_1" >{{ r.Recipe.title }}</a><br>
-                    </div>
-                     <!-- horizontal line-->
-                    <center><img src="..\static\images\result_page\u94.png" width="96%"/></center>
 
 
-                    <!-- Recipe Post Content -->
-                    <div id="u24" class="ax_default box_2">
+        {% for r in recipes %}
 
-                    <!-- recipe post left column (recipe image)-->
-                    <div class="recipe_column_left">
-                        <div id = "default_inner">
-                        {% if r.Recipe.imagepath is not none %}
-                        <img src="{{ r.Recipe.imagepath }}" id="recipe_img"/>
-                        {% else %}
-                        <img src="../static/images/noimage.jpg" id="recipe_img"/>
-                        {% endif %}
-                        </div>
-                    </div> 
+        <div id="u14" class="">
 
-                    <!-- recipe post right column -->
-                    <div class="recipe_column_right">
-                        <div id = "default_inner">
+
+            <!-- title -->
+
+            <!-- horizontal line-->
+            <!--<center><img src="..\static\images\result_page\u94.png" width="96%"/></center>-->
+
+
+            <!-- Recipe Post Content -->
+            <div id="u24" class="ax_default box_2">
+
+                <!-- recipe post left column (recipe image)-->
+                <div class="recipe_column_left">
+
+
+                    {% if r.Recipe.imagepath is not none %}
+                    <img src="{{ r.Recipe.imagepath }}" id="recipe_img"/>
+                    {% else %}
+                    <img src="../static/images/noimage.jpg" id="recipe_img"/>
+                    {% endif %}
+
+                </div> 
+
+                <!-- recipe post right column -->
+
+                <div class="recipe_column_right">
+
+                    <div id = "default_inner">
+                        <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                        instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >{{ r.Recipe.title }}</a><br><br />
                         <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
                         
                         <p class="heading_3">Ingredients</p><br>
                         
                         <p class="paragraph">{{ r.Recipe.ingredient.replace('\n','<br />')|safe }}</p>
 
-
-                        <br><p class="heading_3">Instructions</p><br>
-
-                        <p class="paragraph">{{ r.Recipe.instruction.replace('\n','<br />')|safe }}</p>
-
-                        <br>
-                      </div>
-                    </div>
-                    <div class="clear"></div>  
-                    </div> 
+                        <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                        instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >
+                        <br><p class="heading_3">Read more...</p>
+                    </a>
                 </div>
-              
-            {% endfor %}
+            </div>
+            
+
+            <div class="clear"></div>  
+        </div> 
     </div>
 
+    {% endfor %}
+</div>
 
 
-    <!-- Filter Bar-->
-    <div id="filter" class="">
-        <form method="POST" action ="/search">
+
+<!-- Filter Bar-->
+<div id="filter" class="">
+    <form method="POST" action ="/search">
         <input type="hidden" name="search_filter" value="{{ search_filter }}">
         <input type="hidden" name="search_term" value="{{ search_term }}">
         <div id="filter_top" class="">
@@ -110,28 +107,28 @@
             <button class="clear_button" onclick="uncheckAll()" > Clear Filter </button>
             <p id="filter_title"> PET TYPE </p>
             {% for t in pet_type %}
-              <p class="heading_4">
+            <p class="heading_4">
                 <label><input class="checkbox" type="checkbox" name="pet_filter" value="{{ t.type  }}" />
-                {{ t.type  }}</label>
-            </p>
-            {% endfor %}
-        </div>
-        <div>
-        <p id="filter_title">FOOD TYPE</p>
-        <p class="heading_4"><label><input type="checkbox"/>Meal </label><p>
-        <p class="heading_4"><label><input type="checkbox"/>Snack </label><p>
-        <button class="go_button" > GO </button>
-        </div>
-        </form>
-    </div>
+                    {{ t.type  }}</label>
+                </p>
+                {% endfor %}
+            </div>
+            <div>
+                <p id="filter_title">FOOD TYPE</p>
+                <p class="heading_4"><label><input type="checkbox"/>Meal </label><p>
+                    <p class="heading_4"><label><input type="checkbox"/>Snack </label><p>
+                        <button class="go_button" > GO </button>
+                    </div>
+                </form>
+            </div>
 
-    <script>
-    function uncheckAll(){
-        checks = document.getElementsByClassName("checkbox");
-        for(var i=0; i<checks.length; i++) {
-            checks[i].checked = false;
-        }
-    }
-    </script>
-</body>
-</html>
+            <script>
+            function uncheckAll(){
+                checks = document.getElementsByClassName("checkbox");
+                for(var i=0; i<checks.length; i++) {
+                    checks[i].checked = false;
+                }
+            }
+            </script>
+        </body>
+        </html>

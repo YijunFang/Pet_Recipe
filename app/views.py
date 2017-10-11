@@ -36,14 +36,20 @@ user_id = None
 
 @app.route('/')
 def index():
+	#show logged in version of homepage
+	if current_user.is_authenticated:
+		recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
+								 filter(Recipe.user_id==User.id).all()
+		return render_template("home.html",recipes=recipes)
 
-	recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
-							 filter(Recipe.user_id==User.id).all()
-
-	#return render_template("home_alt.html",recipes=recipes) # uncomment for old version
-															 # we may reuse this for logged
-															 # in users' feed
-	return render_template("home_alt.html",recipes=recipes)
+	#show guest version of homepage
+	else:
+		recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
+								 filter(Recipe.user_id==User.id).all()
+		return render_template("home_alt.html",recipes=recipes) 
+															
+															 
+	
 
 @app.route('/search',methods=['PUT','GET'])
 def search_view_put():
@@ -117,16 +123,16 @@ def search_view():
 def profile_view():
 	userid = request.args.get('userid')		
 	if userid is None:
-		#if current_user.is_authenticated:
-		userid = current_user.id
-		#else:
-		#	userid = 0
+		if current_user.is_authenticated:
+			userid = current_user.id
+		else:
+			return redirect('/')
 	if User.query.get(userid) is None:
 		userid = current_user.id	
 	print(userid)
 	print("In profile")
-	print(current_user.id)
-	print(userid)
+	#print(current_user.id)
+	#print(userid)
 	
 	profile = db_session.query(User).filter(User.id==userid).all()
 
@@ -168,7 +174,7 @@ def login():
 			user_id = u.id
 			login_user(u)
 			print (current_user.get_id)
-			return render_template('home.html')
+			return redirect('/')
 		else:
 			# print('u obj '+ str(u.user_name))
 			return render_template('login_err.html')

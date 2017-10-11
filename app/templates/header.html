@@ -6,8 +6,8 @@
         <!-- Sign In / Resigter Icon-->
         <p>
         {% if current_user.is_authenticated %}
-            {{ current_user.user_name }}
-            <a href="/profile"><img id="u4" class="img " src="../static/images/home/user_u16.png"/></a>
+            <a href="/profile">{{ current_user.user_name }}</a>
+            <a href="/profile"><img id="u4" class="img " src="../static/images/home/user_u16.png"/></a> /
             <a href="/logout">Log Out</a>
         {% else %}
             <a href="/register">
@@ -27,7 +27,7 @@
         <div id="u3" class="ax_default heading_1" data-label="Title">
             <!-- LOGO -->
             <p>
-                <a href="/upload_post">
+                <a href="/">
                 <img id="u2" class="img " src="../static/images/home/logo_u6.png"/> 
                 </a>
                 Pet Recipes <p>
