@@ -58,18 +58,30 @@
 
             {% for r in recipes %}
             <div id = "default_inner" >
-                <p class="heading_2">{{r.Recipe.title}}</p>
+
+
+                <div class="profile_column_left">
                 {% if r.Recipe.imagepath is not none %}
-                <img src="{{r.Recipe.imagepath}}" id="recipe_img"/>
+                <img src="{{r.Recipe.imagepath}}" class="profile_img"/>
                 {% else %}
-                <img src="../static/images/noimage.jpg" id="recipe_img"/>
+                <img src="../static/images/noimage.jpg" class="profile_img"/>
                 {% endif %}
+                </div>
+
+                <div clas="profile_column_right">
+                    <div id = "default_inner" >
+                        <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id) }}" class="heading_2" >{{ r.Recipe.title }}</a><br><br />
+                    </div>
+                </div>
+
+                <div class="clear"></div> 
+
             </div>
             {% endfor %}
 
             {% if recipes|count == 0 %}
             <div id = "default_inner" >
-                 <p class="heading_2">This user has no recipes yet</p>
+                 <p class="heading_2">This user has no recipes</p>
             </div>
             {% endif %}
            

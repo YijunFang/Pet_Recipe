@@ -226,22 +226,31 @@ def register():
 
 @app.route('/recipe')
 def recipe_view():
-	recipeid = request.args.get('recipeid')
-	title = request.args.get('title')
-	ingredient = request.args.get('ingredient')
-	instruction = request.args.get('instruction')
-	pettype= request.args.get('pettype')
-	user= request.args.get('user')
-	img= request.args.get('img')
+	"""
+	can't rely on every link going to /recipe to contain all the info set as 
+	parameters from the previous page, so use db lookup with recipe id
 
-	return render_template("recipe.html",
-		recipeid=recipeid,
-		title=title,
-		ingredient=ingredient,
-		instruction=instruction,
-		pettype=pettype,
-		user=user,
-		img=img)
+	"""
+
+	#case 1: handle links in form of {{ url_for('recipe_view',rid= r.Recipe.id }}
+	recipeid = request.args.get('recipeid')
+	if recipeid is not None:
+		recipe = db_session.query(Recipe,Pet_type,User).\
+								 filter(Recipe.type==Pet_type.id). \
+								 filter(Recipe.user_id==User.id). \
+								 filter(Recipe.id==recipeid).first()
+		return render_template("recipe.html",
+			recipeid=recipe.Recipe.id,
+			title=recipe.Recipe.title,
+			ingredient=recipe.Recipe.ingredient,
+			instruction=recipe.Recipe.instruction,
+			pettype=recipe.Pet_type.type,
+			user=recipe.User.user_name,
+			img=recipe.Recipe.imagepath,
+			userid=recipe.User.id)
+
+	else:
+		return redirect('/')
 
 def allowed_file(filename):
 	return '.' in filename and \
