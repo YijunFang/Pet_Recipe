@@ -41,7 +41,7 @@
                 <li>None</li>
             {% endif %}
             </ul>
-            {% if current_user.id == uid %}
+            {% if current_user.id == profile[0].id %}
             <a href="/update_profile" style="color: #169BD5"><p class="heading_3">Update Profile</p></a>
             {% else %}
             <a href="/follow" style="color: #169BD5"><p class="heading_3">Follow User</p></a>
@@ -53,7 +53,11 @@
             {% for r in recipes %}
             <div id = "default_inner" >
                 <p class="heading_3">{{r.Recipe.title}}</p>
+                {% if r.Recipe.imagepath is not none %}
                 <img src="{{r.Recipe.imagepath}}" id="recipe_img"/>
+                {% else %}
+                <img src="../static/images/noimage.jpg" id="recipe_img"/>
+                {% endif %}
             </div>
             {% endfor %}
            
