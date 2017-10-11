@@ -2,16 +2,21 @@ from __future__ import print_function
 import sys
 import re
 import logging
+import os
 logging.basicConfig(level=logging.DEBUG)
 
 
-from flask import Flask, render_template, request,redirect
+from flask import Flask, render_template, request,redirect,url_for
+from werkzeug.utils import secure_filename
 # from Pet_Recipe.LoginForm import LoginForm
 # from main import app
 from .forms import LoginForm
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
 from sqlalchemy import or_
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
 app = Flask(__name__)
 app.debug = True
 app.secret_key = 's3cr3t'
@@ -213,26 +218,39 @@ def recipe_view():
 		user=user,
 		img=img)
 
+def allowed_file(filename):
+	return '.' in filename and \
+		filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/upload_post', methods = ['GET', 'POST'])
 def upload_post():
+	UPLOAD_FOLDER = 'app/static/images/recipe_image'
+	app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 	if request.method == 'POST':
 		print ('in post')
 		title = request.form['title']
 		ingredient = request.form['ingredient']
 		instruction = request.form['instruction']
 		pet_type = request.form['pet_type']
-		img = None #request.form['post_image']
-		user_id= request.form['user']
+		user_id=current_user.id
 		u = db_session.query(User).filter_by(id= user_id).first()
 
+		img = request.files['post_image']
+		if img.filename == '':
+			img_path = None
+		if img and allowed_file(img.filename):
+			filename = secure_filename(img.filename)
+			img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			print ('file upload successfully!')
+			img_path = UPLOAD_FOLDER + "/" + filename
+
 		if( u is not None):
-			#new_post = Recipe(user_id=user_id, ingredient=ingredient, instruction=instruction, type=pet_type, title=title)
-			#db_session.add(new_post)
-			#db_session.commit()
 			meta = MetaData(engine,reflect=True)
 			table = meta.tables['recipe']
-
-			ins = table.insert().values(user_id=user_id, ingredient=ingredient, instruction=instruction, type=pet_type, title=title) 
+			if img_path is not None:
+				ins = table.insert().values(user_id=user_id, ingredient=ingredient, instruction=instruction, type=pet_type, title=title, imagepath=img_path) 
+			else:
+				ins = table.insert().values(user_id=user_id, ingredient=ingredient, instruction=instruction, type=pet_type, title=title) 
 			conn = engine.connect()
 			conn.execute(ins)
 			conn.close()
