@@ -11,6 +11,7 @@
         <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
         <link href="../static/files/profile/profile.css" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
  <body>
  {% include 'header.html' %}
@@ -74,7 +75,11 @@
                         <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id) }}" class="heading_2" >{{ r.Recipe.title }}</a><br><br />
                     </div>
                 </div>
-                <div class="clear"></div> 
+                <div class="clear"></div>
+                <!--Detele Icon-->
+                <form action = "" method = "post">
+                        <button name="delete" value="{{ r.Recipe.id }}" type="submit" class="fa fa-trash"></button>
+                </form>
             </div>
             {% endfor %}
 

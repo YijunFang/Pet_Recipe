@@ -119,7 +119,7 @@ def search_view():
 	return render_template("result_page.html",search_term=search_term, search_filter=search_filter, \
 							pet_type=pet_type, recipes=recipes, user = user, )
 
-@app.route('/profile')
+@app.route('/profile', methods = ['GET', 'POST'])
 def profile_view():
 	userid = request.args.get('userid')		
 	if userid is None:
@@ -145,8 +145,17 @@ def profile_view():
 					filter(Recipe.user_id==userid).	\
 					filter(Recipe.type==Pet_type.id). \
 					all()
-	print(profile)
-	return render_template("profile_test.html",profile=profile,recipes=recipes,pets=pets)
+	if request.method == 'POST':
+		print ("in post")
+
+		recipe_id = request.form['delete']
+		delete_recipe = db_session.query(Recipe).filter_by(id= recipe_id).first()
+		db_session.delete(delete_recipe)
+		db_session.commit()	
+		return render_template("home.html")
+	else:
+		print(profile)
+		return render_template("profile_test.html",profile=profile,recipes=recipes,pets=pets)
 
 @login_manager.user_loader
 def user_loader(user_id):
