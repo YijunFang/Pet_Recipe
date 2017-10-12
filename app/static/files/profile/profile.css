@@ -26,6 +26,7 @@
 	clear:left;
 	float:left;
 	width:100%;
+	margin: 24px;
 	overflow:hidden;
 	background:#ffffff; /* column 2 background colour */
 }
