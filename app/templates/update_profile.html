@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="/viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/result_page/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/upload_post/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../static/files/profile/profile.css" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+{% include 'header.html' %}
+<div class="w3-row">
+        <div class = "w3-col  w3-container w3-margin" style="width:20%"></div>
+        <div class = "w3-col w3-container w3-padding-16 w3-margin" style="width:60%">
+            <!--Upload Post-->
+            <form class="w3-container w3-card w3-padding-large w3-margin-top" action="/update_profile" method="post" enctype="multipart/form-data">
+                <h2 class="w3-text-blue">Edit Profile</h2>
+
+            <h4 >{{message}}</h4>
+
+            <p>      
+                <label class="w3-text-blue"><b>Username</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="username" type="text" value="{{current_user.user_name}}"></input></p>
+
+            <p>      
+                <label class="w3-text-blue"><b>New Password</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="new_password" type="password" ></input></p>
+            <p>      
+                <label class="w3-text-blue"><b>Email</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="email" type="text" value="{{current_user.email}}"></input></p>
+
+
+            <!-- dynamic adding and deleting pets-->
+            <label class="w3-text-blue"><b>Pets</b></label>
+
+            <!-- the root div that new divs (containing inputs) will attach to-->
+            <div id="dynamicInput">
+            </div>
+
+            <!-- Make pet name,type and remove buttons for existing pets. Old pets use div id= "dynamic_input_n". New pets use div id= "newpet_n".
+                 Two kinds of div id are needed because server handles the two cases differently -->
+
+            {% for pet in user_pets %}
+             <div id="dynamicInput_{{loop.index}}">
+
+                  Pet Name: <input type="text" class="w3-input2 w3-border w3-margin-bottom " id="pet_name_{{loop.index}}" name="pet_name_{{loop.index}}" value="{{pet.Pet.NAME}}"> 
+                  
+                  <input type="hidden" name="pet_id_{{loop.index}}" value="{{pet.Pet.id}}">
+
+                  Type: <select class="w3-select2 w3-border w3-margin-bottom" name="pet_type_{{loop.index}}">
+                  {% for p in pet_type %}
+                    {% if p.type == pet.Pet_type.type %}
+                        <option selected value="{{p.id}}">{{p.type}}</option>
+                    {% else %}
+                        <option value="{{p.id}}">{{p.type}}</option>
+                    {% endif %}
+                   
+                  {% endfor %}
+                  </select>
+                  <input type="button" value="Remove Pet" onClick="removeExistingPet('dynamicInput_{{loop.index}}',{{loop.index}});"  class="w3-btn w3-round-large  theme-color-background">
+
+             </div>
+             {% endfor %}
+
+             <!-- add new pets button -->
+             <input type="button" value="Add Pet" onClick="addInput('dynamicInput');"  class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
+
+
+            <p>      
+                <label class="w3-text-blue"><b>Profile Image</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="file" accept=".jpg, .jpeg, .png, .gif" ></input></p>    
+            <p>      
+                <label class="w3-text-blue"><b>Confirm changes with original password</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="confirm_password" type="password" required></input></p>
+            <p>
+                <input type=submit value="Update" class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
+                </input>
+
+            </p>
+            </form>
+
+            </div>
+
+            
+            <div class = "w3-col  w3-container" style="width:10%"></div>
+
+        </div>
+
+<script>
+    var counter = {{user_pets|count + 1}};
+    var limit = 10;
+
+
+
+    function addInput(divName){
+        
+         if (counter == limit)  {
+              alert("You have reached the limit of adding " + counter + " inputs");
+         }
+         else {
+              var newdiv = document.createElement('div');
+              newdiv.innerHTML = "Pet Name" + ": <input type='text' name='pet_name_" + counter + "'  class='w3-input2 w3-border w3-margin-bottom ' > Type: <select class='w3-select2 w3-border w3-margin-bottom' name='pet_type_" + counter +"'> {% for p in pet_type %}<option value='{{p.id}}'>{{p.type}}</option>{% endfor %}</select>  <input type='button' value='Remove Pet' onClick=\"removeInput('newpet_"+ counter + "');\"  class='w3-btn w3-round-large  theme-color-background'> <input type=\"hidden\" name=\"pet_id_" + counter + "\" value=\"-1\">";
+              newdiv.id = "newpet_"+ counter;
+              document.getElementById(divName).appendChild(newdiv);
+              counter++;
+         }
+    }
+
+    /* handles the removal of pet divs that are new. Simply remove the div containing it from form */
+    function removeInput(divname){
+        var element = document.getElementById(divname);
+        element.outerHTML = "";
+        delete element;
+        counter --;
+    }
+
+    /* handles removal of pets that exist in the database. In this case, mark them for deletion but keep them in the form
+       so that the server knows about them.  */
+    function removeExistingPet(divname, pet_num){
+        var element = document.getElementById(divname);
+        var petname = document.getElementById("pet_name_"+pet_num).value;
+        document.getElementById("pet_name_"+pet_num).name = "delete_pet_"+pet_num;
+        element.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
