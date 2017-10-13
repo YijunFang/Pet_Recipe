@@ -22,11 +22,11 @@
         <div class = "w3-col  w3-container w3-margin" style="width:20%"></div>
         <div class = "w3-col w3-container w3-padding-16 w3-margin" style="width:60%">
             <!--Upload Post-->
-            <form class="w3-container w3-card w3-padding-large w3-margin-top" action="#" method="post" enctype="multipart/form-data">
+            <form class="w3-container w3-card w3-padding-large w3-margin-top" action="#" method="POST" enctype="multipart/form-data">
                 <h2 class="w3-text-blue">Upload Your Own Post</h2>
             <p>      
-                <label class="w3-text-blue"><b>Title</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="title" type="text" required></input></p>
+                <label class="w3-large w3-text-blue"><b>Title</b></label>
+                <input class="w3-input w3-border w3-margin-bottom " name="title" type="text" placeholder="Enter your title" required></input></p>
             
             <p>      
 
@@ -39,18 +39,42 @@
                     {% endfor %}
             </p>
 
+            <script src="../static/files/upload_post/addInput.js" language="Javascript" type="text/javascript"></script>
             <p>      
-                <label class="w3-text-blue"><b>Ingrediant</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="ingredient" type="text" required></input></p>
+                <label class="w3-large w3-text-blue"><b>Ingrediant</b></label>
+
+                <div id="ingrediantInput" class="w3-row w3-margin-top">
+
+                    <div class= "w3-col w3-container w3-large w3-margin-top w3-margin-right" style="width:3%"> 1.</div>
+                    <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" name="ingrediantInputs" type="text" placeholder="Enter your ingrediant"></input>
+                </div>
+
+                <div class="w3-display-container w3-padding-32">
+                    <input type="button" value="+ Add One More Ingreidant" class= "w3-bar-item w3-button w3-light-blue w3-display-middle" style="width: 87%" onClick="ingedInput('ingrediantInput');"></input>
+                </div>
+            </p>
+
             <p>      
-                <label class="w3-text-blue"><b>Instruction</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="instruction" type="text" required></input></p>
+                <label class="w3-large w3-text-blue"><b>Instruction</b></label>
+
+                <div id="instructionInput" class="w3-row w3-margin-top">
+
+                    <div class= "w3-col w3-container w3-large w3-margin-top w3-margin-right" style="width:3%"> 1.</div>
+                    <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" name="InstructionInputs" type="text" placeholder="Enter your instruction"></input>
+                </div>
+
+                <div class="w3-display-container w3-padding-32">
+                    <input type="button" value= " + Add One More Instruction" class= "w3-bar-item w3-button w3-light-blue w3-display-middle" style="width: 87%" onClick="instrInput('instructionInput');"></input>
+                </div>
+            </p>
+
+
             <p>      
-                <label class="w3-text-blue"><b>Image</b></label>
+                <label class="w3-large w3-text-blue"><b>Image</b></label>
                 <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="file" accept=".jpg, .jpeg, .png, .gif" ></input></p>    
 
             <p>
-                <input type=submit value=Upload class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
+                <input type=submit name="upload" value="upload" class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
                 </input>
 
             </p>

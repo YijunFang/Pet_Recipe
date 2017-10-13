@@ -147,6 +147,7 @@ def profile_view():
 					all()
 	if request.method == 'POST':
 		print ("in post")
+		print (request)
 
 		recipe_id = request.form['delete']
 		delete_recipe = db_session.query(Recipe).filter_by(id= recipe_id).first()
