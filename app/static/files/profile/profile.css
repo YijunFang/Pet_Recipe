@@ -1,7 +1,7 @@
 .profile_column_left{
   float:left;
   width:40%;
-  background-color:rgba(65, 65, 65, 1);
+  /*background-color:rgba(65, 65, 65, 1);*/
   color: white;
   height:100%;
 }
@@ -29,6 +29,11 @@
 	margin: 24px;
 	overflow:hidden;
 	background:#ffffff; /* column 2 background colour */
+	box-sizing:border-box;
+	border-width:1px;
+	border-style:solid;
+	border-color:rgba(121, 121, 121, 1);
+	border-radius:0px;
 }
 #container1 {
 	float:left;
@@ -56,3 +61,6 @@
 .profile_img{
 	width: 100%;
 }
+
+.w3-input2{padding:8px;border:none;border-bottom:1px solid #ccc;width:40%}
+.w3-select2{padding:9px 0;width:30%;border:none;border-bottom:1px solid #ccc}

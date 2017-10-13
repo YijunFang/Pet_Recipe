@@ -157,6 +157,17 @@ def profile_view():
 		print(profile)
 		return render_template("profile_test.html",profile=profile,recipes=recipes,pets=pets)
 
+
+@app.route('/update_profile', methods = ['GET', 'POST'])
+@login_required
+def update_profile_view():
+	input_pet_type = Pet_type.query.all()
+	user_pets = db_session.query(Pet,Pet_type). \
+					filter(Pet.type==Pet_type.id). \
+			  		filter(Pet.owner==current_user.id).all()
+
+	return render_template("update_profile.html",pet_type=input_pet_type,user_pets=user_pets)
+
 @login_manager.user_loader
 def user_loader(user_id):
     """Given *user_id*, return the associated User object.
