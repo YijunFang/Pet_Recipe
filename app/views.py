@@ -166,6 +166,14 @@ def update_profile_view():
 					filter(Pet.type==Pet_type.id). \
 			  		filter(Pet.owner==current_user.id).all()
 
+	# get all pet_name & pet_types in the form
+	# old pets marked for deletion will have value of pet_name_delete
+
+	for i in range(1,11):
+		petname = request.form.get('pet_name_'+str(i))
+		pettype = request.form.get('pet_type_'+str(i))
+		print(petname,pettype)
+
 	return render_template("update_profile.html",pet_type=input_pet_type,user_pets=user_pets)
 
 @login_manager.user_loader
