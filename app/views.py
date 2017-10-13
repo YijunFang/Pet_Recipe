@@ -162,19 +162,86 @@ def profile_view():
 @login_required
 def update_profile_view():
 	input_pet_type = Pet_type.query.all()
-	user_pets = db_session.query(Pet,Pet_type). \
-					filter(Pet.type==Pet_type.id). \
-			  		filter(Pet.owner==current_user.id).all()
+
+	# see if confirmation password is correct
+	# if not, return to form with error message
+	confirm = request.form.get('confirm_password')
+	u = db_session.query(User).filter(User.id==current_user.id).first()
+	if u is None or u.password != confirm:
+		user_pets = db_session.query(Pet,Pet_type). \
+				filter(Pet.type==Pet_type.id). \
+			  	filter(Pet.owner==current_user.id).all()
+		message="The confirmation password was incorrect, please try again."
+		if not confirm:
+			message=""
+		return render_template("update_profile.html",message=message, \
+			                    pet_type=input_pet_type,user_pets=user_pets)
 
 	# get all pet_name & pet_types in the form
-	# old pets marked for deletion will have value of pet_name_delete
-
 	for i in range(1,11):
 		petname = request.form.get('pet_name_'+str(i))
 		pettype = request.form.get('pet_type_'+str(i))
-		print(petname,pettype)
+		petid = request.form.get('pet_id_'+str(i))
+		petdelete = request.form.get('delete_pet_'+str(i))
+		
+		# add new pets to db
+		if petname is not None and pettype is not None and petid is not None and petdelete is None:
+			if petid == "-1":
+				print("inserting new pet...")
+				rows = db_session.query(Pet).count() + 1
+				new_pet = Pet(id=rows,type=pettype,NAME=petname,owner=current_user.id)
+				db_session.add(new_pet)
+				db_session.commit()
+			#update existing pets in db
+			else:
+				print('updating existing pet...')
+				db_session.query(Pet).filter(Pet.id==petid). \
+									  update({Pet.NAME:petname, Pet.type:pettype})
+				db_session.commit()
+		#delete pets marked for deletion
+		if petdelete is not None and petid is not None:
+			print('deleting pet...')
+			db_session.query(Pet).filter(Pet.id==petid).delete()
+			db_session.commit()
 
-	return render_template("update_profile.html",pet_type=input_pet_type,user_pets=user_pets)
+	# get new list of pets
+	user_pets = db_session.query(Pet,Pet_type). \
+				filter(Pet.type==Pet_type.id). \
+			  	filter(Pet.owner==current_user.id).all()
+
+	# handle username update
+	new_username = request.form.get('username')
+	if new_username:
+		db_session.query(User).filter(User.id==current_user.id).update({User.user_name:new_username})
+		db_session.commit()
+
+	# handle password update
+	new_password = request.form.get('new_password')
+	if new_password:
+		print("new pass")
+		db_session.query(User).filter(User.id==current_user.id).update({User.password:new_password})
+		db_session.commit()
+
+	# handle email update
+	new_email = request.form.get('email')
+	if new_email:
+		db_session.query(User).filter(User.id==current_user.id).update({User.email:new_email})
+		db_session.commit()		
+
+	# handle profile img update
+	img = request.files['post_image']
+	if img.filename == '':
+		img_path = None
+	if img and allowed_file(img.filename):
+		filename = secure_filename(img.filename)
+		img.save(os.path.join('app/static/images/profile_pic/', filename))
+		print ('file upload successfully!')
+		img_path = '../static/images/profile_pic/' + filename
+		print (img_path)
+		user_to_update = db_session.query(User).filter(User.id==current_user.id).update({User.profile_pic:img_path})
+		db_session.commit()			
+
+	return render_template("update_profile.html",pet_type=input_pet_type,user_pets=user_pets,message="Profile successfully updated")
 
 @login_manager.user_loader
 def user_loader(user_id):
