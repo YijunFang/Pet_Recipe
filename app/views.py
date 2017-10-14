@@ -153,7 +153,7 @@ def profile_view():
 		delete_recipe = db_session.query(Recipe).filter_by(id= recipe_id).first()
 		db_session.delete(delete_recipe)
 		db_session.commit()	
-		return render_template("home.html")
+		return redirect('/profile')
 	else:
 		print(profile)
 		return render_template("profile_test.html",profile=profile,recipes=recipes,pets=pets)
@@ -366,18 +366,44 @@ def allowed_file(filename):
 		filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/upload_post', methods = ['GET', 'POST'])
+@login_required
 def upload_post():
 	UPLOAD_FOLDER = 'app/static/images/recipe_image'
 	app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 	input_pet_type = Pet_type.query.all()
 	if request.method == 'POST':
 		print ('in post')
+		print (request.form)
 		title = request.form['title']
-		ingredient = request.form['ingredient']
-		instruction = request.form['instruction']
 		pet_type = request.form['pet_type']
 		user_id=current_user.id
 		u = db_session.query(User).filter_by(id= user_id).first()
+
+		ing_counter = 1
+		ins_counter = 1
+		ingredient = ""
+		instruction = ""
+		# Get the instruction and indigation
+		for r in sorted(request.form.iterkeys()):
+			ingredient_target = 'ingredientInput_' + str(ing_counter)
+			instruction_target = 'instructionInput_' + str(ins_counter)
+			print (ingredient_target)
+			if r == ingredient_target :
+				print (r)
+				r_content = request.form[ingredient_target]
+				#instruction = str(indigredient) + str(counter) + ". " + str(r_content) + '\n'
+				ingredient = str(ingredient)+ str(r_content) + '\n'
+				print (ingredient)
+				ing_counter+=1
+			elif r == instruction_target:
+				print (r)
+				r_content = request.form[instruction_target]
+				instruction = str(instruction) + str(ins_counter) + ". " + str(r_content) + '\n'
+				print (instruction)
+				ins_counter+=1
+
+		#instruction = request.form['instruction']
+
 
 		img = request.files['post_image']
 		if img.filename == '':
@@ -400,7 +426,7 @@ def upload_post():
 			conn.execute(ins)
 			conn.close()
 
-			return render_template('home.html', pet_type = input_pet_type)
+			return redirect('/profile')
 		else:
 			return render_template('upload_post.html', pet_type = input_pet_type)
 

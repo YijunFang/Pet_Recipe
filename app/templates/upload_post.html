@@ -14,78 +14,81 @@
     <body>
 
 {% include 'header.html' %}
-        {% if not current_user.is_authenticated %}
-            {{ current_user.user_name }}
-            <h1>Please log in to upload your post!</h1>
-        {% else %}
-        <div class="w3-row">
-        <div class = "w3-col  w3-container w3-margin" style="width:20%"></div>
-        <div class = "w3-col w3-container w3-padding-16 w3-margin" style="width:60%">
-            <!--Upload Post-->
-            <form class="w3-container w3-card w3-padding-large w3-margin-top" action="#" method="POST" enctype="multipart/form-data">
-                <h2 class="w3-text-blue">Upload Your Own Post</h2>
-            <p>      
-                <label class="w3-large w3-text-blue"><b>Title</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="title" type="text" placeholder="Enter your title" required></input></p>
-            
-            <p>      
+<div class="w3-row">
+<div class = "w3-col  w3-container w3-margin" style="width:20%"></div>
+<div class = "w3-col w3-container w3-padding-16 w3-margin" style="width:60%">
+    <!--Upload Post-->
+    <form class="w3-container w3-card w3-padding-large w3-margin-top" action="#" method="POST" enctype="multipart/form-data">
+        <h2 class="w3-text-blue">Upload Your Own Post</h2>
+    <p>      
+        <label class="w3-large w3-text-blue"><b>Title</b></label>
+        <input class="w3-input w3-border w3-margin-bottom " name="title" type="text" placeholder="Enter your title" required></input></p>
+    
+    <p>
 
-                    {% for p in pet_type %}
-                    <label class="checkbox-inline">
-                        <input class="w3-radio w3-border w3-margin-bottom " name="pet_type" value={{ p.id }} type="radio">{{p.type}}
-                    </input> 
-                        
-                    </label>
-                    {% endfor %}
-            </p>
+            {% for p in pet_type %}
+            <label class="checkbox-inline">
+                <!--require-->
+                {% if p.type == "Others"  %}
+                <input class="w3-radio w3-border w3-margin-bottom " name="pet_type" value={{ p.id }} type="radio" checked>{{p.type}}
+                {% else %}
+                <input class="w3-radio w3-border w3-margin-bottom " name="pet_type" value={{ p.id }} type="radio">{{p.type}}
+                {% endif %}
+            </input> 
+                
+            </label>
+            {% endfor %}
+    </p>
 
-            <script src="../static/files/upload_post/addInput.js" language="Javascript" type="text/javascript"></script>
-            <p>      
-                <label class="w3-large w3-text-blue"><b>Ingrediant</b></label>
+    <script src="../static/files/upload_post/addInput.js" language="Javascript" type="text/javascript"></script>
+    <p>      
+        <label class="w3-large w3-text-blue"><b>Ingredient</b></label>
 
-                <div id="ingrediantInput" class="w3-row w3-margin-top">
+        <div id="ingredientInput" class="w3-row w3-margin-top">
 
-                    <div class= "w3-col w3-container w3-large w3-margin-top w3-margin-right" style="width:3%"> 1.</div>
-                    <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" name="ingrediantInputs" type="text" placeholder="Enter your ingrediant"></input>
-                </div>
+            <div id="ingre_1" class= "w3-col w3-container w3-large w3-margin-top w3-margin-right" style="width:3%"> 1.</div>
+            <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" name="ingredientInput_1" type="text" placeholder="Enter your ingredient" required></input>
+        </div>
 
-                <div class="w3-display-container w3-padding-32">
-                    <input type="button" value="+ Add One More Ingreidant" class= "w3-bar-item w3-button w3-light-blue w3-display-middle" style="width: 87%" onClick="ingedInput('ingrediantInput');"></input>
-                </div>
-            </p>
+        <div class="w3-row w3-display-container w3-padding-32">
+            <input type="button" value="+ Add One More Ingreident" class= "w3-col w3-bar-item w3-button w3-light-blue w3-display-left" style="width: 48%" onClick="ingedInput('ingredientInput');"></input>
+            <input type="button" value="x Delete This Ingreident" class= "w3-col w3-bar-item w3-button w3-pale-red w3-display-right" style="width: 48%" onClick="inged_removeLast('ingredientInput');" ></input>
+        </div>
 
-            <p>      
-                <label class="w3-large w3-text-blue"><b>Instruction</b></label>
+    </p>
 
-                <div id="instructionInput" class="w3-row w3-margin-top">
+    <p>      
+        <label class="w3-large w3-text-blue"><b>Instruction</b></label>
 
-                    <div class= "w3-col w3-container w3-large w3-margin-top w3-margin-right" style="width:3%"> 1.</div>
-                    <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" name="InstructionInputs" type="text" placeholder="Enter your instruction"></input>
-                </div>
+        <div id="instructionInput" class="w3-row w3-margin-top">
 
-                <div class="w3-display-container w3-padding-32">
-                    <input type="button" value= " + Add One More Instruction" class= "w3-bar-item w3-button w3-light-blue w3-display-middle" style="width: 87%" onClick="instrInput('instructionInput');"></input>
-                </div>
-            </p>
+            <div id="instr_1" class= "w3-col w3-container w3-large w3-margin-top w3-margin-right" style="width:3%"> 1.</div>
+            <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" id="instructionInput_1" name="instructionInput_1" type="text" placeholder="Enter your instruction" required></input>
+        </div>
+
+        <div class="w3-row w3-display-container w3-padding-32">
+            <input type="button" value= " + Add One More Instruction" class= "w3-col w3-bar-item w3-button w3-light-blue w3-display-left" style="width: 48%" onClick="instrInput('instructionInput');"></input>
+            <input type="button" value="x Delete This Instruction" class= "w3-col w3-bar-item w3-button w3-pale-red w3-display-right" style="width: 48%" onClick="instr_removeLast('instructionInput');" ></input>
+        </div>
+    </p>
 
 
-            <p>      
-                <label class="w3-large w3-text-blue"><b>Image</b></label>
-                <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="file" accept=".jpg, .jpeg, .png, .gif" ></input></p>    
+    <p>      
+        <label class="w3-large w3-text-blue"><b>Image</b></label>
+        <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="file" accept=".jpg, .jpeg, .png, .gif" ></input></p>    
 
-            <p>
-                <input type=submit name="upload" value="upload" class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
-                </input>
+    <p>
+        <input type=submit name="upload" value="upload" class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
+        </input>
 
-            </p>
-            </form>
-        
+    </p>
+    </form>
 
-            </div>
 
-            
-            <div class = "w3-col  w3-container" style="width:10%"></div>
-            {% endif %}
+    </div>
+
+    
+    <div class = "w3-col  w3-container" style="width:10%"></div>
         </div>
     </body>
 </html>
