@@ -333,14 +333,14 @@ def fave():
 	recipes = []
 	return render_template('home.html',recipes=recipes)
 
-@app.route('/recipe')
+@app.route('/recipe', methods = ['POST','GET']) 
 def recipe_view():
 	"""
 	can't rely on every link going to /recipe to contain all the info set as 
 	parameters from the previous page, so use db lookup with recipe id
 
 	"""
-
+	sys.stderr.write('###recipe view entered###\n')
 	#case 1: handle links in form of {{ url_for('recipe_view',rid= r.Recipe.id }}
 	recipeid = request.args.get('recipeid')
 	if recipeid is not None:
@@ -348,7 +348,29 @@ def recipe_view():
 								 filter(Recipe.type==Pet_type.id). \
 								 filter(Recipe.user_id==User.id). \
 								 filter(Recipe.id==recipeid).first()
-		return render_template("recipe.html",
+		comments = db_session.query(Comment,User).filter(Comment.recipe_id==recipeid). \
+							filter(Comment.user_id==User.id).all()
+
+		commentid = request.args.get('commentid')
+
+		if commentid is not None:
+	
+			sys.stderr.write('###delete comment entered###\n')
+
+	#		meta = MetaData(engine,reflect=True)
+	#		table = meta.tables['comment']
+	#		rem = table.delete(id==commentid) 
+	#		conn = engine.connect()
+	#		conn.execute(rem)
+	#		conn.close()
+			db_session.query(Comment).filter(Comment.id == commentid).delete()
+			db_session.commit()
+			comments = db_session.query(Comment,User).filter(Comment.recipe_id==recipeid). \
+								filter(Comment.user_id==User.id).all()
+		
+	
+		
+			return render_template("recipe.html",
 			recipeid=recipe.Recipe.id,
 			title=recipe.Recipe.title,
 			ingredient=recipe.Recipe.ingredient,
@@ -356,10 +378,71 @@ def recipe_view():
 			pettype=recipe.Pet_type.type,
 			user=recipe.User.user_name,
 			img=recipe.Recipe.imagepath,
-			userid=recipe.User.id)
+			userid=recipe.User.id,
+			comments=comments)
+		else:
+
+			if request.method=='POST':
+				#see how upload recipe uploads to database
+			
+				sys.stderr.write('###post method entered###\n')
+				comment = request.form['comment']
+				user_id=current_user.id
+				dbs = db_session.query(User).filter_by(id= user_id).first()
+				
+				if(dbs is not None):
+					meta = MetaData(engine,reflect=True)
+					table = meta.tables['comment']
+					ins = table.insert().values(user_id=user_id, recipe_id=recipeid, message=comment) 
+					conn = engine.connect()
+					conn.execute(ins)
+					conn.close()
+					comments = db_session.query(Comment,User).filter(Comment.recipe_id==recipeid). \
+								filter(Comment.user_id==User.id).all()
+		
+					return render_template("recipe.html",
+					recipeid=recipe.Recipe.id,
+					title=recipe.Recipe.title,
+					ingredient=recipe.Recipe.ingredient,
+					instruction=recipe.Recipe.instruction,
+					pettype=recipe.Pet_type.type,
+					user=recipe.User.user_name,
+					img=recipe.Recipe.imagepath,
+					userid=recipe.User.id,
+					comments=comments)
+	
+		#	else:
+
+			else:	
+				return render_template("recipe.html",
+					recipeid=recipe.Recipe.id,
+					title=recipe.Recipe.title,
+					ingredient=recipe.Recipe.ingredient,
+					instruction=recipe.Recipe.instruction,
+					pettype=recipe.Pet_type.type,
+					user=recipe.User.user_name,
+					img=recipe.Recipe.imagepath,
+					userid=recipe.User.id,
+					comments=comments)
 
 	else:
+		sys.stderr.write('###redirect to home entered###\n')
 		return redirect('/')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def allowed_file(filename):
 	return '.' in filename and \

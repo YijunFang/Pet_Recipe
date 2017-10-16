@@ -85,46 +85,54 @@
 
                 </div>
 
-
-
-
                 <!-- comment form -->
                 <div id="u14" class="">
 
-                  <!-- comment section title-->
-                  <div id="default_inner" >
-                    <p class="heading_2">Comments</p>
-                    <p class="paragraph">Add your comment below</p><br>
+                <!-- comment section title-->
+	        {% if current_user.is_authenticated %}
+                <div id="default_inner" class="container" >
+ 	        	<form name="commentform" id="commentform" action="{{ url_for('recipe_view',recipeid=recipeid )}}" method="post" class="wpl-track-me">
+                    		<p class="heading_2">Comments</p>
+                    		<p class="paragraph">Share your thoughts!</p><br>
+				<textarea name="comment" rows="4" cols="125" placeholder="Add comment here"></textarea>
+				<input type="submit" value="Submit">
+			</form>
+<!-- placeholder="Add comment here" value="" style="width:900px;height:100px;" />-->
                   </div>
+		{% endif %}
                 </div>
-
-
+		 {% for r in comments %}
                  <!-- individual comment box start-->
                  <div id="u14" class="">
-            
                     <!-- Post Time -->
                     <div id="u22" class="ax_default box_2">
                                            <!-- Post Background -->
                     <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
                         <div id="u21" class="text" style="visibility: visible;">
-                            <p><span>User01234</span></p>
+                            <p><span>{{ r.User.user_name }}</span></p>
                         </div>
-                        <p><span>Today 9:13 am</span></p>
+                        <p><span>{{ r.Comment.posttime }}</span></p>
                     </div>
                     <!-- text of the comment-->
                     <div>
                         <div id = "default_inner">
                             <br>
                             <br>
-                             <p class="paragraph">This is a comment</p>
+                             <p class="paragraph">{{ r.Comment.message }}</p>
                         </div>
                     </div>
-                </div>
+		        {% if current_user.is_authenticated %}
+				{% if current_user.id == r.User.id %}
+					<div id="del_butt" style="float: right">
+						<form name="deletecomment" id="deletecomment" action="{{ url_for('recipe_view',recipeid=recipeid, commentid=r.Comment.id )}}" method="post" >
+							<input type="submit" value="Delete Comment">
+						</form>
+					</div>
+				{% endif %}
+			{% endif %}
+    	        </div>
                 <!-- individual comment box end-->
-
-
-
+		{% endfor %}
         </div>
-      
     </body>
 </html>
