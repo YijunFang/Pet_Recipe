@@ -273,7 +273,7 @@ def login():
             # signup page
             return render_template('login_err.html')
 
-        elif u.password == password:
+        elif u.password == password && u.authenticated==1:
             print("login success")
             user_id = u.id
             login_user(u)
