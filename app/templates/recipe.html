@@ -9,6 +9,8 @@
         <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
         <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
         <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link href="../static/files/upload_post/styles.css" type="text/css" rel="stylesheet"/>
     </head>
     <body>
 
@@ -94,8 +96,9 @@
  	        	<form name="commentform" id="commentform" action="{{ url_for('recipe_view',recipeid=recipeid )}}" method="post" class="wpl-track-me">
                     		<p class="heading_2">Comments</p>
                     		<p class="paragraph">Share your thoughts!</p><br>
-				<textarea name="comment" rows="4" cols="125" placeholder="Add comment here"></textarea>
-				<input type="submit" value="Submit">
+				<textarea name="comment" rows="4" cols="80" placeholder="Add comment here" class= "w3-textarea"></textarea>
+                <br>
+				<input type="submit" value="Submit" class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
 			</form>
 <!-- placeholder="Add comment here" value="" style="width:900px;height:100px;" />-->
                   </div>
@@ -109,7 +112,7 @@
                                            <!-- Post Background -->
                     <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
                         <div id="u21" class="text" style="visibility: visible;">
-                            <p><span>{{ r.User.user_name }}</span></p>
+                            <a href="{{url_for('profile_view',userid=r.User.id)}}"><p><span>{{ r.User.user_name }}</span></p></a>
                         </div>
                         <p><span>{{ r.Comment.posttime }}</span></p>
                     </div>
@@ -125,7 +128,7 @@
 				{% if current_user.id == r.User.id %}
 					<div id="del_butt" style="float: right">
 						<form name="deletecomment" id="deletecomment" action="{{ url_for('recipe_view',recipeid=recipeid, commentid=r.Comment.id )}}" method="post" >
-							<input type="submit" value="Delete Comment">
+							<input type="submit" value="Delete Comment"  class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
 						</form>
 					</div>
 				{% endif %}
