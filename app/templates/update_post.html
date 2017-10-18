@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../static/resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/files/upload_post/styles.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+
+{% include 'header.html' %}
+<div class="w3-row">
+<div class = "w3-col  w3-container w3-margin" style="width:20%"></div>
+<div class = "w3-col w3-container w3-padding-16 w3-margin" style="width:60%">
+    <!--Upload Post-->
+    <form class="w3-container w3-card w3-padding-large w3-margin-top" action="#" method="POST" enctype="multipart/form-data">
+        <h2 class="w3-text-blue">Upload Your Own Recipe</h2>
+    <p>      
+        <label class="w3-large w3-text-blue"><b>Title</b></label>
+        <input type="hidden" name="recipeid" value="{{recipeid}}">
+        <input class="w3-input w3-border w3-margin-bottom " name="title" type="text" value="{{ title }}" required></input></p>
+    
+    <p>
+            <label class="w3-large w3-text-blue"><b>Pet Type</b></label>
+            <br><select class="w3-select2 w3-border w3-margin-top w3-margin-bottom " name="pet_type">
+                  {% for p in pet_type %}
+                        {% if p.type == pettype %}
+                        <option selected value="{{p.id}}">{{p.type}}</option>
+                        {% else %}
+                            <option value="{{p.id}}">{{p.type}}</option>
+                        {% endif %}            
+                  {% endfor %}
+            </select>    
+            </label>
+        </br>
+    </p>
+
+    <script src="../static/files/update_post/addInput.js" language="Javascript" type="text/javascript"></script>
+    <p>      
+        <label class="w3-large w3-text-blue"><b>Ingredient</b></label>
+
+        <div id="ingredientInput" class="w3-row w3-margin-top">
+
+            {% set ing = ingredient.split('\n') %}
+            {% for text in ing%}
+            {% if '' != text %}
+            <div id="ingre_{{loop.index}}">
+            <div  class= "w3-col w3-container w3-large w3-margin-top w3-margin-right" style="width:3%"> {{loop.index}}.</div>
+            <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" name="ingredientInput_{{loop.index}}" type="text" value="{{text}}" required></input>
+            </div>
+            {% endif%}
+            {%endfor%}
+        </div>
+
+        <div class="w3-row w3-display-container w3-padding-32">
+            <input type="button" value="+ Add One More Ingreident" class= "w3-col w3-bar-item w3-button w3-light-blue w3-display-left" style="width: 48%" onClick="ingedInput('ingredientInput', {{(ing|length) -1 }});"></input>
+            <input type="button" value="x Delete This Ingreident" class= "w3-col w3-bar-item w3-button w3-pale-red w3-display-right" style="width: 48%" onClick="inged_removeLast('ingredientInput', {{(ing|length) -1}});" ></input>
+        </div>
+
+    </p>
+
+    <p>      
+        <label class="w3-large w3-text-blue"><b>Instruction</b></label>
+
+        <div id="instructionInput" class="w3-row w3-margin-top">
+            {% set instr = instruction.split('\n') %}
+            {% for text in instr%}
+            {% if '' != text %}
+            {% set no_index = text.split('.') %}
+            <div id="instr_{{loop.index}}">
+            <div  class= "w3-col w3-container w3-large w3-margin-top w3-margin-right" style="width:3%"> {{loop.index}}.</div>
+            <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" name="ingredientInput_{{loop.index}}" type="text" value="{{no_index[1]}}" required></input>
+            </div>
+            {% endif%}
+            {%endfor%}
+        </div>
+
+        <div class="w3-row w3-display-container w3-padding-32">
+            <input type="button" value= " + Add One More Instruction" class= "w3-col w3-bar-item w3-button w3-light-blue w3-display-left" style="width: 48%" onClick="instrInput('instructionInput', {{(instr|length) -1 }});"></input>
+            <input type="button" value="x Delete This Instruction" class= "w3-col w3-bar-item w3-button w3-pale-red w3-display-right" style="width: 48%" onClick="instr_removeLast('instructionInput', {{(instr|length) -1 }});" ></input>
+        </div>
+    </p>
+
+
+    <p>      
+        <label class="w3-large w3-text-blue"><b>Image</b></label>
+        {% if img is none %}
+        <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="file" accept=".jpg, .jpeg, .png, .gif" ></input></p>
+        {% else %}
+        <input class="w3-input w3-border w3-margin-bottom " name="post_image" type="file" accept=".jpg, .jpeg, .png, .gif" ></input></p>
+
+        {% endif %}    
+
+    <p>
+        <input type=submit name="upload" value="upload" class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
+        </input>
+
+    </p>
+    </form>
+
+
+    </div>
+
+    
+    <div class = "w3-col  w3-container" style="width:10%"></div>
+        </div>
+    </body>
+</html>

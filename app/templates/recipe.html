@@ -32,8 +32,8 @@
                     </div>-->
 
                     <!-- Post Time -->
-                    <div id="u22" class="ax_default box_2">
-                                           <!-- Post Background -->
+                    <div id="u22" class="ax_default box_2 ">
+                    <!-- Post Background -->
                     <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
                         <div id="u21" class="text" style="visibility: visible;">
                             <p><span> <a href="{{url_for('profile_view',userid=userid)}}">{{ user }}</a></span></p>
@@ -52,7 +52,7 @@
 
 
                     <!-- Recipe Post Content -->
-                    <div id="u24" class="ax_default box_2">
+                    <div id="u24" class="ax_default box_2 w3-display-container">
                     <!-- recipe post left column (recipe image)-->
                     <div class="recipe_column_left">
                         <div id = "default_inner">
@@ -82,29 +82,36 @@
                         <br>
                       </div>
                     </div>
+
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.id == userid %}
+                        <form action="#" method="POST" enctype="multipart/form-data">
+                            <input type="submit" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background" name="update" value="Edit"></input>
+                        </form>
+                        {% endif %}
+                    {% endif %}
                     <div class="clear"></div>  
                     </div>
-
                 </div>
 
                 <!-- comment form -->
                 <div id="u14" class="">
 
                 <!-- comment section title-->
-	        {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated %}
                 <div id="default_inner" class="container" >
- 	        	<form name="commentform" id="commentform" action="{{ url_for('recipe_view',recipeid=recipeid )}}" method="post" class="wpl-track-me">
-                    		<p class="heading_2">Comments</p>
-                    		<p class="paragraph">Share your thoughts!</p><br>
-				<textarea name="comment" rows="4" cols="80" placeholder="Add comment here" class= "w3-textarea"></textarea>
+                <form name="commentform" id="commentform" action="{{ url_for('recipe_view',recipeid=recipeid )}}" method="post" class="wpl-track-me">
+                            <p class="heading_2">Comments</p>
+                            <p class="paragraph">Share your thoughts!</p><br>
+                <textarea name="comment" rows="4" cols="80" placeholder="Add comment here" class= "w3-textarea"></textarea>
                 <br>
-				<input type="submit" value="Submit" class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
-			</form>
+                <input type="submit" value="Submit" class="w3-btn w3-round-large w3-margin-bottom theme-color-background"></input>
+            </form>
 <!-- placeholder="Add comment here" value="" style="width:900px;height:100px;" />-->
                   </div>
-		{% endif %}
+        {% endif %}
                 </div>
-		 {% for r in comments %}
+         {% for r in comments %}
                  <!-- individual comment box start-->
                  <div id="u14" class="">
                     <!-- Post Time -->
@@ -124,18 +131,18 @@
                              <p class="paragraph">{{ r.Comment.message }}</p>
                         </div>
                     </div>
-		        {% if current_user.is_authenticated %}
-				{% if current_user.id == r.User.id %}
-					<div id="del_butt" style="float: right">
-						<form name="deletecomment" id="deletecomment" action="{{ url_for('recipe_view',recipeid=recipeid, commentid=r.Comment.id )}}" method="post" >
-							<input type="submit" value="Delete Comment"  class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
-						</form>
-					</div>
-				{% endif %}
-			{% endif %}
-    	        </div>
+                {% if current_user.is_authenticated %}
+                {% if current_user.id == r.User.id %}
+                    <div id="del_butt" style="float: right">
+                        <form name="deletecomment" id="deletecomment" action="{{ url_for('recipe_view',recipeid=recipeid, commentid=r.Comment.id )}}" method="post" >
+                            <input type="submit" value="Delete Comment"  class="w3-btn w3-round-large w3-margin-bottom theme-color-background">
+                        </form>
+                    </div>
+                {% endif %}
+            {% endif %}
+                </div>
                 <!-- individual comment box end-->
-		{% endfor %}
+        {% endfor %}
         </div>
     </body>
 </html>

@@ -388,14 +388,28 @@ def recipe_view():
     parameters from the previous page, so use db lookup with recipe id
 
     """
-    sys.stderr.write('###recipe view entered###\n')
+    print('###recipe view entered###\n')
     #case 1: handle links in form of {{ url_for('recipe_view',rid= r.Recipe.id }}
     recipeid = request.args.get('recipeid')
+
     if recipeid is not None:
+        input_pet_type = Pet_type.query.all()
         recipe = db_session.query(Recipe,Pet_type,User).\
                                  filter(Recipe.type==Pet_type.id). \
                                  filter(Recipe.user_id==User.id). \
                                  filter(Recipe.id==recipeid).first()
+        if request.method =='POST' and request.form['update'] is not None:
+            return render_template("/update_post.html",
+                pet_type= input_pet_type,
+                recipeid=recipe.Recipe.id,
+                title=recipe.Recipe.title,
+                ingredient=recipe.Recipe.ingredient,
+                instruction=recipe.Recipe.instruction,
+                pettype=recipe.Pet_type.type,
+                user=recipe.User.user_name,
+                img=recipe.Recipe.imagepath,
+                userid=recipe.User.id)
+
         comments = db_session.query(Comment,User).filter(Comment.recipe_id==recipeid). \
                             filter(Comment.user_id==User.id).all()
 
@@ -403,7 +417,7 @@ def recipe_view():
 
         if commentid is not None:
     
-            sys.stderr.write('###delete comment entered###\n')
+            print('###delete comment entered###')
 
     #       meta = MetaData(engine,reflect=True)
     #       table = meta.tables['comment']
@@ -429,14 +443,16 @@ def recipe_view():
             userid=recipe.User.id,
             comments=comments)
         else:
-
             if request.method=='POST':
                 #see how upload recipe uploads to database
             
-                sys.stderr.write('###post method entered###\n')
+                print('###post method entered###')
+
                 comment = request.form['comment']
                 user_id=current_user.id
                 dbs = db_session.query(User).filter_by(id= user_id).first()
+                update = request.form['update']
+
                 
                 if(dbs is not None):
                     meta = MetaData(engine,reflect=True)
@@ -447,7 +463,7 @@ def recipe_view():
                     conn.close()
                     comments = db_session.query(Comment,User).filter(Comment.recipe_id==recipeid). \
                                 filter(Comment.user_id==User.id).all()
-        
+
                     return render_template("recipe.html",
                     recipeid=recipe.Recipe.id,
                     title=recipe.Recipe.title,
@@ -474,7 +490,7 @@ def recipe_view():
                     comments=comments)
 
     else:
-        sys.stderr.write('###redirect to home entered###\n')
+        print('redirect to home entered')
         return redirect('/')
 
 
@@ -563,6 +579,73 @@ def upload_post():
 
     else:
         return render_template('upload_post.html', pet_type = input_pet_type)
+
+@app.route('/update_post', methods = ['GET', 'POST'])
+@login_required
+def update_post():
+    print ('check')
+    UPLOAD_FOLDER = 'app/static/images/recipe_image'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    input_pet_type = Pet_type.query.all()
+    if request.method == 'POST':
+        print ('in post')
+        print (request.form)
+        title = request.form['title']
+        pet_type = request.form['pet_type']
+        recipeid = request.form['recipeid']
+        print (recipeid)
+        user_id=current_user.id
+        u = db_session.query(User).filter_by(id= user_id).first()
+
+        ing_counter = 1
+        ins_counter = 1
+        ingredient = ""
+        instruction = ""
+        # Get the instruction and indigation
+        for r in sorted(request.form.iterkeys()):
+            ingredient_target = 'ingredientInput_' + str(ing_counter)
+            instruction_target = 'instructionInput_' + str(ins_counter)
+            print (ingredient_target)
+            if r == ingredient_target :
+                print (r)
+                r_content = request.form[ingredient_target]
+                #instruction = str(indigredient) + str(counter) + ". " + str(r_content) + '\n'
+                ingredient = str(ingredient)+ str(r_content) + '\n'
+                print (ingredient)
+                ing_counter+=1
+            elif r == instruction_target:
+                print (r)
+                r_content = request.form[instruction_target]
+                instruction = str(instruction) + str(ins_counter) + ". " + str(r_content) + '\n'
+                print (instruction)
+                ins_counter+=1
+
+        #instruction = request.form['instruction']
+
+
+        img = request.files['post_image']
+        if img.filename == '':
+            img_path = None
+        if img and allowed_file(img.filename):
+            filename = secure_filename(img.filename)
+            img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print ('file upload successfully!')
+            img_path = '../static/images/recipe_image/' + filename
+            print (img_path)
+
+        if( recipeid is not None):
+            #user_id=user_id, ingredient=ingredient, instruction=instruction, type=pet_type, title=title, imagepath=img_path
+            # handle ingredient update
+            if ingredient:
+                db_session.query(Recipe).filter(Recipe.id==recipeid).update({User.ingredient:ingredient})
+                db_session.commit()
+
+            return redirect('/profile')
+        else:
+            return render_template('update_post.html', pet_type = input_pet_type)
+
+    else:
+        return render_template('update_post.html', pet_type = input_pet_type)
 
 if __name__ == '__main__':
     #print "lol"
