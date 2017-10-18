@@ -86,7 +86,7 @@
                     {% if current_user.is_authenticated %}
                         {% if current_user.id == userid %}
                         <form action="#" method="POST" enctype="multipart/form-data">
-                            <input type="submit" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background" name="update" value="Edit"></input>
+                            <a href="{{url_for('update_post', recipeid=recipeid)}}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background" name="update">Edit</a>
                         </form>
                         {% endif %}
                     {% endif %}

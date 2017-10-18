@@ -44,7 +44,7 @@ function inged_removeLast(divName, base){
 }
 
 function instr_removeLast(divName,base){
-     var instr_counter = in_counter_base + base;
+     var instr_counter = instr_counter_base + base;
      if(instr_counter == 1){
           alert("At least have one instruction");
      }else{

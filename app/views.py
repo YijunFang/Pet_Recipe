@@ -398,17 +398,6 @@ def recipe_view():
                                  filter(Recipe.type==Pet_type.id). \
                                  filter(Recipe.user_id==User.id). \
                                  filter(Recipe.id==recipeid).first()
-        if request.method =='POST' and request.form['update'] is not None:
-            return render_template("/update_post.html",
-                pet_type= input_pet_type,
-                recipeid=recipe.Recipe.id,
-                title=recipe.Recipe.title,
-                ingredient=recipe.Recipe.ingredient,
-                instruction=recipe.Recipe.instruction,
-                pettype=recipe.Pet_type.type,
-                user=recipe.User.user_name,
-                img=recipe.Recipe.imagepath,
-                userid=recipe.User.id)
 
         comments = db_session.query(Comment,User).filter(Comment.recipe_id==recipeid). \
                             filter(Comment.user_id==User.id).all()
@@ -518,6 +507,7 @@ def upload_post():
     UPLOAD_FOLDER = 'app/static/images/recipe_image'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     input_pet_type = Pet_type.query.all()
+
     if request.method == 'POST':
         print ('in post')
         print (request.form)
@@ -587,6 +577,9 @@ def update_post():
     UPLOAD_FOLDER = 'app/static/images/recipe_image'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     input_pet_type = Pet_type.query.all()
+    recipeid = request.args.get('recipeid')
+    user_id=current_user.id
+
     if request.method == 'POST':
         print ('in post')
         print (request.form)
@@ -594,7 +587,6 @@ def update_post():
         pet_type = request.form['pet_type']
         recipeid = request.form['recipeid']
         print (recipeid)
-        user_id=current_user.id
         u = db_session.query(User).filter_by(id= user_id).first()
 
         ing_counter = 1
@@ -636,8 +628,20 @@ def update_post():
         if( recipeid is not None):
             #user_id=user_id, ingredient=ingredient, instruction=instruction, type=pet_type, title=title, imagepath=img_path
             # handle ingredient update
+            if title:
+                db_session.query(Recipe).filter(Recipe.id==recipeid).update({Recipe.title:title})
+                db_session.commit()
+            if pet_type:
+                db_session.query(Recipe).filter(Recipe.id==recipeid).update({Recipe.type:pet_type})
+                db_session.commit()
             if ingredient:
-                db_session.query(Recipe).filter(Recipe.id==recipeid).update({User.ingredient:ingredient})
+                db_session.query(Recipe).filter(Recipe.id==recipeid).update({Recipe.ingredient:ingredient})
+                db_session.commit()
+            if instruction:
+                db_session.query(Recipe).filter(Recipe.id==recipeid).update({Recipe.instruction:instruction})
+                db_session.commit()
+            if img_path:
+                db_session.query(Recipe).filter(Recipe.id==recipeid).update({Recipe.imagepath:img_path})
                 db_session.commit()
 
             return redirect('/profile')
@@ -645,7 +649,18 @@ def update_post():
             return render_template('update_post.html', pet_type = input_pet_type)
 
     else:
-        return render_template('update_post.html', pet_type = input_pet_type)
+        print ('in get')
+        r = db_session.query(Recipe).filter(Recipe.id==recipeid).first()
+
+        return render_template("/update_post.html", \
+                pet_type= input_pet_type, \
+                recipeid=r.id, \
+                title=r.title, \
+                ingredient=r.ingredient, \
+                instruction=r.instruction, \
+                pettype=r.type, \
+                img=r.imagepath, \
+                userid=user_id)
 
 if __name__ == '__main__':
     #print "lol"

@@ -19,7 +19,7 @@
 <div class = "w3-col w3-container w3-padding-16 w3-margin" style="width:60%">
     <!--Upload Post-->
     <form class="w3-container w3-card w3-padding-large w3-margin-top" action="#" method="POST" enctype="multipart/form-data">
-        <h2 class="w3-text-blue">Upload Your Own Recipe</h2>
+        <h2 class="w3-text-blue">Update Your Own Recipe</h2>
     <p>      
         <label class="w3-large w3-text-blue"><b>Title</b></label>
         <input type="hidden" name="recipeid" value="{{recipeid}}">
@@ -71,10 +71,10 @@
             {% set instr = instruction.split('\n') %}
             {% for text in instr%}
             {% if '' != text %}
-            {% set no_index = text.split('.') %}
+            {% set no_index = text.split('. ') %}
             <div id="instr_{{loop.index}}">
             <div  class= "w3-col w3-container w3-large w3-margin-top w3-margin-right" style="width:3%"> {{loop.index}}.</div>
-            <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" name="ingredientInput_{{loop.index}}" type="text" value="{{no_index[1]}}" required></input>
+            <input class="w3-col w3-input w3-border w3-margin-bottom " style="width:90%" name="instructionInput_{{loop.index}}" type="text" value="{{no_index[1]}}" required></input>
             </div>
             {% endif%}
             {%endfor%}
