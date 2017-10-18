@@ -273,7 +273,7 @@ def login():
             # signup page
             return render_template('login_err.html')
 
-        elif u.password == password && u.authenticated==1:
+        elif u.password == password and u.authenticated==1:
             print("login success")
             user_id = u.id
             login_user(u)
@@ -323,7 +323,7 @@ def register():
             # email = request.form['email']
             token = s.dumps(email, salt='email-confirm')
             # fill in your host email
-            msg = Message('Confirm Email', sender='youremail', recipients=[email])
+            msg = Message('Confirm Email', sender='yarn.toddy@gmail.com', recipients=[email])
             # msg = Message('Confirm Email', sender='yoof.tot@gmail.com', recipients=[email])
             link = url_for('confirm_email', token=token, _external=True)
             msg.body = 'Your link to comfirm account register in Pet Recipe is {}'.format(link)
