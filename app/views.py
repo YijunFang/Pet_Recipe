@@ -250,7 +250,18 @@ def update_profile_view():
         user_to_update = db_session.query(User).filter(User.id==current_user.id).update({User.profile_pic:img_path})
         db_session.commit()         
 
-    return render_template("update_profile.html",pet_type=input_pet_type,user_pets=user_pets,message="Profile successfully updated")
+    if new_username or new_password or new_email:
+        msg = Message('Personal information get updated', sender='yarn.toddy@gmail.com', recipients=[u.email])
+        if new_username:
+            msg.body = 'Hi {}, you have updated your personal information on Pet Recipe'.format(new_username)
+        else:
+            msg.body = 'Hi {}, you have updated your personal information on Pet Recipe'.format(u.username)
+
+        mail.send(msg)
+    # go back to profile if updated
+    return redirect('/profile')
+
+    # return render_template("update_profile.html",pet_type=input_pet_type,user_pets=user_pets,message="Profile successfully updated")
 
 @login_manager.user_loader
 def user_loader(user_id):
@@ -350,7 +361,7 @@ def confirm_email(token):
         user_id = u.id
         print ('comfirm email')
         login_user(u)
-
+        # return redirect('/')
         return render_template('home.html')
     except SignatureExpired:
         return '<h1>The token is expired!</h1>'
