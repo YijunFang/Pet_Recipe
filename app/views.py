@@ -193,7 +193,7 @@ def profile_view():
 
     #check if current user follows userid
     isFollowing = False
-    if db_session.query(Follow).filter(Follow.my_id==current_user.id).filter(Follow.other_id==userid).all():
+    if current_user.is_authenticated and db_session.query(Follow).filter(Follow.my_id==current_user.id).filter(Follow.other_id==userid).all():
         isFollowing = True
 
     if request.method == 'POST':
