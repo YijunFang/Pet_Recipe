@@ -197,21 +197,20 @@ def update_profile_view():
         if petname is not None and pettype is not None and petid is not None and petdelete is None:
             if petid == "-1":
                 print("inserting new pet...")
-                rows = db_session.query(Pet).count() + 1
+                rows = db_session.query(Pet).order_by(Pet.id.desc()).first().id + 1
                 new_pet = Pet(id=rows,type=pettype,NAME=petname,owner=current_user.id)
                 db_session.add(new_pet)
-                db_session.commit()
             #update existing pets in db
             else:
                 print('updating existing pet...')
                 db_session.query(Pet).filter(Pet.id==petid). \
                                       update({Pet.NAME:petname, Pet.type:pettype})
-                db_session.commit()
+                
         #delete pets marked for deletion
         if petdelete is not None and petid is not None:
             print('deleting pet...')
             db_session.query(Pet).filter(Pet.id==petid).delete()
-            db_session.commit()
+            
 
     # get new list of pets
     user_pets = db_session.query(Pet,Pet_type). \
@@ -220,22 +219,20 @@ def update_profile_view():
 
     # handle username update
     new_username = request.form.get('username')
-    if new_username:
+    if new_username != current_user.user_name:
+        print("update username")
         db_session.query(User).filter(User.id==current_user.id).update({User.user_name:new_username})
-        db_session.commit()
 
     # handle password update
     new_password = request.form.get('new_password')
     if new_password:
         print("new pass")
         db_session.query(User).filter(User.id==current_user.id).update({User.password:new_password})
-        db_session.commit()
-
+        
     # handle email update
     new_email = request.form.get('email')
-    if new_email:
+    if new_email != current_user.email:
         db_session.query(User).filter(User.id==current_user.id).update({User.email:new_email})
-        db_session.commit()     
 
     # handle profile img update
     img = request.files['post_image']
@@ -248,9 +245,10 @@ def update_profile_view():
         img_path = '../static/images/profile_pic/' + filename
         print (img_path)
         user_to_update = db_session.query(User).filter(User.id==current_user.id).update({User.profile_pic:img_path})
-        db_session.commit()         
-
-    if new_username or new_password or new_email:
+        
+    db_session.commit()         
+    
+    if new_username != current_user.user_name or new_password or new_email != current_user.email:
         msg = Message('Personal information get updated', sender='yarn.toddy@gmail.com', recipients=[u.email])
         if new_username:
             msg.body = 'Hi {}, you have updated your personal information on Pet Recipe'.format(new_username)
@@ -258,6 +256,7 @@ def update_profile_view():
             msg.body = 'Hi {}, you have updated your personal information on Pet Recipe'.format(u.username)
 
         mail.send(msg)
+    
     # go back to profile if updated
     return redirect('/profile')
 
@@ -482,18 +481,10 @@ def recipe_view():
         print('redirect to home entered')
         return redirect('/')
 
-
-
-
-
-
-
-
-
-
-
-
-
+@app.route('/follow', methods = ['GET', 'POST'])
+@login_required
+def follow():
+    return redirect('/profile')
 
 
 
@@ -521,7 +512,7 @@ def upload_post():
         ingredient = ""
         instruction = ""
         # Get the instruction and indigation
-        for r in sorted(request.form.iterkeys()):
+        for r in sorted(request.form.items()):
             ingredient_target = 'ingredientInput_' + str(ing_counter)
             instruction_target = 'instructionInput_' + str(ins_counter)
             print (ingredient_target)

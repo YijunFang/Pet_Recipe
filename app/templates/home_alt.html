@@ -82,9 +82,9 @@
                             <div id = "default_inner">
                                 <p> <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
                                     instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_1" >{{ r.Recipe.title }}</a></p>
-                                    <br></br>
+                                    <br>
 
-                                    <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p>
+                                    <p>Suitable For {{ r.Pet_type.type }}</p>
 
 
 

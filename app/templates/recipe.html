@@ -67,10 +67,6 @@
                     <!-- recipe post right column -->
                     <div class="recipe_column_right">
                         <div id = "default_inner">
-                        {% if current_user.is_authenticated %}
-                        <p class="heading_3"><a href="{{url_for('fave',recipetofave=recipeid)}}">Fave This Recipe</a></p>  
-                        <br>
-                        {% endif %}
                         
                         <p class="heading_3">Suitable For {{ pettype }}</p><br>
 
@@ -84,10 +80,16 @@
                     </div>
 
                     {% if current_user.is_authenticated %}
+
                         {% if current_user.id == userid %}
                         <form action="#" method="POST" enctype="multipart/form-data">
                             <a href="{{url_for('update_post', recipeid=recipeid)}}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background" name="update">Edit</a>
                         </form>
+                        {% else %}
+                        <form action="/fave" method="POST">
+                            <a href="{{url_for('fave',recipetofave=recipeid)}}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background" name="fave">Fave</a>
+                        </form>
+
                         {% endif %}
                     {% endif %}
                     <div class="clear"></div>  
