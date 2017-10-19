@@ -9,11 +9,12 @@
     <link href="../static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
     <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
     <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
+    <script src="../static/files/home/tab.js" language="Javascript" type="text/javascript"></script>
     <link href="../static/files/result_page/styles.css" type="text/css" rel="stylesheet"/>
     <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
-
     {% include 'header.html' %}
 
     <div id="u12" class="">
@@ -22,6 +23,21 @@
 
     <!-- back (Rectangle) -->
     <div id="u12" class="">
+    <div >
+        <button class="w3-bar-item w3-button w3-border-top w3-border-left w3-border-right w3-border-grey w3-light-grey w3-large tablink" onClick="changeTab(event,'Fave')">Favouite</button>
+        <button class="w3-bar-item w3-button w3-grey w3-round w3-large tablink" onClick="changeTab(event,'Pop')">Popular</button>
+        <button class="w3-bar-item w3-button w3-grey w3-round w3-large tablink" onClick="changeTab(event,'Follow')">Following</button>
+    </div>
+    <div class="w3-card w3-padding-small">
+
+<!-- post part -->
+ 
+  <div id="Fave" class="w3-container tab">
+    <!-- implement fave post -->
+
+    <!-- test example
+    <h2>London</h2>
+    <p>London is the capital city of England.</p> -->
 
         <!-- start recipe box here with u14-->
         <!-- Recipes Post -->
@@ -78,8 +94,24 @@
 
     </div>
     {% endfor %}
+  </div>
 
-</div>
+  <div id="Pop" class="w3-container tab" style="display:none">
+    <!-- implement popular post -->
+    <h2>Paris</h2>
+    <p>Paris is the capital of France.</p> 
+  </div>
+
+  <div id="Follow" class="w3-container tab" style="display:none">
+    <!--implement following post -->
+    <h2>Tokyo</h2>
+    <p>Tokyo is the capital of Japan.</p>
+  </div>
+
+
+<!-- post part end -->
+    </div>
+    </div>
 
 </body>
 </html>
