@@ -16,7 +16,7 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from .forms import LoginForm
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
@@ -44,15 +44,21 @@ user_id = None
 
 @app.route('/')
 def index():
+    # get most popular by faves
+    popular =[]
+    fave_count =  db_session.query(func.count(Favourite.recipe_id).label("total"),Favourite.recipe_id).group_by(Favourite.recipe_id).subquery()
+    print(fave_count)
+    popular = recipes = db_session.query(Recipe,Pet_type,User). \
+                        join(fave_count,Recipe.id==fave_count.c.recipe_id). \
+                        order_by(fave_count.c.total.desc()). \
+                        filter(Recipe.type==Pet_type.id). \
+                        filter(Recipe.user_id==User.id).\
+                        all()
+
+
     #show logged in version of homepage with favorites
     if current_user.is_authenticated:
-        popular =[]
-        popular = db_session.query(User,Favourite,Recipe,Pet_type). \
-                    filter(Favourite.recipe_id==Recipe.id). \
-                    filter(Recipe.user_id==User.id). \
-                    filter(Recipe.type==Pet_type.id). \
-                    limit(10). \
-                    all()
+
         following = []
         following = db_session.query(User,Follow,Recipe,Pet_type). \
                     filter(Follow.my_id==current_user.id). \
@@ -68,13 +74,12 @@ def index():
                     filter(Recipe.type==Pet_type.id). \
                     all()
         return render_template("home.html",popular=popular,following=following,faves=faves) 
-        #return render_template('home.html',recipes=recipes)
 
     #show guest version of homepage
     else:
         recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
                                  filter(Recipe.user_id==User.id).limit(10).all()
-        return render_template("home_alt.html",recipes=recipes) 
+        return render_template("home_alt.html",recipes=popular) 
                                                             
                                                              
     
