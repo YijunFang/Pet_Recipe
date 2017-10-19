@@ -53,7 +53,7 @@ def index():
     #show guest version of homepage
     else:
         recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
-                                 filter(Recipe.user_id==User.id).all()
+                                 filter(Recipe.user_id==User.id).limit(10).all()
         return render_template("home_alt.html",recipes=recipes) 
                                                             
                                                              
@@ -206,6 +206,19 @@ def follow():
     db_session.commit()
     return redirect(url_for('profile_view',userid=userid))
 
+
+@app.route('/show_following', methods = ['GET'])
+@login_required
+def show_following():
+    recipes = []
+    recipes = db_session.query(User,Follow,Recipe,Pet_type). \
+                    filter(Follow.my_id==current_user.id). \
+                    filter(Follow.other_id==User.id). \
+                    filter(Recipe.user_id==User.id). \
+                    filter(Recipe.type==Pet_type.id). \
+                    all()
+    
+    return render_template('home.html',recipes=recipes)
 
 @app.route('/update_profile', methods = ['GET', 'POST'])
 @login_required

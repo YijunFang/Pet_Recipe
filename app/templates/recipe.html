@@ -11,6 +11,7 @@
         <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link href="../static/files/upload_post/styles.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
 
@@ -83,11 +84,11 @@
 
                         {% if current_user.id == userid %}
                         <form action="#" method="POST" enctype="multipart/form-data">
-                            <a href="{{url_for('update_post', recipeid=recipeid)}}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background" name="update">Edit</a>
+                            <a href="{{url_for('update_post', recipeid=recipeid)}}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background fa fa-pencil" name="update"></a>
                         </form>
                         {% else %}
                         <form action="/fave" method="POST">
-                            <a href="{{url_for('fave',recipetofave=recipeid)}}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background" name="fave">Fave</a>
+                            <a href="{{url_for('fave',recipetofave=recipeid)}}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background fa fa-heart" name="fave"></a>
                         </form>
 
                         {% endif %}
