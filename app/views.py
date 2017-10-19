@@ -49,6 +49,7 @@ def index():
         recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
                                  filter(Recipe.user_id==User.id).all()
         return redirect('/fave')
+        #return render_template('home.html',recipes=recipes)
 
     #show guest version of homepage
     else:
