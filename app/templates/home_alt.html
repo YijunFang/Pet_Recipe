@@ -10,75 +10,101 @@
         <link href="../static/data/styles.css" type="text/css" rel="stylesheet"/>
         <link href="../static/files/home/styles.css" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link href="../static/files/header/styles_alt.css" type="text/css" rel="stylesheet"/>
+        <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
+
     </head>
     <body>
 
-    {% include 'header.html' %}
     
-    <div class="slideshow">
-    {% for r in recipes %}
-        {% if r.Recipe.imagepath is not none %}
-        <div class="mySlides">
 
-            <div class="recipe_column_left" >
-            <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
-                instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}"><img src="{{ r.Recipe.imagepath }}" width="100%"/></a>
-
-            </div>
-            <div class="recipe_column_right" style="color:white;">
-                <div id = "default_inner">
-                                   <p> <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
-                instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_1" >{{ r.Recipe.title }}</a></p>
-
-                    <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
-
-                    
-
-                    <p class="heading_3">Ingredients</p><br>
-
-                    <p class="paragraph">{{ r.Recipe.ingredient.replace('\n','<br />')|safe }}</p>
-                    
-                    <!--
-                    <br><p class="heading_3">Instructions</p><br>
-
-                    <p class="paragraph">{{ r.Recipe.instruction.replace('\n','<br />')|safe }}</p>
-                    -->
-
-
-                    <br>
-                </div>
-            </div>
-            <div class="clear"></div>  
-        </div>
-
+    <!-- TOP Black Bar -->
+    <div id="u0" class="">
+        <div id="header_text" class="headerT">
+        <!-- Sign In / Resigter Icon-->
+        <p>
+        {% if current_user.is_authenticated %}
+            <a href="/profile">{{ current_user.user_name }}</a>
+            <a href="/profile"><img id="u4" class="img " src="../static/images/home/user_u16.png"/></a> /
+            <a href="/logout">Log Out</a>
+        {% else %}
+            <a href="/register">
+            Sign Up
+            </a>
+             / 
+            <a href="/login"> Login </a>
         {% endif %}
-    {% endfor %}   
-    <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-    <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+        </p>
+        </div>
     </div>
-    <div class="homegrey">
-        <br>
-        <p class="heading_0">Today's Recommended Recipes</p><br>
-    </div> 
-    </body>
-</html>
 
-<script>
-var slideIndex = 1;
-showDivs(slideIndex);
 
-function plusDivs(n) {
-    showDivs(slideIndex += n);
-}
+    <div class="searchbanner" align="center">
 
-function showDivs(n) {
-    var i;
-    var x = document.getElementsByClassName("mySlides");
-    if (n > x.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = x.length} ;
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    x[slideIndex-1].style.display = "block";
-}
-</script>
+            <p class="bigtitle">Pet Recipe</p>
+            <br>
+            <form method="POST" action ="/search">
+                    <input type="hidden" name="search_filter" value="Everything">
+                    <input type="text" name="search_term" placeholder="Search.." class="w3-input w3-border w3-margin-bottom"> 
+            </form> 
+    </div>
+
+    <div class="divider" >
+       <p style="margin-left:12%">Top Recipes</p>
+    </div>
+
+
+<div style="width:70%;margin-left:10%">
+ <table>
+
+    {% for r in recipes %}
+       
+
+
+            {% if loop.index % 3 == 1 %}
+            <tr>
+            {% endif %}
+
+            <td>
+
+                <div id = "u14" >
+                    <div id="u24" class="ax_default box_2">
+                        <div>
+
+                            {% if r.Recipe.imagepath is not none %}
+                            <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id)}}"><img src="{{ r.Recipe.imagepath }} " width="400px"/></a>
+                            {% else %}
+                            <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id)}}"> <img src="../static/images/noimage.jpg" width="400px"/></a>
+                            {% endif %}
+
+
+
+                            <div id = "default_inner">
+                                <p> <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                                    instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_1" >{{ r.Recipe.title }}</a></p>
+                                    <br></br>
+
+                                    <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p>
+
+
+
+
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </td>
+
+            {% if loop.index % 3 == 0 %}
+            </tr>
+            {% endif %}
+
+        
+    {% endfor %}  
+</table> 
+
+
+</div>
+</body>

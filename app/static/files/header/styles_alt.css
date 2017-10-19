@@ -1,0 +1,149 @@
+﻿body {
+  margin:0;
+  background-color:rgba(242, 242, 242, 1);
+
+}
+
+#u0 {
+  position: relative;
+  width:100%;
+  height:8%;
+  background-color:rgba(65, 65, 65, 1);
+
+}
+
+#header_text{
+  float: right;
+  position: relative;
+  top: 30%;
+  right: 1%;
+  font-weight:400;
+  color: lightgrey;
+  vertical-align: middle;
+  font-family: Verdana,sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.headerT a:link {
+    color: lightgrey; 
+    background-color: transparent; 
+    text-decoration: none;
+}
+
+.headerT a:visited {
+    color: lightgrey;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.headerT a:hover {
+    color: red;
+    background-color: transparent;
+}
+
+.headerT a:active {
+    color: blue;
+    background-color: transparent;
+}
+
+#u1 {
+  position: relative;
+  width:100%;
+  height:13%;
+  background:inherit;
+  background-color:rgba(120, 219, 255, 1);
+  border:none;
+  border-radius:0px;
+  -moz-box-shadow:5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+  -webkit-box-shadow:5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+  box-shadow:5px 5px 5px rgba(0, 0, 0, 0.349019607843137);
+}
+
+#u2 {
+  position:relative;
+  left: 5%;
+  top: -3px;
+  vertical-align: middle;
+}
+
+#u3 {
+  display: inline-block;
+  position:relative;
+  left: 3%;
+  top: 15%;
+  width: 30%;
+  height:100% ;
+  font-family:'SignPainter-HouseScript', 'SignPainter HouseScript', 'SignPainter';
+  font-weight:400;
+  font-style:italic;
+  font-size:42px;
+}
+
+#u4 {
+  float: right;
+  position:relative;
+  right:110%;
+  top:-5px;
+  width:33px;
+  height:34px;
+}
+
+
+
+.dropbtn {
+  position:relative;
+  width:120px;
+  height:45px;
+  background:inherit;
+  background-color:rgba(242, 242, 242, 1);
+  border:solid #ccc;
+  border-radius: 4px;
+  border-top-right-radius:0px;
+  border-bottom-right-radius:0px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color:rgba(242, 242, 242, 1);
+}
+
+.dropdown {
+    position: relative;
+    float: right;
+    right: 30%;
+    top: 35%;
+    z-index: 99;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color:rgba(242, 242, 242, 1);
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background:inherit;
+    background-color:rgba(242, 242, 242, 1);
+    text-align: center;
+    font-size: 16px;
+    z-index: 99;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    background:inherit;
+    background-color:rgba(242, 242, 242, 1);
+    border:solid #ccc;
+    text-align: center;
+    font-size: 16px;
+    display: block;
+}
+
+.dropdown a:hover {  background-color:rgba(242, 242, 242, 1)}
+
+.show {display:block;}
