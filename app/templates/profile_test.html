@@ -35,11 +35,17 @@
             <p class="title_large">{{ profile[0].user_name }}</p>
             <p class="paragraph">{{ profile[0].email }}</p>
             <br>
+
             {% if current_user.id == profile[0].id %}
             <a href="/update_profile" style="color: #169BD5"><p class="heading_3">Update Profile</p></a>
             {% elif current_user.is_authenticated %}
-            <a href="{{url_for('follow',userid=profile[0].id)}}" style="color: #169BD5"><p class="heading_3">Follow User</p></a>
+                {% if isFollowing %}
+                    <a href="{{url_for('follow',userid=profile[0].id,followaction="unfollow")}}" style="color: #169BD5"><p class="heading_3">Unfollow User</p></a>
+                {% else %}
+                    <a href="{{url_for('follow',userid=profile[0].id,followaction="follow")}}" style="color: #169BD5"><p class="heading_3">Follow User</p></a>
+                {% endif %}
             {% endif %}
+
             <br>
             <p class="heading_3">Pets Owned</p>
             <ul>
@@ -50,6 +56,26 @@
                 <li>None</li>
             {% endif %}
             </ul>
+
+            <p class="heading_3">Followers</p>
+            <ul>
+            {% for f in followers %}
+            <li><p class="paragraph"><a href="{{url_for('profile_view',userid=f.User.id)}}">{{ f.User.user_name }} </a> </p></li>
+            {% endfor %}
+            {% if followers|count == 0 %}
+                <li>None</li>
+            {% endif %} 
+            </ul> 
+
+            <p class="heading_3">Following</p>
+            <ul>
+            {% for f in following %}
+            <li><p class="paragraph"><a href="{{url_for('profile_view',userid=f.User.id)}}">{{ f.User.user_name }} </a> </p></li>
+            {% endfor %}
+            {% if following|count == 0 %}
+                <li>None</li>
+            {% endif %} 
+            </ul>  
 
             </div>
 

@@ -153,6 +153,24 @@ def profile_view():
                     filter(Recipe.user_id==userid). \
                     filter(Recipe.type==Pet_type.id). \
                     all()
+
+    followers = []
+    followers = db_session.query(User,Follow). \
+                    filter(Follow.other_id==userid). \
+                    filter(Follow.my_id==User.id). \
+                    all()
+
+    following = []
+    following = db_session.query(User,Follow). \
+                    filter(Follow.my_id==userid). \
+                    filter(Follow.other_id==User.id). \
+                    all()
+
+    #check if current user follows userid
+    isFollowing = False
+    if db_session.query(Follow).filter(Follow.my_id==current_user.id).filter(Follow.other_id==userid).all():
+        isFollowing = True
+
     if request.method == 'POST':
         print ("in post")
         print (request)
@@ -164,7 +182,29 @@ def profile_view():
         return redirect('/profile')
     else:
         print(profile)
-        return render_template("profile_test.html",profile=profile,recipes=recipes,pets=pets)
+        return render_template("profile_test.html",profile=profile,recipes=recipes,pets=pets,followers=followers \
+                               ,isFollowing=isFollowing, following=following)
+
+
+@app.route('/follow', methods = ['GET'])
+@login_required
+def follow():
+    userid = request.args.get('userid')
+    followaction = request.args.get('followaction')
+    print(userid+" "+followaction)
+
+    if not userid:
+        return redirect('/')
+
+    if followaction == 'follow':
+        newid = db_session.query(Follow).order_by(Follow.id.desc()).first().id + 1
+        new_follow = Follow(id=newid,my_id=current_user.id,other_id=userid)
+        db_session.add(new_follow)
+    if followaction == 'unfollow':
+        db_session.query(Follow).filter(Follow.my_id==current_user.id).filter(Follow.other_id==userid).delete()
+
+    db_session.commit()
+    return redirect(url_for('profile_view',userid=userid))
 
 
 @app.route('/update_profile', methods = ['GET', 'POST'])
@@ -480,12 +520,6 @@ def recipe_view():
     else:
         print('redirect to home entered')
         return redirect('/')
-
-@app.route('/follow', methods = ['GET', 'POST'])
-@login_required
-def follow():
-    return redirect('/profile')
-
 
 
 def allowed_file(filename):

@@ -39,6 +39,9 @@ class Comment(Base):
 class Favourite(Base):
 	__table__ = Base.metadata.tables['favourite']
 
+class Follow(Base):
+    __table__ = Base.metadata.tables['follow']
+
 class Pet(Base):
 	__table__ = Base.metadata.tables['pet']
 
