@@ -46,9 +46,28 @@ user_id = None
 def index():
     #show logged in version of homepage with favorites
     if current_user.is_authenticated:
-        recipes = db_session.query(Recipe,Pet_type,User).filter(Recipe.type==Pet_type.id). \
-                                 filter(Recipe.user_id==User.id).all()
-        return redirect('/fave')
+        popular =[]
+        popular = db_session.query(User,Favourite,Recipe,Pet_type). \
+                    filter(Favourite.recipe_id==Recipe.id). \
+                    filter(Recipe.user_id==User.id). \
+                    filter(Recipe.type==Pet_type.id). \
+                    limit(10). \
+                    all()
+        following = []
+        following = db_session.query(User,Follow,Recipe,Pet_type). \
+                    filter(Follow.my_id==current_user.id). \
+                    filter(Follow.other_id==User.id). \
+                    filter(Recipe.user_id==User.id). \
+                    filter(Recipe.type==Pet_type.id). \
+                    all()
+        faves = []
+        faves = db_session.query(User,Favourite,Recipe,Pet_type). \
+                    filter(Favourite.user_id==current_user.id). \
+                    filter(Favourite.recipe_id==Recipe.id). \
+                    filter(Recipe.user_id==User.id). \
+                    filter(Recipe.type==Pet_type.id). \
+                    all()
+        return render_template("home.html",popular=popular,following=following,faves=faves) 
         #return render_template('home.html',recipes=recipes)
 
     #show guest version of homepage
@@ -207,19 +226,6 @@ def follow():
     db_session.commit()
     return redirect(url_for('profile_view',userid=userid))
 
-
-@app.route('/show_following', methods = ['GET'])
-@login_required
-def show_following():
-    recipes = []
-    recipes = db_session.query(User,Follow,Recipe,Pet_type). \
-                    filter(Follow.my_id==current_user.id). \
-                    filter(Follow.other_id==User.id). \
-                    filter(Recipe.user_id==User.id). \
-                    filter(Recipe.type==Pet_type.id). \
-                    all()
-    
-    return render_template('home.html',recipes=recipes)
 
 @app.route('/update_profile', methods = ['GET', 'POST'])
 @login_required
@@ -429,10 +435,10 @@ def fave():
     recipetofave = request.args.get('recipetofave')  #id of recipe to fave
     if recipetofave is not None:
         print(recipetofave)
+        # add to db here
 
-    #put list of faves in recipes variable to be rendered by jinja
-    recipes = []
-    return render_template('home.html',recipes=recipes)
+
+    return redirect('/')
 
 @app.route('/recipe', methods = ['POST','GET']) 
 def recipe_view():

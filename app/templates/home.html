@@ -35,13 +35,9 @@
   <div id="Fave" class="w3-container tab">
     <!-- implement fave post -->
 
-    <!-- test example
-    <h2>London</h2>
-    <p>London is the capital city of England.</p> -->
-
         <!-- start recipe box here with u14-->
         <!-- Recipes Post -->
-        {% for r in recipes %}
+        {% for r in faves %}
         <div id="u14" class="">
                     <div id="u22" class="ax_default box_2">
                                            <!-- Post Background -->
@@ -97,15 +93,116 @@
   </div>
 
   <div id="Pop" class="w3-container tab" style="display:none">
-    <!-- implement popular post -->
-    <h2>Paris</h2>
-    <p>Paris is the capital of France.</p> 
+{% for r in popular %}
+        <div id="u14" class="">
+                    <div id="u22" class="ax_default box_2">
+                                           <!-- Post Background -->
+                    <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
+                        <div id="u21" class="text" style="visibility: visible;">
+                            <a href="{{url_for('profile_view',userid=r.User.id)}}"><p><span> {{ r.User.user_name }}</span></p></a>
+                        </div>
+                        <p><span>Today 9:13 am</span></p>
+                    </div>
+            <br></br>
+            <br></br>
+            <!-- Recipe Post Content -->
+            <div id="u24" class="ax_default box_2">
+
+                <!-- recipe post left column (recipe image)-->
+                <div class="recipe_column_left">
+
+
+                    {% if r.Recipe.imagepath is not none %}
+                    <img src="{{ r.Recipe.imagepath }}" id="recipe_img"/>
+                    {% else %}
+                    <img src="../static/images/noimage.jpg" id="recipe_img"/>
+                    {% endif %}
+
+                </div> 
+
+                <!-- recipe post right column -->
+
+                <div class="recipe_column_right">
+
+                    <div id = "default_inner">
+                        <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                        instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >{{ r.Recipe.title }}</a><br><br />
+                        <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
+                        
+                        <p class="heading_3">Ingredients</p><br>
+                        
+                        <p class="paragraph">{{ r.Recipe.ingredient.replace('\n','<br />')|safe }}</p>
+
+                        <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                        instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >
+                        <br><p class="heading_3">Read more...</p>
+                    </a>
+                </div>
+            </div>
+            
+
+            <div class="clear"></div>  
+        </div> 
+
+    </div>
+    {% endfor %}
   </div>
 
   <div id="Follow" class="w3-container tab" style="display:none">
     <!--implement following post -->
-    <h2>Tokyo</h2>
-    <p>Tokyo is the capital of Japan.</p>
+{% for r in following %}
+        <div id="u14" class="">
+                    <div id="u22" class="ax_default box_2">
+                                           <!-- Post Background -->
+                    <img id="u18" class="img " src="../static/images/home/post_u18.png"/> 
+                        <div id="u21" class="text" style="visibility: visible;">
+                            <a href="{{url_for('profile_view',userid=r.User.id)}}"><p><span> {{ r.User.user_name }}</span></p></a>
+                        </div>
+                        <p><span>Today 9:13 am</span></p>
+                    </div>
+            <br></br>
+            <br></br>
+            <!-- Recipe Post Content -->
+            <div id="u24" class="ax_default box_2">
+
+                <!-- recipe post left column (recipe image)-->
+                <div class="recipe_column_left">
+
+
+                    {% if r.Recipe.imagepath is not none %}
+                    <img src="{{ r.Recipe.imagepath }}" id="recipe_img"/>
+                    {% else %}
+                    <img src="../static/images/noimage.jpg" id="recipe_img"/>
+                    {% endif %}
+
+                </div> 
+
+                <!-- recipe post right column -->
+
+                <div class="recipe_column_right">
+
+                    <div id = "default_inner">
+                        <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                        instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >{{ r.Recipe.title }}</a><br><br />
+                        <p class="heading_3">Suitable For {{ r.Pet_type.type }}</p><br>
+                        
+                        <p class="heading_3">Ingredients</p><br>
+                        
+                        <p class="paragraph">{{ r.Recipe.ingredient.replace('\n','<br />')|safe }}</p>
+
+                        <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
+                        instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >
+                        <br><p class="heading_3">Read more...</p>
+                    </a>
+                </div>
+            </div>
+            
+
+            <div class="clear"></div>  
+        </div> 
+
+    </div>
+    {% endfor %}
   </div>
 
 
