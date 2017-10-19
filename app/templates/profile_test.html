@@ -45,7 +45,7 @@
             </ul>
             {% if current_user.id == profile[0].id %}
             <a href="/update_profile" style="color: #169BD5"><p class="heading_3">Update Profile</p></a>
-            {% else %}
+            {% elif current_user.is_authenticated %}
             <a href="/follow" style="color: #169BD5"><p class="heading_3">Follow User</p></a>
             {% endif %}
             </div>

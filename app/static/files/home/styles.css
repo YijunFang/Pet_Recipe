@@ -145,7 +145,7 @@ input[name="search_term"] {
 
 .bigtitle{
   font-style: bold;
-  font-family: arial;
+  font-family: 'Lobster', sans-serif;
   font-size: 160px;
   color: white;
 }
