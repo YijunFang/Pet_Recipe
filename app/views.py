@@ -163,6 +163,8 @@ def search_view():
 
 def isFaved(rid):
     isFave = False
+    if not current_user.is_authenticated:
+        return False
     if db_session.query(Favourite).filter(Favourite.user_id==current_user.id). \
                         filter(Favourite.recipe_id==rid).all():
         isFave = True
