@@ -54,7 +54,6 @@ def index():
                         filter(Recipe.user_id==User.id).\
                         all()
 
-
     #show logged in version of homepage with favorites
     if current_user.is_authenticated:
 
@@ -72,7 +71,18 @@ def index():
                     filter(Recipe.user_id==User.id). \
                     filter(Recipe.type==Pet_type.id). \
                     all()
-        return render_template("home.html",popular=popular,following=following,faves=faves) 
+
+        popularfaved = []
+        for r in popular:
+            rid = r.Recipe.id
+            popularfaved.append(isFaved(rid))
+
+        followfaved = []
+        for r in following:
+            rid = r.Recipe.id
+            followfaved.append(isFaved(rid))
+
+        return render_template("home.html",popular=popular,following=following,faves=faves,popularfaved=popularfaved,followfaved=followfaved) 
 
     #show guest version of homepage
     else:
@@ -453,7 +463,7 @@ def fave():
             print("removing fave")
 
 
-    return redirect(url_for('recipe_view',recipeid=recipetofave))
+    return redirect('/')
 
 @app.route('/recipe', methods = ['POST','GET']) 
 def recipe_view():

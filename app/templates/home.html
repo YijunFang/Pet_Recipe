@@ -83,11 +83,18 @@
                         instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >
                         <br><p class="heading_3">Read more...</p>
                         </a>
+
                 </div>
-            </form>
             </div>
         
             <div class="clear"></div> 
+                <form action = "" method = "post">
+                {% if faves[loop.index-1]%}
+                <a href="{{ url_for('fave', recipetofave=r.Recipe.id,action='remove') }}" style="float: right; top:-45px;left:-10px;position: relative; " class="w3-btn w3-large w3-round-large  theme-color-background fa fa-heart" name="update"></a>
+                {% else %}
+                <a href="{{ url_for('fave', recipetofave=r.Recipe.id,action='add') }}" style="float: right;top:-45px;left:-10px;position: relative; " class="w3-btn w3-large w3-round-large  theme-color-background fa fa-heart-o" name="update"></a>
+                {% endif %}
+                 </form>
  
         </div>
     </div>
@@ -145,6 +152,13 @@
             
 
             <div class="clear"></div>  
+                <form action = "" method = "post">
+                {% if popularfaved[loop.index-1]%}
+                <a href="{{ url_for('fave', recipetofave=r.Recipe.id,action='remove') }}" style="float: right; top:-45px;left:-10px;position: relative; " class="w3-btn w3-large w3-round-large  theme-color-background fa fa-heart" name="update"></a>
+                {% else %}
+                <a href="{{ url_for('fave', recipetofave=r.Recipe.id,action='add') }}" style="float: right;top:-45px;left:-10px;position: relative; " class="w3-btn w3-large w3-round-large  theme-color-background fa fa-heart-o" name="update"></a>
+                {% endif %}
+                 </form>
         </div> 
 
     </div>
@@ -201,7 +215,14 @@
             </div>
             
 
-            <div class="clear"></div>  
+            <div class="clear"></div> 
+                <form action = "" method = "post">
+                {% if followfaved[loop.index-1]%}
+                <a href="{{ url_for('fave', recipetofave=r.Recipe.id,action='remove') }}" style="float: right; top:-45px;left:-10px;position: relative; " class="w3-btn w3-large w3-round-large  theme-color-background fa fa-heart" name="update"></a>
+                {% else %}
+                <a href="{{ url_for('fave', recipetofave=r.Recipe.id,action='add') }}" style="float: right;top:-45px;left:-10px;position: relative; " class="w3-btn w3-large w3-round-large  theme-color-background fa fa-heart-o" name="update"></a>
+                {% endif %}
+                 </form> 
         </div> 
 
     </div>
