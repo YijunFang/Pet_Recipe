@@ -120,7 +120,11 @@
                 {% else %}
                 <form action = "" method = "post">
                         <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id) }}" class="w3-btn w3-large w3-round-large  theme-color-background fa fa-eye" name="update"></a>
-                        <a href="{{ url_for('fave', recipetofave=r.Recipe.id) }}" class="w3-btn w3-large w3-round-large  theme-color-background fa fa-heart" name="update"></a>
+                        {% if faves[loop.index-1]%}
+                        <a href="{{ url_for('fave', recipetofave=r.Recipe.id,action='remove') }}" class="w3-btn w3-large w3-round-large  theme-color-background fa fa-heart" name="update"></a>
+                        {% else %}
+                        <a href="{{ url_for('fave', recipetofave=r.Recipe.id,action='add') }}" class="w3-btn w3-large w3-round-large  theme-color-background fa fa-heart-o" name="update"></a>
+                        {% endif %}
                 </form>
                 {% endif %}
                 {% endif %}

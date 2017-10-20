@@ -13,6 +13,8 @@
     <link href="../static/files/result_page/styles.css" type="text/css" rel="stylesheet"/>
     <link href="../static/files/recipe/styles.css" type="text/css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="../static/files/upload_post/styles.css" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     {% include 'header.html' %}
@@ -80,15 +82,16 @@
                         <a href="{{ url_for('recipe_view',recipeid= r.Recipe.id, title= r.Recipe.title, ingredient= r.Recipe.ingredient,
                         instruction=r.Recipe.instruction, pettype=r.Pet_type.type, user=r.User.user_name, img=r.Recipe.imagepath) }}" class="heading_2" >
                         <br><p class="heading_3">Read more...</p>
-                    </a>
+                        </a>
                 </div>
+            </form>
             </div>
-            
-
-            <div class="clear"></div>  
-        </div> 
-
+        
+            <div class="clear"></div> 
+ 
+        </div>
     </div>
+
     {% endfor %}
   </div>
 

@@ -69,7 +69,9 @@
                     <div class="recipe_column_right">
                         <div id = "default_inner">
                         
-                        <p class="heading_3">Suitable For {{ pettype }}</p><br>
+                        <p class="heading_3">Suitable For {{ pettype }}</p><br> 
+
+
 
                         <p class="heading_3">Ingredients</p><br>
                         <p class="paragraph">{{ ingredient.replace('\n','<br />')|safe }}</p>
@@ -88,7 +90,11 @@
                         </form>
                         {% else %}
                         <form action="/fave" method="POST">
-                            <a href="{{url_for('fave',recipetofave=recipeid)}}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background fa fa-heart" name="fave"></a>
+                            {% if isFaved %}
+                            <a href="{{ url_for('fave', recipetofave=recipeid,action='remove') }}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background  fa fa-heart" name="update"></a>
+                            {% else %}
+                            <a href="{{ url_for('fave', recipetofave=recipeid,action='add') }}" class="w3-display-bottomright w3-btn w3-large w3-round-large w3-margin theme-color-background  fa fa-heart-o" name="update"></a>
+                            {% endif %}
                         </form>
 
                         {% endif %}

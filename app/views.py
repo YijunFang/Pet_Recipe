@@ -47,7 +47,6 @@ def index():
     # get most popular by faves
     popular =[]
     fave_count =  db_session.query(func.count(Favourite.recipe_id).label("total"),Favourite.recipe_id).group_by(Favourite.recipe_id).subquery()
-    print(fave_count)
     popular = recipes = db_session.query(Recipe,Pet_type,User). \
                         join(fave_count,Recipe.id==fave_count.c.recipe_id). \
                         order_by(fave_count.c.total.desc()). \
@@ -152,6 +151,13 @@ def search_view():
     return render_template("result_page.html",search_term=search_term, search_filter=search_filter, \
                             pet_type=pet_type, recipes=recipes, user = user, )
 
+def isFaved(rid):
+    isFave = False
+    if db_session.query(Favourite).filter(Favourite.user_id==current_user.id). \
+                        filter(Favourite.recipe_id==rid).all():
+        isFave = True
+    return isFave
+
 @app.route('/profile', methods = ['GET', 'POST'])
 def profile_view():
     userid = request.args.get('userid')     
@@ -162,10 +168,6 @@ def profile_view():
             return redirect('/')
     if User.query.get(userid) is None:
         userid = current_user.id    
-    print(userid)
-    print("In profile")
-    #print(current_user.id)
-    #print(userid)
     
     profile = db_session.query(User).filter(User.id==userid).all()
 
@@ -178,6 +180,11 @@ def profile_view():
                     filter(Recipe.user_id==userid). \
                     filter(Recipe.type==Pet_type.id). \
                     all()
+
+    faves = []
+    for r in recipes:
+        rid = r.Recipe.id
+        faves.append(isFaved(rid))
 
     followers = []
     followers = db_session.query(User,Follow). \
@@ -208,7 +215,7 @@ def profile_view():
     else:
         print(profile)
         return render_template("profile_test.html",profile=profile,recipes=recipes,pets=pets,followers=followers \
-                               ,isFollowing=isFollowing, following=following)
+                               ,isFollowing=isFollowing, following=following, faves=faves)
 
 
 @app.route('/follow', methods = ['GET'])
@@ -216,7 +223,6 @@ def profile_view():
 def follow():
     userid = request.args.get('userid')
     followaction = request.args.get('followaction')
-    print(userid+" "+followaction)
 
     if not userid:
         return redirect('/')
@@ -436,14 +442,18 @@ def confirm_email(token):
 @app.route('/fave')
 @login_required
 def fave():
-    #handle event where user adds a new recipe to faves
     recipetofave = request.args.get('recipetofave')  #id of recipe to fave
+    action = request.args.get('action') #action: to remove or add
     if recipetofave is not None:
         print(recipetofave)
-        # add to db here
+        # add/remove to db here
+        if action == 'add':
+            print("adding fave")
+        elif action == 'remove':
+            print("removing fave")
 
 
-    return redirect('/')
+    return redirect(url_for('recipe_view',recipeid=recipetofave))
 
 @app.route('/recipe', methods = ['POST','GET']) 
 def recipe_view():
@@ -467,6 +477,9 @@ def recipe_view():
                             filter(Comment.user_id==User.id).all()
 
         commentid = request.args.get('commentid')
+
+        faved = False
+        faved = isFaved(recipeid)
 
         if commentid is not None:
     
@@ -494,7 +507,8 @@ def recipe_view():
             user=recipe.User.user_name,
             img=recipe.Recipe.imagepath,
             userid=recipe.User.id,
-            comments=comments)
+            comments=comments,
+            isFaved=faved)
         else:
             if request.method=='POST':
                 #see how upload recipe uploads to database
@@ -526,7 +540,8 @@ def recipe_view():
                     user=recipe.User.user_name,
                     img=recipe.Recipe.imagepath,
                     userid=recipe.User.id,
-                    comments=comments)
+                    comments=comments,
+                    isFaved=faved)
     
         #   else:
 
@@ -540,7 +555,8 @@ def recipe_view():
                     user=recipe.User.user_name,
                     img=recipe.Recipe.imagepath,
                     userid=recipe.User.id,
-                    comments=comments)
+                    comments=comments,
+                    isFaved=faved)
 
     else:
         print('redirect to home entered')
