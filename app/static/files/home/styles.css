@@ -140,7 +140,7 @@ input[name="search_term"] {
   overflow: hidden;
   height: 500px;
   background-image: url("/static/images/banner.jpg");
-
+  background-size: 100%;
 }
 
 .bigtitle{
