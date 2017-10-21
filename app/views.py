@@ -453,16 +453,25 @@ def confirm_email(token):
 
 @app.route('/fave')
 @login_required
-def fave():
+def fave():#Recipe,Pet_type,User
     recipetofave = request.args.get('recipetofave')  #id of recipe to fave
     action = request.args.get('action') #action: to remove or add
     if recipetofave is not None:
+        print("recipetofave")
         print(recipetofave)
+        print("current_user.id:")
+        print(current_user.id)
+        
         # add/remove to db here
         if action == 'add':
             print("adding fave")
+            new_fave = Favourite(recipe_id=recipetofave,user_id=current_user.id)
+            db_session.add(new_fave)
+            db_session.commit()
         elif action == 'remove':
             print("removing fave")
+            db_session.query(Favourite).filter(Favourite.recipe_id==recipetofave).filter(Favourite.user_id==current_user.id).delete()
+            db_session.commit()
 
 
     return redirect('/')
