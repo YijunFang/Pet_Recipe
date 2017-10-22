@@ -608,25 +608,24 @@ def upload_post():
         ingredient = ""
         instruction = ""
         # Get the instruction and indigation
-        for r in sorted(request.form.items()):
+        for r, value in sorted(request.form.items()):
             ingredient_target = 'ingredientInput_' + str(ing_counter)
             instruction_target = 'instructionInput_' + str(ins_counter)
-            print (ingredient_target)
             if r == ingredient_target :
                 print (r)
-                r_content = request.form[ingredient_target]
+                print (value)
                 #instruction = str(indigredient) + str(counter) + ". " + str(r_content) + '\n'
-                ingredient = str(ingredient)+ str(r_content) + '\n'
+                ingredient = str(ingredient)+ str(value) + '\n'
                 print (ingredient)
                 ing_counter+=1
             elif r == instruction_target:
                 print (r)
-                r_content = request.form[instruction_target]
-                instruction = str(instruction) + str(ins_counter) + ". " + str(r_content) + '\n'
+                instruction = str(instruction) + str(ins_counter) + ". " + str(value) + '\n'
                 print (instruction)
                 ins_counter+=1
 
-        #instruction = request.form['instruction']
+        print (ingredient)
+        print (instruction)
 
 
         img = request.files['post_image']
@@ -684,7 +683,7 @@ def update_post():
         for r in sorted(request.form.iterkeys()):
             ingredient_target = 'ingredientInput_' + str(ing_counter)
             instruction_target = 'instructionInput_' + str(ins_counter)
-            print (ingredient_target)
+            print (r)
             if r == ingredient_target :
                 print (r)
                 r_content = request.form[ingredient_target]

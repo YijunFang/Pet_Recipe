@@ -103,6 +103,7 @@ input[name="search_term"] {
 
 #recipe_img{
   width: 100%;
+  margin: 5px;
 }
 
 #default_inner{
