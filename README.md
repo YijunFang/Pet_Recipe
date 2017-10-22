@@ -18,7 +18,7 @@ venv\Scripts\activate
 ```
 to start virtual env
 ```
-set FLASK_APP=main.py 
+set FLASK_APP=run.py 
 ```
 to choose web app. Use export command on unix
 ```
