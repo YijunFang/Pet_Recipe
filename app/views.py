@@ -280,8 +280,8 @@ def update_profile_view():
         if petname is not None and pettype is not None and petid is not None and petdelete is None:
             if petid == "-1":
                 print("inserting new pet...")
-                rows = db_session.query(Pet).order_by(Pet.id.desc()).first().id + 1
-                new_pet = Pet(id=rows,type=pettype,NAME=petname,owner=current_user.id)
+                #rows = db_session.query(Pet).order_by(Pet.id.desc()).first().id + 1
+                new_pet = Pet(type=pettype,NAME=petname,owner=current_user.id)
                 db_session.add(new_pet)
             #update existing pets in db
             else:
